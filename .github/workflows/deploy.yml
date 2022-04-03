@@ -216,13 +216,13 @@ jobs:
             echo "::set-env name=IMAGE::emailcrm-staging-backend"
             echo "::set-env name=DOMAINS::'api.staging.emailcrmapp.com', 'admin.staging.emailcrmapp.com', 'app.staging.emailcrmapp.com'"
           fi
-      # - name: Print environment and application
-      #   env:
-      #     APPLICATION_NAME: ${{ env.APPLICATION_NAME }}
-      #     ENVIRONMENT_NAME: ${{ env.ENVIRONMENT_NAME }}
-      #   run: |
-      #     echo "Application: $(echo ${{secrets.APPLICATION_NAME }} | sed 's/./& /g')"
-      #     echo "Environment: $(echo ${{secrets.ENVIRONMENT_NAME }} | sed 's/./& /g')"
+      - name: Print environment and application
+        env:
+          APPLICATION_NAME: ${{ env.APPLICATION_NAME }}
+          ENVIRONMENT_NAME: ${{ env.ENVIRONMENT_NAME }}
+        run: |
+          echo "Application: $(echo ${{secrets.APPLICATION_NAME }} | sed 's/./& /g')"
+          echo "Environment: $(echo ${{secrets.ENVIRONMENT_NAME }} | sed 's/./& /g')"
 
       # Copy environment from github actions
       - run: |-
