@@ -147,7 +147,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy
     needs: build
-    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/staging'
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging'
 
     environment: vps
 
@@ -197,7 +197,7 @@ jobs:
           echo "Setting variables in ${GITHUB_REF##*/}"
           echo "::set-env name=VERSION_LABEL::`git rev-parse --short HEAD`"
           echo "::set-env name=VERSION_DESCRIPTION::`git log --format=%B -n 1 HEAD`"
-          if [[ "${{ github.ref }}" == 'refs/heads/master' ]]; then
+          if [[ "${{ github.ref }}" == 'refs/heads/master' || "${{ github.ref }}" == 'refs/heads/main' ]]; then
             echo "::set-env name=APPLICATION_NAME::`echo $APPLICATION_NAME_PRODUCTION`"
             echo "::set-env name=ENVIRONMENT_NAME::`echo $ENVIRONMENT_NAME_PRODUCTION`"
             echo "::set-env name=GKE_ENV_KEY::`echo $APP_ENV_MASTER`"

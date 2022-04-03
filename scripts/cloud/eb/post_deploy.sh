@@ -25,6 +25,8 @@ if [ -z "${ENV}" ]; then
 	case ${BRANCH_NAME} in
 		'master')
 			ENV="staging";;
+		'main')
+			ENV="staging";;
 		'staging')
 			ENV="staging";;
 		'beta')
