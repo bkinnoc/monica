@@ -9,10 +9,6 @@ on:
   release:
     types: [created]
 
-  workflow_run:
-    workflows: ['Compress images']
-    types: [completed]
-
 env:
   default-php-version: '7.4'
   node-version: 16
