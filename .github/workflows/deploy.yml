@@ -19,7 +19,7 @@ jobs:
   # Build
   #############
   build:
-    if: ${{ github.event.tests.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     name: Build assets
     outputs:
