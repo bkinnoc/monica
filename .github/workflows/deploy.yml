@@ -199,6 +199,9 @@ jobs:
           if [[ "${{ github.ref }}" == 'refs/heads/master' || "${{ github.ref }}" == 'refs/heads/main' ]]; then
             echo "::set-env name=APPLICATION_NAME::`echo $APPLICATION_NAME_PRODUCTION`"
             echo "::set-env name=ENVIRONMENT_NAME::`echo $ENVIRONMENT_NAME_PRODUCTION`"
+            echo "::set-env name=HOST_PRODUCTION::`echo $HOST_PRODUCTION`"
+            echo "::set-env name=USER_PRODUCTION::`echo $USER_PRODUCTION`"
+            echo "::set-env name=DIR_PRODUCTION::`echo $DIR_PRODUCTION`"
             echo "::set-env name=GKE_ENV_KEY::`echo $APP_ENV_MASTER`"
             echo "::set-env name=SSH_PRIVATE_KEY::`echo $SSH_PRIVATE_KEY`"
             echo "::set-env name=UNIQUE_NAME::backend"
@@ -208,6 +211,9 @@ jobs:
           else
             echo "::set-env name=APPLICATION_NAME::`echo $APPLICATION_NAME_STAGING`"
             echo "::set-env name=ENVIRONMENT_NAME::`echo $ENVIRONMENT_NAME_STAGING`"
+            echo "::set-env name=HOST_STAGING::`echo $HOST_STAGING`"
+            echo "::set-env name=USER_STAGING::`echo $USER_STAGING`"
+            echo "::set-env name=DIR_STAGING::`echo $DIR_STAGING`"
             echo "::set-env name=GKE_ENV_KEY::`echo $APP_ENV_STAGING`"
             echo "::set-env name=SSH_PRIVATE_KEY::`echo $SSH_PRIVATE_KEY_STAGING`"
             echo "::set-env name=UNIQUE_NAME::staging-backend"
