@@ -6,8 +6,8 @@
     RewriteEngine On
 
     # Redirect to https
-    RewriteCond %{HTTP:X-Forwarded-Proto} !=https
-    RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,N]
+    # RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+    # RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,N]
 
     <IfModule mod_headers.c>
         # Activate HSTS

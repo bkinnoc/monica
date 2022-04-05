@@ -69,6 +69,7 @@ echo -e "\n1c - Creating storage directories"
 mkdir -p storage/cms/{combiner,twig,cache}
 mkdir -p storage/framework/{cache,sessions,views}
 mkdir -p storage/{app,temp,logs}
+mkdir -p storage/app/public
 
 # Going into maintenance mode
 echo -e "\n2 - Going into maintenance mode"
@@ -78,12 +79,11 @@ echo -e "\n2 - Going into maintenance mode"
 echo -e "\n3 - Applying migrations and optimizing application"
 php artisan migrate --force
 php artisan telescope:publish
-php artisan storage:link
 php artisan clear
 php artisan view:clear
 php artisan view:cache
 php artisan clear-compiled
-php artisan optimize
+php artisan monica:update
 
 # Lets build the app
 if [ -f 'scripts/build_js_app.sh' ]; then
@@ -100,9 +100,13 @@ cd ..
 mv html backup
 mv staging html
 mkdir -p staging
+sudo chgrp -cR www-data .
 
 echo -e "\n5 - Exiting maintenance mode"
 cd html
+composer dumpautoload
+php artisan optimize
+php artisan storage:link
 php artisan up
 
 echo -e "\nDeploy Done!"
