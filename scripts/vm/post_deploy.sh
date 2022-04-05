@@ -99,6 +99,7 @@ echo -e "\4b - Switching folders"
 cd ..
 mv html backup
 mv staging html
+mkdir -p staging
 
 echo -e "\n5 - Exiting maintenance mode"
 cd html

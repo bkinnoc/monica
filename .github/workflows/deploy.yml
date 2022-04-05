@@ -189,9 +189,17 @@ jobs:
           APPLICATION_NAME_PRODUCTION: ${{ secrets.APPLICATION_NAME_PRODUCTION }}
           ENVIRONMENT_NAME_PRODUCTION: ${{ secrets.ENVIRONMENT_NAME_PRODUCTION }}
           APP_ENV_MASTER: ${{ secrets.APP_ENV_MASTER }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_PRIVATE_KEY_STAGING: ${{ secrets.SSH_PRIVATE_KEY_STAGING }}
           APPLICATION_NAME_STAGING: ${{ secrets.APPLICATION_NAME_STAGING }}
           ENVIRONMENT_NAME_STAGING: ${{ secrets.ENVIRONMENT_NAME_STAGING }}
           APP_ENV_STAGING: ${{ secrets.APP_ENV_STAGING }}
+          HOST_PRODUCTION: ${{ secrets.HOST_PRODUCTION }}
+          USER_PRODUCTION: ${{ secrets.USER_PRODUCTION }}
+          DIR_PRODUCTION: ${{ secrets.DIR_PRODUCTION }}
+          HOST_STAGING: ${{ secrets.HOST_STAGING }}
+          USER_STAGING: ${{ secrets.USER_STAGING }}
+          DIR_STAGING: ${{ secrets.DIR_STAGING }}
         run: |
           echo "Setting variables in ${GITHUB_REF##*/}"
           echo "::set-env name=VERSION_LABEL::`git rev-parse --short HEAD`"
@@ -202,7 +210,7 @@ jobs:
             echo "::set-env name=HOST_PRODUCTION::`echo $HOST_PRODUCTION`"
             echo "::set-env name=USER_PRODUCTION::`echo $USER_PRODUCTION`"
             echo "::set-env name=DIR_PRODUCTION::`echo $DIR_PRODUCTION`"
-            echo "::set-env name=GKE_ENV_KEY::`echo $APP_ENV_MASTER`"
+            echo "::set-env name=ENV_KEY::APP_ENV_MASTER"
             echo "::set-env name=SSH_PRIVATE_KEY::`echo $SSH_PRIVATE_KEY`"
             echo "::set-env name=UNIQUE_NAME::backend"
             echo "::set-env name=ENV_NAME::production"
@@ -214,7 +222,7 @@ jobs:
             echo "::set-env name=HOST_STAGING::`echo $HOST_STAGING`"
             echo "::set-env name=USER_STAGING::`echo $USER_STAGING`"
             echo "::set-env name=DIR_STAGING::`echo $DIR_STAGING`"
-            echo "::set-env name=GKE_ENV_KEY::`echo $APP_ENV_STAGING`"
+            echo "::set-env name=ENV_KEY::APP_ENV_STAGING"
             echo "::set-env name=SSH_PRIVATE_KEY::`echo $SSH_PRIVATE_KEY_STAGING`"
             echo "::set-env name=UNIQUE_NAME::staging-backend"
             echo "::set-env name=ENV_NAME::staging"
@@ -231,7 +239,7 @@ jobs:
 
       # Copy environment from github actions
       - run: |-
-          printf '%s' "${{ secrets[env.GKE_ENV_KEY] }}" > .env
+          printf '%s' "${{ secrets[env.ENV_KEY] }}" > .env
           sed -i ':a;N;$!ba;s/\\n/\n/g' .env && cat .env
           cp .env ".env.${{ env.ENV_NAME }}"
 
@@ -251,6 +259,14 @@ jobs:
           # This avoids a failure when the client does not know the SSH Host already
           GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
           REPO_URL: ${{ secrets.REPO_URL }}
+          BRANCH_NAME: ${{ env.ENV_NAME }}
+          SSH_PRIVATE_KEY: ${{ env.SSH_PRIVATE_KEY }}
+          HOST_STAGING: ${{ env.HOST_STAGING }}
+          USER_STAGING: ${{ env.USER_STAGING }}
+          DIR_STAGING: ${{ env.DIR_STAGING }}
+          HOST_PRODUCTION: ${{ env.HOST_PRODUCTION }}
+          USER_PRODUCTION: ${{ env.USER_PRODUCTION }}
+          DIR_PRODUCTION: ${{ env.DIR_PRODUCTION }}
 
       # - name: Deploy to Staging server
       #   uses: easingthemes/ssh-deploy@main
