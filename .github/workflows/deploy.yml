@@ -13,6 +13,7 @@ on:
 env:
   php-version: '8.0'
   node-version: 16
+  ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
 
 jobs:
   #############
@@ -203,7 +204,7 @@ jobs:
             echo "::set-env name=UNIQUE_NAME::backend"
             echo "::set-env name=ENV_NAME::production"
             echo "::set-env name=IMAGE::emailcrm-backend"
-            echo "::set-env name=DOMAINS::'api.emailcrmapp.com', 'admin.emailcrmapp.com', 'app.emailcrmapp.com'"
+            echo "::set-env name=DOMAINS::'api.getcustomers.company', 'admin.getcustomers.company', 'app.getcustomers.company'"
           else
             echo "::set-env name=APPLICATION_NAME::`echo $APPLICATION_NAME_STAGING`"
             echo "::set-env name=ENVIRONMENT_NAME::`echo $ENVIRONMENT_NAME_STAGING`"
@@ -212,7 +213,7 @@ jobs:
             echo "::set-env name=UNIQUE_NAME::staging-backend"
             echo "::set-env name=ENV_NAME::staging"
             echo "::set-env name=IMAGE::emailcrm-staging-backend"
-            echo "::set-env name=DOMAINS::'api.staging.emailcrmapp.com', 'admin.staging.emailcrmapp.com', 'app.staging.emailcrmapp.com'"
+            echo "::set-env name=DOMAINS::'api.staging.getcustomers.company', 'admin.staging.getcustomers.company', 'app.staging.getcustomers.company'"
           fi
       - name: Print environment and application
         env:
