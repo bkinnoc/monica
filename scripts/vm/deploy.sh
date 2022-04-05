@@ -70,13 +70,13 @@ echo "Creating env File"
 
 echo "Copying app to remote server: ${BUILD_URL}"
 SSH_OPTS='-o PasswordAuthentication=no -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ChallengeResponseAuthentication=no'
-scp ${SSH_OPTS} artifacts.tar.gz ${USER}@${BUILD_URL}:~${USER}/${APP_FOLDER}
-ssh ${SSH_OPTS} ${USER}@${BUILD_URL} "mkdir -p ~${USER}/${APP_FOLDER}/scripts/vm" && scp ${SSH_OPTS} ./scripts/vm/post_deploy.sh ${USER}@${BUILD_URL}:~${USER}/${APP_FOLDER}/scripts/vm
+scp ${SSH_OPTS} artifacts.tar.gz ${USER}@${BUILD_URL}:${APP_FOLDER}
+ssh ${SSH_OPTS} ${USER}@${BUILD_URL} "mkdir -p ${APP_FOLDER}/scripts/vm" && scp ${SSH_OPTS} ./scripts/vm/post_deploy.sh ${USER}@${BUILD_URL}:${APP_FOLDER}/scripts/vm
 
 echo "Logging into ${BUILD_URL} and updating app"
 ssh ${SSH_OPTS} ${USER}@${BUILD_URL} ENV=$ENV APP_FOLDER=$APP_FOLDER USER=${USER} 'bash -sex' << 'ENDSSH'
 pwd
-cd ~/${APP_FOLDER};
+cd ${APP_FOLDER};
 bash scripts/vm/post_deploy.sh --env=${ENV}
 ENDSSH
 
