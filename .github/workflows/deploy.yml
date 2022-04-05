@@ -131,6 +131,12 @@ jobs:
             public/fonts
             !public/**/*.map
 
+      - name: Store vendor
+        uses: actions/upload-artifact@v2
+        with:
+          name: vendor
+          path: vendor/**
+
       - name: Store source maps
         uses: actions/upload-artifact@v2
         with:
@@ -165,6 +171,12 @@ jobs:
         with:
           name: assets
           path: public
+
+      - name: Download vendor
+        uses: actions/download-artifact@v2
+        with:
+          name: vendor
+          path: vendor
 
       - name: Configure Git
         run: |
