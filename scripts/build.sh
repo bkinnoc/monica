@@ -73,7 +73,7 @@ echo -e "\n2 - Installing composer packages"
 # fi
 # cd ../../
 # echo -e "\n2 - Continuing install of composer packages"
-# php composer.phar install -vvv --no-suggest --no-scripts --ignore-platform-reqs
+composer install -vvv --no-suggest --no-scripts --ignore-platform-reqs --no-progress --no-interaction --prefer-dist --optimize-autoloader
 # php composer.phar dumpautoload --optimize --no-scripts
 
 echo -e "\n3 - Zipping app"
