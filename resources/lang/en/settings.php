@@ -9,6 +9,7 @@
 return [
     'sidebar_settings' => 'Account settings',
     'sidebar_personalization' => 'Personalization',
+    'sidebar_charities' => 'Charities',
     'sidebar_settings_storage' => 'Storage',
     'sidebar_settings_export' => 'Export data',
     'sidebar_settings_users' => 'Users',
@@ -373,6 +374,22 @@ return [
     'api_authorized_clients_none' => 'There are no authorized clients yet.',
     'api_authorized_clients_name' => 'Name',
     'api_authorized_clients_scopes' => 'Scopes',
+
+    'charities_tab_title' => 'Manage your charities',
+    'charities_title' => 'Here you will be able to manage the charities you want to donate to.',
+    'charity_preferences_title' => 'Configue Charitable Distributions',
+    'charity_preferences_description' => 'Below you can add and configure your chartiable distributions.',
+    'charity_preferences_add' => 'Add Charity',
+    'charity_preferences_modal_add' => 'Add Charity',
+    'charity_preferences_modal_edit' => 'Update Charity Preference',
+    'charity_preferences_modal_question' => 'Select a charity below. NOTE: Your already selected charties will not be available',
+    'charity_preferences_modal_set_percent' => 'What percentage would you like to donate?',
+    'charity_preferences_modal_select_charity' => 'Select the charity',
+    'charity_preferences_table_name' => 'Your charity preferences',
+    'charity_preferences_table_actions' => 'Actions',
+    'charity_preferences_modal_select_charity' => 'Select the charity',
+    'charity_preferences_modal_delete_desc' => 'Are you sure you want to delete this charity?',
+    'charity_preferences_modal_delete' => 'Delete Charity Preference',
 
     'personalization_tab_title' => 'Personalize your account',
 

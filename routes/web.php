@@ -284,7 +284,7 @@ Route::middleware(['auth', 'verified', 'mfa'])->group(function () {
             Route::get('/settings/subscriptions/archive', 'Settings\\SubscriptionsController@archive')->name('archive');
             Route::post('/settings/subscriptions/archive', 'Settings\\SubscriptionsController@processArchive');
             Route::get('/settings/subscriptions/downgrade/success', 'Settings\\SubscriptionsController@downgradeSuccess')->name('downgrade.success');
-            if (! App::environment('production')) {
+            if (!App::environment('production')) {
                 Route::get('/settings/subscriptions/forceCompletePaymentOnTesting', 'Settings\\SubscriptionsController@forceCompletePaymentOnTesting')->name('forceCompletePaymentOnTesting');
             }
         });
@@ -313,6 +313,16 @@ Route::middleware(['auth', 'verified', 'mfa'])->group(function () {
 
             Route::post('/settings/security/generate-recovery-codes', 'Settings\\RecoveryCodesController@store');
             Route::post('/settings/security/recovery-codes', 'Settings\\RecoveryCodesController@index');
+        });
+
+        // Charities
+        Route::name('charities.preferences.')->group(function () {
+            Route::get('/settings/charities', 'Settings\\CharityController@index')->name('index');
+            Route::get('/settings/charities/preferences', 'Settings\\CharityController@userPreferences')->name('user-charity-preferences.index');
+            Route::post('/settings/charities/preferences', 'Settings\\CharityController@storeCharityPreference')->name('user-charity-preferences.store');
+            Route::put('/settings/charities/preferences/{id}', 'Settings\\CharityController@storeCharityPreference')->name('user-charity-preferences.update');
+            Route::delete('/settings/charities/preferences/{id}', 'Settings\\CharityController@destroyCharityPreference')->name('user-charity-preferences.delete');
+            Route::get('/settings/charities/all', 'Settings\\CharityController@charities')->name('all');
         });
     });
 });

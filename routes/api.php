@@ -153,5 +153,10 @@ Route::group(['middleware' => ['auth:api']], function () {
          * MISC
          */
         Route::get('/countries', 'Misc\\ApiCountryController@index')->name('countries');
+
+        /**
+         * Charities
+         */
+        Route::apiResource('/charities', 'CharityAPIController')->only(['index', 'show']);
     });
 });

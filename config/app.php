@@ -205,6 +205,7 @@ return [
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
+        App\Providers\NovaServiceProvider::class,
         App\Providers\MacroServiceProvider::class,
         Vluzrmos\LanguageDetector\Providers\LanguageDetectorServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
@@ -270,6 +271,7 @@ return [
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Gravatar' => Creativeorange\Gravatar\Facades\Gravatar::class,
+        'Profanity' => ConsoleTVs\Profanity\Facades\Profanity::class,
     ],
 
 ];

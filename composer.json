@@ -8,6 +8,7 @@
         "social"
     ],
     "license": "AGPL",
+    "minimum-stability": "dev",
     "require": {
         "php": "^7.4 || ^8.0",
         "ext-bcmath": "*",
@@ -18,15 +19,19 @@
         "asbiin/laravel-adorable": "^1.0",
         "asbiin/laravel-webauthn": "^1.0",
         "bacon/bacon-qr-code": "^2.0",
+        "consoletvs/profanity": "dev-master",
         "creativeorange/gravatar": "^1.0",
         "doctrine/dbal": "^3.0",
+        "ebess/advanced-nova-media-library": "^3.8.0",
         "erusev/parsedown": "^1.7",
         "facade/ignition": "^2.0",
         "giggsey/libphonenumber-for-php": "^8.9",
         "guzzlehttp/guzzle": "^7.2",
+        "infyomlabs/laravel-generator": "^3.0",
         "intervention/image": "^2.3",
         "laravel/cashier": "^12.0",
         "laravel/framework": "^8.0",
+        "laravel/nova": "*",
         "laravel/passport": "^10.0",
         "laravel/socialite": "^5.0",
         "laravel/ui": "^3.0",
@@ -38,6 +43,7 @@
         "moneyphp/money": "^3.1",
         "monicahq/laravel-cloudflare": "^3.0",
         "monicahq/laravel-sabre": "^1.2",
+        "nitm/laravel-base": "*",
         "ok/ipstack-client": "^1.2",
         "phar-io/version": "^3.1",
         "pragmarx/countries-laravel": "^0",
@@ -47,6 +53,7 @@
         "predis/predis": "^1.1",
         "sabre/dav": "^4.0",
         "sentry/sentry-laravel": "^2.0",
+        "spatie/laravel-permission": "^4.0",
         "spatie/macroable": "^1.0",
         "stevebauman/location": "^6.1",
         "symfony/translation": "^5.0",
@@ -54,6 +61,7 @@
         "vectorface/whip": "^0.4",
         "vinkla/hashids": "^9.0",
         "vluzrmos/language-detector": "^2.2",
+        "vyuldashev/nova-permission": "^3.0",
         "web-token/jwt-key-mgmt": "^2.1",
         "web-token/jwt-signature-algorithm-ecdsa": "^2.1",
         "web-token/jwt-signature-algorithm-eddsa": "^2.1",
@@ -141,5 +149,15 @@
         "post-create-project-cmd": [
             "@php artisan key:generate"
         ]
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@gitlab.com:nitm/laravel-base.git"
+        },
+        {
+            "type": "path",
+            "url": "./nova"
+        }
+    ]
 }

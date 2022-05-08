@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use function Safe\json_decode;
 use App\Models\Account\ApiUsage;
-use App\Http\Controllers\Controller;
+use Nitm\Api\Http\Controllers\BaseApiController;
 use App\Traits\JsonRespondController;
 
-class ApiController extends Controller
+class ApiController extends BaseApiController
 {
     use JsonRespondController;
 
@@ -43,16 +43,16 @@ class ApiController extends Controller
                 // It has a sort criteria, but is it a valid one?
                 if (empty($this->getSortCriteria())) {
                     return $this->setHTTPStatusCode(400)
-                              ->setErrorCode(39)
-                              ->respondWithError();
+                        ->setErrorCode(39)
+                        ->respondWithError();
                 }
             }
 
             if ($request->has('limit')) {
                 if ($request->input('limit') > config('api.max_limit_per_page')) {
                     return $this->setHTTPStatusCode(400)
-                              ->setErrorCode(30)
-                              ->respondWithError();
+                        ->setErrorCode(30)
+                        ->respondWithError();
                 }
 
                 $this->setLimitPerPage($request->input('limit'));
@@ -67,11 +67,13 @@ class ApiController extends Controller
             // a DELETE
             // TODO: there is probably a much better way to do that
             try {
-                if ($request->method() != 'GET' && $request->method() != 'DELETE'
-                    && is_null(json_decode($request->getContent()))) {
+                if (
+                    $request->method() != 'GET' && $request->method() != 'DELETE'
+                    && is_null(json_decode($request->getContent()))
+                ) {
                     return $this->setHTTPStatusCode(400)
-                                ->setErrorCode(37)
-                                ->respondWithError();
+                        ->setErrorCode(37)
+                        ->respondWithError();
                 }
             } catch (\Safe\Exceptions\JsonException $e) {
                 // no error

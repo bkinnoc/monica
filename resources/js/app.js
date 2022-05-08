@@ -312,6 +312,10 @@ Vue.component(
   'DavResources',
   require('./components/settings/DAVResources.vue').default
 );
+Vue.component(
+  'CharityPreferences',
+  require('./components/settings/CharityPreferences.vue').default
+);
 
 require('./testing');
 
@@ -339,5 +343,5 @@ common.loadLanguage(window.Laravel.locale, true).then((i18n) => {
   return app;
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
 });

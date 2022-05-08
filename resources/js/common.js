@@ -9,7 +9,7 @@ Vue.use(VueI18n);
 
 // Moments
 import moment from 'moment';
-Vue.filter('formatDate', function(value) {
+Vue.filter('formatDate', function (value) {
   if (value) {
     return moment(String(value)).format('LL');
   }
@@ -26,18 +26,18 @@ export default {
   i18n: new VueI18n({
     locale: 'en', // set locale
     fallbackLocale: 'en',
-    messages: {'en': messages},
+    messages: { 'en': messages },
     pluralizationRules: pluralization,
   }),
-  
-  loadedLanguages : ['en'], // our default language that is preloaded
-  
+
+  loadedLanguages: ['en'], // our default language that is preloaded
+
   _setI18nLanguage (lang) {
     this.i18n.locale = lang;
     axios.defaults.headers.common['Accept-Language'] = lang;
     document.querySelector('html').setAttribute('lang', lang);
   },
-  
+
   _loadLanguageAsync (lang) {
     if (this.i18n.locale !== lang) {
       if (!this.loadedLanguages.includes(lang)) {
@@ -51,7 +51,7 @@ export default {
     return Promise.resolve(this.i18n);
   },
 
-  loadLanguage: function(lang, set) {
+  loadLanguage: function (lang, set) {
     return this._loadLanguageAsync(lang).then(i18n => {
       if (set) {
         this._setI18nLanguage(lang);

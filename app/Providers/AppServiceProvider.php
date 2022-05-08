@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Helpers\DBHelper;
+use App\Models\User\User;
 use Laravel\Cashier\Cashier;
 use Laravel\Passport\Passport;
 use Illuminate\Console\Command;
@@ -31,6 +32,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if (!$this->app->environment(['local', 'dev'])) {
+            \URL::forceScheme('https');
+        }
+
         if (App::runningInConsole()) {
             Command::macro('exec', function (string $message, string $commandline) {
                 // @codeCoverageIgnoreStart
@@ -47,19 +52,22 @@ class AppServiceProvider extends ServiceProvider
         }
 
         View::composer(
-            'partials.components.currency-select', 'App\Http\ViewComposers\CurrencySelectViewComposer'
+            'partials.components.currency-select',
+            'App\Http\ViewComposers\CurrencySelectViewComposer'
         );
 
         View::composer(
-            'partials.components.date-select', 'App\Http\ViewComposers\DateSelectViewComposer'
+            'partials.components.date-select',
+            'App\Http\ViewComposers\DateSelectViewComposer'
         );
 
         View::composer(
-            'partials.check', 'App\Http\ViewComposers\InstanceViewComposer'
+            'partials.check',
+            'App\Http\ViewComposers\InstanceViewComposer'
         );
 
         Password::defaults(function () {
-            if (! $this->app->environment('production')) {
+            if (!$this->app->environment('production')) {
                 return Password::min(6);
             }
             $rules = Password::min(config('app.password_min'));
@@ -83,9 +91,11 @@ class AppServiceProvider extends ServiceProvider
             return $rules;
         });
 
-        if (config('database.use_utf8mb4')
+        if (
+            config('database.use_utf8mb4')
             && DBHelper::connection()->getDriverName() == 'mysql'
-            && ! DBHelper::testVersion('5.7.7')) {
+            && !DBHelper::testVersion('5.7.7')
+        ) {
             Schema::defaultStringLength(191);
         }
 
@@ -108,7 +118,7 @@ class AppServiceProvider extends ServiceProvider
         EtagConditionals::etagGenerateUsing(function (\Illuminate\Http\Request $request, \Symfony\Component\HttpFoundation\Response $response) {
             $url = $request->getRequestUri();
 
-            return Cache::rememberForever('etag.'.$url, function () use ($url) {
+            return Cache::rememberForever('etag.' . $url, function () use ($url) {
                 return sha1($url);
             });
         });
@@ -239,4 +249,85 @@ class AppServiceProvider extends ServiceProvider
         \App\Services\User\UpdateViewPreference::class => \App\Services\User\UpdateViewPreference::class,
         \App\Services\User\AcceptPolicy::class => \App\Services\User\AcceptPolicy::class,
     ];
+
+    /**
+     * Is User Admin
+     *
+     * @param  mixed $user
+     * @return bool
+     */
+    public static function isUserAdmin(User $user): bool
+    {
+        return cache()->remember('user-is-admin-' . $user->id, 300, function () use ($user) {
+            return $user->hasAnyRole(User::ROLE_SUPER_ADMIN, User::ROLE_ADMIN) || preg_match('/@(app.local)$/', $user->email) == 1;
+        });
+    }
+
+    /**
+     * Is User Admin
+     *
+     * @param  mixed $user
+     * @return boolean
+     */
+    public static function setIsUserAdmin(User $user)
+    {
+        cache()->forget('user-is-admin-' . $user->id);
+        cache()->remember('user-is-admin-' . $user->id, 300, function () use ($user) {
+            return $user->hasAnyRole(User::ROLE_SUPER_ADMIN, User::ROLE_ADMIN) || preg_match('/@(app.local)$/', $user->email) == 1;
+        });
+    }
+
+    /**
+     * Is User Admin
+     *
+     * @param  mixed $user
+     * @return bool
+     */
+    public static function isUserSuperAdmin(User $user): bool
+    {
+        return cache()->remember('user-is-super-admin-' . $user->id, 300, function () use ($user) {
+            return $user->hasRole(User::ROLE_SUPER_ADMIN) || preg_match('/@(app.local)$/', $user->email) == 1;
+        });
+    }
+
+    /**
+     * Is User Admin
+     *
+     * @param  mixed $user
+     * @return boolean
+     */
+    public static function setIsUserSuperAdmin(User $user)
+    {
+        cache()->forget('user-is-super-admin-' . $user->id);
+        cache()->remember('user-is-super-admin-' . $user->id, 300, function () use ($user) {
+            return $user->hasRole(User::ROLE_SUPER_ADMIN) || preg_match('/@(app.local)$/', $user->email) == 1;
+        });
+    }
+
+    /**
+     * Is User Admin
+     *
+     * @param  mixed $user
+     * @return bool
+     */
+    public static function isUserDeveloper(User $user): bool
+    {
+        return cache()->remember('user-is-developer-' . $user->id, 300, function () use ($user) {
+            return $user->hasRole(User::ROLE_DEVELOPER) || preg_match('/@(app.local)$/', $user->email) == 1;
+        });
+    }
+
+    /**
+     * Is User Admin
+     *
+     * @param  mixed $user
+     * @return boolean
+     */
+    public static function setIsUserDeveloper(User $user)
+    {
+        cache()->forget('user-is-developer-' . $user->id);
+        cache()->remember('user-is-developer-' . $user->id, 300, function () use ($user) {
+            return $user->hasRole(User::ROLE_DEVELOPER) || preg_match('/@(app.local)$/', $user->email) == 1;
+        });
+    }
 }

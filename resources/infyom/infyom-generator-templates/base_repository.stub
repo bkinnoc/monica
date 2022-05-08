@@ -1,0 +1,11 @@
+<?php
+
+namespace $NAMESPACE_APP$\Repositories;
+
+use Illuminate\Container\Container as Application;
+use Illuminate\Database\Eloquent\Model;
+
+
+abstract class BaseRepository extends \Nitm\Content\Repositories\BaseRepository
+{
+}

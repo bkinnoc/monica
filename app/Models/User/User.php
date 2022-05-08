@@ -12,6 +12,9 @@ use App\Models\Contact\Contact;
 use App\Helpers\ComplianceHelper;
 use App\Models\Settings\Currency;
 use Laravel\Passport\HasApiTokens;
+use Nitm\Content\Traits\CustomWith;
+use Spatie\Permission\Traits\HasRoles;
+use Nitm\Content\Traits\SyncsRelations;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -23,7 +26,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable implements MustVerifyEmail, HasLocalePreference
 {
-    use Notifiable, HasApiTokens, HasUuid;
+    use Notifiable, HasApiTokens, HasUuid, HasRoles, SyncsRelations, CustomWith;
+
+    const ROLE_USER        = 'User';
+    const ROLE_ADMIN       = 'Web Admin';
+    const ROLE_DEVELOPER   = 'Developer';
+    const ROLE_SUPER_ADMIN = 'Super Admin';
 
     /**
      * The attributes that are mass assignable.
@@ -137,6 +145,27 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     }
 
     /**
+     * This function returns a collection of charities that belong to the user
+     *
+     * @return A collection of charities that the user wants to donate to.
+     */
+    public function charities()
+    {
+        return $this->belongsToMany(\App\Models\Charity::class, 'user_charities', 'user_id', 'charity_id')
+            ->withPivot(['charity_id', 'user_id', 'percent']);
+    }
+
+    /**
+     * This function returns a collection of charities that belong to the user
+     *
+     * @return A collection of charities that the user wants to donate to.
+     */
+    public function userCharities()
+    {
+        return $this->hasMany(\App\Models\UserCharity::class, 'user_id');
+    }
+
+    /**
      * Assigns a default value just in case the sort order is empty.
      *
      * @param  string  $value
@@ -144,7 +173,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
      */
     public function getContactsSortOrderAttribute($value): string
     {
-        return ! empty($value) ? $value : 'firstnameAZ';
+        return !empty($value) ? $value : 'firstnameAZ';
     }
 
     /**
@@ -175,14 +204,14 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
             $completeName = $this->first_name;
 
             if ($this->last_name !== '') {
-                $completeName = $completeName.' '.$this->last_name;
+                $completeName = $completeName . ' ' . $this->last_name;
             }
         } else {
             if ($this->last_name !== '') {
                 $completeName = $this->last_name;
             }
 
-            $completeName = $completeName.' '.$this->first_name;
+            $completeName = $completeName . ' ' . $this->first_name;
         }
 
         return $completeName;
@@ -239,13 +268,13 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         $isTheRightTime = true;
 
         // compare date with current date for the user
-        if (! $date->isSameDay($now)) {
+        if (!$date->isSameDay($now)) {
             $isTheRightTime = false;
         }
 
         // compare current hour for the user with the hour they want to be
         // reminded as per the hour set on the profile
-        if (! $now->isSameHour($this->account->default_time_reminder_is_sent)) {
+        if (!$now->isSameHour($this->account->default_time_reminder_is_sent)) {
             $isTheRightTime = false;
         }
 
