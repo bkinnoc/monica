@@ -5,9 +5,11 @@ namespace App\Nova;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Vyuldashev\NovaPermission\RoleBooleanGroup;
 use Vyuldashev\NovaPermission\PermissionBooleanGroup;
 
@@ -35,6 +37,12 @@ class User extends Resource
     public static $search = [
         'id', 'name', 'email',
     ];
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        // adds a `tags_count` column to the query result based on
+        // number of tags associated with this product
+        return $query->withCount('charities');
+    }
 
     /**
      * Get the fields displayed by the resource.
@@ -64,6 +72,7 @@ class User extends Resource
                 ->creationRules('required', 'string', 'min:8')
                 ->updateRules('nullable', 'string', 'min:8'),
             // Charities
+            Number::make(__('Charities'), 'charities_count')->sortable()->exceptOnForms(),
             BelongsToMany::make(__('Charities'), 'charities', Charity::class),
             /** Permissions and roles */
             RoleBooleanGroup::make('Roles'),
