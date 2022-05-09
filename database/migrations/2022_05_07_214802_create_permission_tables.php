@@ -20,6 +20,8 @@ class CreatePermissionTables extends Migration
             throw new \Exception('Error: config/permission.php not loaded. Run [php artisan config:clear] and try again.');
         }
 
+        Schema::dropifExists($tableNames['role_has_permissions']);
+        Schema::dropifExists($tableNames['model_has_permissions']);
         Schema::dropifExists($tableNames['permissions']);
         Schema::create(
             $tableNames['permissions'],
@@ -31,6 +33,7 @@ class CreatePermissionTables extends Migration
             }
         );
 
+        Schema::dropifExists($tableNames['model_has_roles']);
         Schema::dropifExists($tableNames['roles']);
         Schema::create(
             $tableNames['roles'],
@@ -42,7 +45,6 @@ class CreatePermissionTables extends Migration
             }
         );
 
-        Schema::dropifExists($tableNames['model_has_permissions']);
         Schema::create(
             $tableNames['model_has_permissions'],
             function (Blueprint $table) use ($tableNames, $columnNames) {
@@ -64,7 +66,6 @@ class CreatePermissionTables extends Migration
             }
         );
 
-        Schema::dropifExists($tableNames['model_has_roles']);
         Schema::create(
             $tableNames['model_has_roles'],
             function (Blueprint $table) use ($tableNames, $columnNames) {
@@ -86,7 +87,6 @@ class CreatePermissionTables extends Migration
             }
         );
 
-        Schema::dropifExists($tableNames['role_has_permissions']);
         Schema::create(
             $tableNames['role_has_permissions'],
             function (Blueprint $table) use ($tableNames) {
@@ -143,7 +143,10 @@ class CreatePermissionTables extends Migration
         Schema::table(
             $tableNames['roles'],
             function () {
-                \App\Models\User\User::first()->assignRole('Web Admin');
+                $user = \App\Models\User\User::first();
+                if ($user) {
+                    $user->assignRole('Web Admin');
+                }
             }
         );
 

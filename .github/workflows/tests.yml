@@ -5,14 +5,13 @@ on:
     branches: [main]
   pull_request:
     types: [opened, synchronize, reopened]
-    branches-ignore: ['l10n_main*']
+    branches-ignore: ["l10n_main*"]
   release:
     types: [created]
 
 env:
-  default-php-version: '7.4'
+  default-php-version: "78.0"
   node-version: 16
-
 
 jobs:
   #############
@@ -25,7 +24,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: [7.4, '8.0']
+        php-version: ["8.0"]
         connection: [mysql]
         testsuite: [Api, Feature, Unit-Models, Unit-Services]
 
@@ -46,7 +45,7 @@ jobs:
       - name: Check PHP Extensions
         run: php -m
 
-    # Composer
+      # Composer
       - name: Validate composer.json and composer.lock
         run: composer validate
 
@@ -66,7 +65,7 @@ jobs:
       - name: Install composer dependencies
         run: composer install --no-progress --no-interaction --prefer-dist --optimize-autoloader $ext
 
-    # Prepare
+      # Prepare
       - name: Prepare environment
         run: |
           cp scripts/ci/.env.${{ matrix.connection }} .env
@@ -106,7 +105,7 @@ jobs:
       - name: Cache route
         run: php artisan route:cache
 
-    # Test
+      # Test
       - name: Run Unit test suite
         if: matrix.php-version == env.default-php-version
         run: phpdbg -dmemory_limit=4G -qrr vendor/bin/phpunit -c phpunit.xml --testsuite ${{ matrix.testsuite }} --log-junit ./results/junit/results${{ matrix.testsuite }}.xml --coverage-clover ./results/coverage/coverage${{ matrix.testsuite }}.xml
@@ -132,7 +131,6 @@ jobs:
           name: results
           path: results
 
-
   ###################
   # Run tests browser
   ###################
@@ -143,7 +141,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: [7.4, '8.0']
+        php-version: [7.4, "8.0"]
         connection: [mysql]
 
     steps:
@@ -163,7 +161,7 @@ jobs:
       - name: Check PHP Extensions
         run: php -m
 
-    # Composer
+      # Composer
       - name: Validate composer.json and composer.lock
         run: composer validate
 
@@ -183,7 +181,7 @@ jobs:
       - name: Install composer dependencies
         run: composer install --no-progress --no-interaction --prefer-dist --optimize-autoloader $ext
 
-    # Yarn
+      # Yarn
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -205,7 +203,7 @@ jobs:
       - name: Build assets
         run: yarn run production
 
-    # Prepare
+      # Prepare
       - name: Prepare environment
         run: |
           cp scripts/ci/.env.${{ matrix.connection }} .env
@@ -239,7 +237,7 @@ jobs:
       - name: Test coverage page
         run: REQUEST_URI=/ php scripts/tests/server-cc.php
 
-    # Test
+      # Test
       - name: Upgrade Chrome Driver
         run: php artisan dusk:chrome-driver $(google-chrome -version | awk '{ print $3 }' | cut -d . -f 1)
       - name: Start Chrome Driver
@@ -273,7 +271,6 @@ jobs:
           name: results
           path: results
 
-
   ###########################
   # Reporting to sonarcloud
   ###########################
@@ -287,7 +284,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
 
       - name: Download results
         uses: actions/download-artifact@v2

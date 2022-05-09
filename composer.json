@@ -10,7 +10,7 @@
     "license": "AGPL",
     "minimum-stability": "dev",
     "require": {
-        "php": "^7.4 || ^8.0",
+        "php": "^8.0",
         "ext-bcmath": "*",
         "ext-gd": "*",
         "ext-gmp": "*",
@@ -71,6 +71,7 @@
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3",
+        "brianium/paratest": "6.x-dev",
         "fakerphp/faker": "^1.10",
         "khanamiryan/qrcode-detector-decoder": "^1.0",
         "laravel/dusk": "^6.0",
