@@ -24,7 +24,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ["7.4", "8.0"]
+        php-version: ["7.4"]
         connection: [mysql]
         testsuite: [Api, Feature, Unit-Models, Unit-Services]
 
@@ -141,7 +141,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ["7.4", "8.0"]
+        php-version: ["7.4"]
         connection: [mysql]
 
     steps:
