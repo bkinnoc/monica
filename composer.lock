@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cbeda92b99f4b9893e00fccdd34be06c",
+    "content-hash": "01be219b36bed6eb6cd34ee73267a9f8",
     "packages": [
         {
             "name": "asbiin/laravel-adorable",
@@ -219,16 +219,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.222.7",
+            "version": "3.222.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "03d35eef5c509798d2c08587cfd9a7c33afe2260"
+                "reference": "c0344f5d8b1fa3238f96dcc60ff4edbeabbffcae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/03d35eef5c509798d2c08587cfd9a7c33afe2260",
-                "reference": "03d35eef5c509798d2c08587cfd9a7c33afe2260",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/c0344f5d8b1fa3238f96dcc60ff4edbeabbffcae",
+                "reference": "c0344f5d8b1fa3238f96dcc60ff4edbeabbffcae",
                 "shasum": ""
             },
             "require": {
@@ -304,9 +304,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.222.7"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.222.8"
             },
-            "time": "2022-05-06T18:16:59+00:00"
+            "time": "2022-05-09T18:17:25+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -3422,12 +3422,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "0431475828b5e13d56d47573ae75fc0907523ef5"
+                "reference": "abd5b3896fd82fe5177272b04552bc4ba1d933de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/0431475828b5e13d56d47573ae75fc0907523ef5",
-                "reference": "0431475828b5e13d56d47573ae75fc0907523ef5",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/abd5b3896fd82fe5177272b04552bc4ba1d933de",
+                "reference": "abd5b3896fd82fe5177272b04552bc4ba1d933de",
                 "shasum": ""
             },
             "require": {
@@ -3587,7 +3587,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-05-06T13:44:23+00:00"
+            "time": "2022-05-09T16:28:53+00:00"
         },
         {
             "name": "laravel/nova",
@@ -5643,12 +5643,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "2a8c7dffdf0c4f7dd58ae1e7f74b9a3eb93f1ad9"
+                "reference": "c709906d0a41790b000625ce70b0c6430add266d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/2a8c7dffdf0c4f7dd58ae1e7f74b9a3eb93f1ad9",
-                "reference": "2a8c7dffdf0c4f7dd58ae1e7f74b9a3eb93f1ad9",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/c709906d0a41790b000625ce70b0c6430add266d",
+                "reference": "c709906d0a41790b000625ce70b0c6430add266d",
                 "shasum": ""
             },
             "require": {
@@ -5739,7 +5739,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-08T22:16:47+00:00"
+            "time": "2022-05-09T20:37:14+00:00"
         },
         {
             "name": "mtdowling/jmespath.php",
@@ -5967,12 +5967,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/caching.git",
-                "reference": "eb6bd26d96e194489303f677a260750b69ac02f1"
+                "reference": "e5c9dafc4fd939c50d0d9aabc0ec0f30b1f59aaa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/caching/zipball/eb6bd26d96e194489303f677a260750b69ac02f1",
-                "reference": "eb6bd26d96e194489303f677a260750b69ac02f1",
+                "url": "https://api.github.com/repos/nette/caching/zipball/e5c9dafc4fd939c50d0d9aabc0ec0f30b1f59aaa",
+                "reference": "e5c9dafc4fd939c50d0d9aabc0ec0f30b1f59aaa",
                 "shasum": ""
             },
             "require": {
@@ -6028,9 +6028,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/caching/issues",
-                "source": "https://github.com/nette/caching/tree/v3.1.3-RC1"
+                "source": "https://github.com/nette/caching/tree/v3.1"
             },
-            "time": "2022-05-08T04:02:52+00:00"
+            "time": "2022-05-09T12:30:15+00:00"
         },
         {
             "name": "nette/finder",
@@ -11131,12 +11131,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-client-contracts.git",
-                "reference": "f7525778c712be78ad5b6ca31f47fdcfd404c280"
+                "reference": "4184b9b63af1edaf35b6a7974c6f1f9f33294129"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-client-contracts/zipball/f7525778c712be78ad5b6ca31f47fdcfd404c280",
-                "reference": "f7525778c712be78ad5b6ca31f47fdcfd404c280",
+                "url": "https://api.github.com/repos/symfony/http-client-contracts/zipball/4184b9b63af1edaf35b6a7974c6f1f9f33294129",
+                "reference": "4184b9b63af1edaf35b6a7974c6f1f9f33294129",
                 "shasum": ""
             },
             "require": {
@@ -11201,7 +11201,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-13T20:10:05+00:00"
+            "time": "2022-04-12T16:11:42+00:00"
         },
         {
             "name": "symfony/http-foundation",
@@ -16331,12 +16331,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/dusk.git",
-                "reference": "4f09b8e34e06f1b7046c7a381809747eeb72c58f"
+                "reference": "7fed3695741787d9998c5f04c94adfd62d70e766"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/dusk/zipball/4f09b8e34e06f1b7046c7a381809747eeb72c58f",
-                "reference": "4f09b8e34e06f1b7046c7a381809747eeb72c58f",
+                "url": "https://api.github.com/repos/laravel/dusk/zipball/7fed3695741787d9998c5f04c94adfd62d70e766",
+                "reference": "7fed3695741787d9998c5f04c94adfd62d70e766",
                 "shasum": ""
             },
             "require": {
@@ -16397,7 +16397,7 @@
                 "issues": "https://github.com/laravel/dusk/issues",
                 "source": "https://github.com/laravel/dusk/tree/6.x"
             },
-            "time": "2022-05-03T15:49:54+00:00"
+            "time": "2022-05-09T13:43:52+00:00"
         },
         {
             "name": "laravel/legacy-factories",
@@ -20986,7 +20986,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.0",
+        "php": "7.4|^8.0",
         "ext-bcmath": "*",
         "ext-gd": "*",
         "ext-gmp": "*",

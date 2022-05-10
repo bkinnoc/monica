@@ -5,12 +5,11 @@ on:
     types: [opened, synchronize, reopened]
 
   workflow_run:
-    workflows: ['Compress images']
+    workflows: ["Compress images"]
     types: [completed]
 
 env:
-  php-version: '8.0'
-
+  php-version: ["7.4", "8.0"]
 
 jobs:
   psalm:
@@ -44,7 +43,6 @@ jobs:
 
       - name: Run psalm
         run: vendor/bin/psalm --output-format=github
-
 
   phpstan:
     runs-on: ubuntu-latest

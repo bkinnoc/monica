@@ -10,7 +10,7 @@ on:
     types: [created]
 
 env:
-  default-php-version: "78.0"
+  default-php-version: "7.4"
   node-version: 16
 
 jobs:
@@ -24,7 +24,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ["8.0"]
+        php-version: ["7.4", "8.0"]
         connection: [mysql]
         testsuite: [Api, Feature, Unit-Models, Unit-Services]
 
@@ -141,7 +141,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: [7.4, "8.0"]
+        php-version: ["7.4", "8.0"]
         connection: [mysql]
 
     steps:
