@@ -10,7 +10,7 @@
     "license": "AGPL",
     "minimum-stability": "dev",
     "require": {
-        "php": "7.4|^8.0",
+        "php": "^7.4|^8.0",
         "ext-bcmath": "*",
         "ext-gd": "*",
         "ext-gmp": "*",
