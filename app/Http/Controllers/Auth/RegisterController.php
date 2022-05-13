@@ -14,6 +14,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Validation\Rules\Password as PasswordRules;
+use App\Rules\ValidateTag;
+
 
 class RegisterController extends Controller
 {
@@ -54,8 +56,8 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm(Request $request)
     {
-        $first = ! InstanceHelper::hasAtLeastOneAccount();
-        if (config('monica.disable_signup') == 'true' && ! $first) {
+        $first = !InstanceHelper::hasAtLeastOneAccount();
+        if (config('monica.disable_signup') == 'true' && !$first) {
             abort(403, trans('auth.signup_disabled'));
         }
 
@@ -75,7 +77,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'last_name' => 'required|max:255',
             'first_name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
+            'email' => ['required', 'email', 'max:255', 'unique:users', new \App\Rules\BadWord],
             'password' => ['required', 'confirmed', PasswordRules::defaults()],
             'policy' => 'required',
         ]);
@@ -89,8 +91,8 @@ class RegisterController extends Controller
      */
     protected function create(array $data): ?User
     {
-        $first = ! InstanceHelper::hasAtLeastOneAccount();
-        if (config('monica.disable_signup') == 'true' && ! $first) {
+        $first = !InstanceHelper::hasAtLeastOneAccount();
+        if (config('monica.disable_signup') == 'true' && !$first) {
             abort(403, trans('auth.signup_disabled'));
         }
 
@@ -106,7 +108,7 @@ class RegisterController extends Controller
             /** @var User */
             $user = $account->users()->first();
 
-            if (! $first) {
+            if (!$first) {
                 // send me an alert
                 SendNewUserAlert::dispatch($user);
             }
@@ -128,10 +130,10 @@ class RegisterController extends Controller
      */
     protected function registered(Request $request, $user)
     {
-        if (! is_null($user)) {
+        if (!is_null($user)) {
             /** @var int $count */
             $count = Account::count();
-            if (! config('monica.signup_double_optin') || $count == 1) {
+            if (!config('monica.signup_double_optin') || $count == 1) {
                 // if signup_double_optin is disabled, skip the confirm email part
                 $user->markEmailAsVerified();
             }

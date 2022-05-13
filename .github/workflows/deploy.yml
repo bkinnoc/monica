@@ -86,6 +86,10 @@ jobs:
             ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
             ${{ runner.os }}-yarn-
 
+    # Setup SSH keyscan
+      - name: Setup proper ssh hosts
+        run: bash scripts/setup.sh
+
       - name: Install yarn dependencies
         run: yarn inst
       - name: Lint files

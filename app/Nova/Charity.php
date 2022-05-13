@@ -25,6 +25,13 @@ class Charity extends Resource
     public static $model = \App\Models\Charity::class;
 
     /**
+     * @inheritDoc
+     *
+     * @var string
+     */
+    public static $group = 'Settings';
+
+    /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string

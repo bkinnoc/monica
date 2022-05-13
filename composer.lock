@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4027f114bba405aabd43653af14f026a",
+    "content-hash": "7562edd59cc9d50cdd3811134926ff3c",
     "packages": [
         {
             "name": "asbiin/laravel-adorable",
@@ -166,6 +166,57 @@
                 }
             ],
             "time": "2021-12-20T18:19:53+00:00"
+        },
+        {
+            "name": "askedio/laravel5-profanity-filter",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Askedio/laravel-profanity-filter.git",
+                "reference": "343ff0b7e267d4c09fb3e9f87175aa3265340461"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Askedio/laravel-profanity-filter/zipball/343ff0b7e267d4c09fb3e9f87175aa3265340461",
+                "reference": "343ff0b7e267d4c09fb3e9f87175aa3265340461",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "laravel/laravel": "5.*",
+                "phpunit/phpunit": "~5.0",
+                "symfony/css-selector": "3.1.*",
+                "symfony/dom-crawler": "3.1.*"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Askedio\\Laravel5ProfanityFilter\\Providers\\ProfanityFilterServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Askedio\\Laravel5ProfanityFilter\\": "app/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "AGPL-3.0"
+            ],
+            "description": "A Vendor Package Example",
+            "keywords": [
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/Askedio/laravel-profanity-filter/issues",
+                "source": "https://github.com/Askedio/laravel-profanity-filter/tree/master"
+            },
+            "time": "2020-07-03T04:10:43+00:00"
         },
         {
             "name": "aws/aws-crt-php",
@@ -842,57 +893,6 @@
                 }
             ],
             "time": "2021-10-28T20:44:15+00:00"
-        },
-        {
-            "name": "consoletvs/profanity",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ConsoleTVs/Profanity.git",
-                "reference": "072175eae71951218615e23afc1ec025b3502a8b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ConsoleTVs/Profanity/zipball/072175eae71951218615e23afc1ec025b3502a8b",
-                "reference": "072175eae71951218615e23afc1ec025b3502a8b",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": "5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|6.*|7.*|8.*|9.*"
-            },
-            "default-branch": true,
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "ConsoleTVs\\Profanity\\ProfanityServiceProvider"
-                    ],
-                    "aliases": {
-                        "Profanity": "ConsoleTVs\\Profanity\\Facades\\Profanity"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "ConsoleTVs\\Profanity\\": "."
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Erik Campobadal",
-                    "email": "ConsoleTVs@gmail.com"
-                }
-            ],
-            "description": "PHP library to block bad words in a string",
-            "support": {
-                "issues": "https://github.com/ConsoleTVs/Profanity/issues",
-                "source": "https://github.com/ConsoleTVs/Profanity/tree/3.2.0"
-            },
-            "time": "2022-02-19T17:51:11+00:00"
         },
         {
             "name": "creativeorange/gravatar",
@@ -20887,7 +20887,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "consoletvs/profanity": 20,
+        "askedio/laravel5-profanity-filter": 20,
         "brianium/paratest": 20,
         "roave/security-advisories": 20
     },
