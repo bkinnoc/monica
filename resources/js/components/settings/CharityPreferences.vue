@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 <template>
   <div>
     <notifications
@@ -76,7 +77,7 @@
           <div class="dt-row hover bb b--light-gray">
             <div class="dtc">
               <div class="pa2 b">
-                <strong>{{ preference.name }}: {{preference.pivot.percent}}%</strong>
+                <strong>{{ preference.name }}: {{ preference.pivot.percent }}%</strong>
               </div>
             </div>
             <div class="dtc">
@@ -113,11 +114,11 @@
         <div class="mb4">
           <p class="b mb2"></p>
           <form-select
+            :id="'add-charity-id'"
             v-model="savePreferenceForm.charity_id"
             :required="true"
             :options="charityOptions.filter(c => selectedCharityIds.indexOf(c.id) === -1)"
             :input-props="{id:'autosuggest__input', placeholder:'Start searching?'}"
-            :id="'add-charity-id'"
             :title="$t('settings.charity_preferences_modal_select_charity')"
             :validator="$v.savePreferenceForm.charity_id"
           />
@@ -159,7 +160,7 @@
       <form @submit.prevent="updateCharity()">
         <div class="mb4">
           <p class="b mb2"></p>
-          <h3>{{updatedCharity.name}}</h3>
+          <h3>{{ updatedCharity.name }}</h3>
           <form-input
             :id="'update-charity-percent'"
             v-model="savePreferenceForm.percent"
@@ -234,15 +235,15 @@
 </template>
 
 <script>
-import { validationMixin } from "vuelidate";
-import { SweetModal } from "sweet-modal-vue";
-import { required, maxValue, minValue } from "vuelidate/lib/validators";
+import { validationMixin } from 'vuelidate';
+import { SweetModal } from 'sweet-modal-vue';
+import { required, maxValue, minValue } from 'vuelidate/lib/validators';
 
 export default {
-  mixins: [validationMixin],
   components: {
     SweetModal,
   },
+  mixins: [validationMixin],
 
   props: {
     limited: {
@@ -255,11 +256,11 @@ export default {
     return {
       charityPreferences: [],
       charityOptions: [],
-      errorMessage: "",
+      errorMessage: '',
 
       updatedCharity: {
-        id: "",
-        name: "",
+        id: '',
+        name: '',
       },
 
       savePreferenceForm: {
@@ -269,7 +270,7 @@ export default {
       },
 
       destroycharityForm: {
-        id: "",
+        id: '',
         errors: [],
       },
     };
@@ -277,7 +278,7 @@ export default {
 
   computed: {
     dirltr() {
-      return this.$root.htmldir === "ltr";
+      return this.$root.htmldir === 'ltr';
     },
     selectedCharityIds() {
       return this.charityPreferences.map((c) => c.id);
@@ -330,13 +331,13 @@ export default {
     },
 
     getCharityPreferences() {
-      axios.get("settings/charities/preferences").then((response) => {
+      axios.get('settings/charities/preferences').then((response) => {
         this.charityPreferences = response.data || [];
       });
     },
 
     getCharities() {
-      axios.get("api/charities").then((response) => {
+      axios.get('api/charities').then((response) => {
         this.charityOptions = response.data?.data || [];
       });
     },
@@ -357,7 +358,7 @@ export default {
 
     addCharity() {
       axios
-        .post("settings/charities/preferences", this.savePreferenceForm)
+        .post('settings/charities/preferences', this.savePreferenceForm)
         .then((response) => {
           this.$refs.createCharityModal.close();
           const result =
@@ -368,13 +369,13 @@ export default {
           this.savePreferenceForm.charity_id = null;
           this.savePreferenceForm.percent = 0;
 
-          this.notify(this.$t("app.default_save_success"), true);
+          this.notify(this.$t('app.default_save_success'), true);
         })
         .catch((error) => {
           this.errorMessage = this.$root
             .storeUtils()
             .objectValues(error.response.data.errors)
-            .join("<br/>");
+            .join('<br/>');
         });
     },
 
@@ -400,41 +401,41 @@ export default {
     updateCharity() {
       axios
         .put(
-          "settings/charities/preferences/" + this.savePreferenceForm.id,
+          'settings/charities/preferences/' + this.savePreferenceForm.id,
           this.savePreferenceForm
         )
         .then((response) => {
-          console.log("Rsult", response, this.$root.storeUtils());
+          console.log('Rsult', response, this.$root.storeUtils());
           this.$refs.updateCharityModal.close();
           const result =
             response.data instanceof Array ? response.data[0] : response.data;
-          console.log("Result", result);
+          console.log('Result', result);
           this.$root
             .storeUtils()
             .updateStateData(this.charityPreferences, result, true, true);
           this.updatedCharity = result;
 
-          this.notify(this.$t("app.default_save_success"), true);
+          this.notify(this.$t('app.default_save_success'), true);
         })
         .catch((error) => {
           this.errorMessage = this.$root
             .storeUtils()
             .objectValues(error.response.data.errors)
-            .join("<br/>");
+            .join('<br/>');
         });
     },
 
     destroyCharity() {
       axios
-        .delete("settings/charities/preferences/" + this.destroycharityForm.id)
+        .delete('settings/charities/preferences/' + this.destroycharityForm.id)
         .then((response) => {
           this.$refs.deleteCharityModal.close();
-          this.destroycharityForm.id = "";
+          this.destroycharityForm.id = '';
           this.charityPreferences = this.charityPreferences.filter(
             (c) => c.id != response.data.id
           );
 
-          this.notify(this.$t("app.default_save_success"), true);
+          this.notify(this.$t('app.default_save_success'), true);
         })
         .catch((error) => {
           this.errorMessage = JSON.stringify(
@@ -445,10 +446,10 @@ export default {
 
     notify(text, success) {
       this.$notify({
-        group: "charityPreferences",
+        group: 'charityPreferences',
         title: text,
-        text: "",
-        type: success ? "success" : "error",
+        text: '',
+        type: success ? 'success' : 'error',
       });
     },
   },
