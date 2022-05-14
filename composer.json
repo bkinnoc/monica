@@ -154,7 +154,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "git@gitlab.com:nitm/laravel-base.git"
+            "url": "https://gitlab.com/nitm/laravel-base.git"
         },
         {
             "type": "path",

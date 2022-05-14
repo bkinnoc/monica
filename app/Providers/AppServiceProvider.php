@@ -32,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (!$this->app->environment(['local', 'dev'])) {
+        if (!$this->app->environment(['local', 'dev', 'testing'])) {
             \URL::forceScheme('https');
         }
 

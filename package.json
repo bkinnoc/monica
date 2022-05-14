@@ -61,7 +61,7 @@
     },
     "dependencies": {
         "@hokify/vuejs-datepicker": "^2.0",
-        "@nitm/js-api-client-base": "gitlab:nitm/js-api-client-base",
+        "@nitm/js-api-client-base": "git+https://gitlab.com/nitm/js-api-client-base",
         "animate.css": "^4.1",
         "axios": "^0.21",
         "bootstrap": "^4.6",
