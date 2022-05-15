@@ -102,11 +102,13 @@ mv html backup
 mv staging html
 mkdir -p staging
 chgrp -cR www-data . > /dev/null 2>&1
-chmod 0775 staging . > /dev/null 2>&1
-chmod -cR 0775 html/storage . > /dev/null 2>&1
+chmod 0775 staging > /dev/null 2>&1
 
 echo -e "\n5 - Exiting maintenance mode"
 cd html
+chmod -cR 0775 storage/logs > /dev/null 2>&1
+chmod -cR 0775 storage/framework > /dev/null 2>&1
+chmod -cR 0775 storage/views > /dev/null 2>&1
 php composer.phar dumpautoload
 php artisan clear
 php artisan view:clear
