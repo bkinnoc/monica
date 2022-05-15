@@ -6258,12 +6258,12 @@
             "source": {
                 "type": "git",
                 "url": "https://gitlab.com/nitm/laravel-base.git",
-                "reference": "ae6a39e95dcbc4d56a6739dae9c89efe7ee3b3f3"
+                "reference": "f1e550ee5908d412604325b7e75bf72454280f9d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://gitlab.com/api/v4/projects/nitm%2Flaravel-base/repository/archive.zip?sha=ae6a39e95dcbc4d56a6739dae9c89efe7ee3b3f3",
-                "reference": "ae6a39e95dcbc4d56a6739dae9c89efe7ee3b3f3",
+                "url": "https://gitlab.com/api/v4/projects/nitm%2Flaravel-base/repository/archive.zip?sha=f1e550ee5908d412604325b7e75bf72454280f9d",
+                "reference": "f1e550ee5908d412604325b7e75bf72454280f9d",
                 "shasum": ""
             },
             "require": {
@@ -6321,7 +6321,7 @@
                 "docs": "https://gitlab.com/nitm/laravel-base/wiki",
                 "source": "https://gitlab.com/nitm/laravel-base"
             },
-            "time": "2022-05-15T18:56:44+00:00"
+            "time": "2022-05-15T19:11:50+00:00"
         },
         {
             "name": "nyholm/psr7",
