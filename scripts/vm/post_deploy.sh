@@ -97,12 +97,12 @@ echo -e "\n4 - Fixing permissions";
 
 echo -e "\4b - Switching folders"
 cd ..
-sudo rm -fr backup
+rm -fr backup
 mv html backup
 mv staging html
 mkdir -p staging
-sudo chgrp -cR www-data . > /dev/null 2>&1
-sudo chmod 0775 staging
+chgrp -cR www-data . > /dev/null 2>&1
+chmod 0775 staging . > /dev/null 2>&1
 
 echo -e "\n5 - Exiting maintenance mode"
 cd html

@@ -23,10 +23,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Nitm\Content\Traits\Model as ModelTrait;
 
 class User extends Authenticatable implements MustVerifyEmail, HasLocalePreference
 {
-    use Notifiable, HasApiTokens, HasUuid, HasRoles, SyncsRelations, CustomWith;
+    use Notifiable, HasApiTokens, HasUuid, HasRoles, SyncsRelations, CustomWith, ModelTrait;
 
     const ROLE_USER        = 'User';
     const ROLE_ADMIN       = 'Web Admin';

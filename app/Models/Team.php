@@ -1,8 +1,12 @@
 <?php
 
+namespace App\Models;
+
 use App\Models\User\User;
 use Illuminate\Support\Str;
 use Nitm\Content\Models\Role;
+use Nitm\Content\Traits\Model;
+use Nitm\Content\Traits\CustomWith;
 use Nitm\Content\Models\Team as BaseTeam;
 
 /**
@@ -10,6 +14,7 @@ use Nitm\Content\Models\Team as BaseTeam;
  */
 class Team extends BaseTeam
 {
+    use Model, CustomWith;
 
     /**
      * @param role The role you want to translate.

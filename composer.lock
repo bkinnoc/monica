@@ -1254,12 +1254,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "e9acb0aa19dc9ffd5b056d644c0eaf2bee4a67da"
+                "reference": "63da06fcd1c2f7fb255d2f2455951c338c7b5856"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/e9acb0aa19dc9ffd5b056d644c0eaf2bee4a67da",
-                "reference": "e9acb0aa19dc9ffd5b056d644c0eaf2bee4a67da",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/63da06fcd1c2f7fb255d2f2455951c338c7b5856",
+                "reference": "63da06fcd1c2f7fb255d2f2455951c338c7b5856",
                 "shasum": ""
             },
             "require": {
@@ -1357,7 +1357,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-15T14:09:37+00:00"
+            "time": "2022-05-15T18:13:12+00:00"
         },
         {
             "name": "doctrine/deprecations",
@@ -6258,12 +6258,12 @@
             "source": {
                 "type": "git",
                 "url": "https://gitlab.com/nitm/laravel-base.git",
-                "reference": "ca2ea39d0865b9c1a5ae13530405d9fab896c7d3"
+                "reference": "ae6a39e95dcbc4d56a6739dae9c89efe7ee3b3f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://gitlab.com/api/v4/projects/nitm%2Flaravel-base/repository/archive.zip?sha=ca2ea39d0865b9c1a5ae13530405d9fab896c7d3",
-                "reference": "ca2ea39d0865b9c1a5ae13530405d9fab896c7d3",
+                "url": "https://gitlab.com/api/v4/projects/nitm%2Flaravel-base/repository/archive.zip?sha=ae6a39e95dcbc4d56a6739dae9c89efe7ee3b3f3",
+                "reference": "ae6a39e95dcbc4d56a6739dae9c89efe7ee3b3f3",
                 "shasum": ""
             },
             "require": {
@@ -6321,7 +6321,7 @@
                 "docs": "https://gitlab.com/nitm/laravel-base/wiki",
                 "source": "https://gitlab.com/nitm/laravel-base"
             },
-            "time": "2022-05-14T23:52:48+00:00"
+            "time": "2022-05-15T18:56:44+00:00"
         },
         {
             "name": "nyholm/psr7",
