@@ -63,6 +63,7 @@ return [
     'main_nav_journal' => 'Journal',
     'main_nav_activities' => 'Activities',
     'main_nav_tasks' => 'Tasks',
+    'main_nav_nova_admin' => 'Admin',
 
     'footer_remarks' => 'Comments?',
     'footer_send_email' => 'Send us an email',
