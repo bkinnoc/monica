@@ -83,11 +83,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         $user = auth()->user();
-        return [
+        return array_filter([
             \Vyuldashev\NovaPermission\NovaPermissionTool::make(),
             AppServiceProvider::isUserAdmin($user) ? NovaActivitylog::make() : null,
             AppServiceProvider::isUserDeveloper($user) ? NovaTelescope::make() : null,
-        ];
+        ]);
     }
 
     /**
