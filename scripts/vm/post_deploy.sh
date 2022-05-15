@@ -106,6 +106,7 @@ chmod 0775 staging > /dev/null 2>&1
 
 echo -e "\n5 - Exiting maintenance mode"
 cd html
+chgrp -cR www-data .* > /dev/null 2>&1
 chmod -cR 0775 storage/logs > /dev/null 2>&1
 chmod -cR 0775 storage/framework > /dev/null 2>&1
 chmod -cR 0775 storage/views > /dev/null 2>&1
