@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b36effea5351ea494d352130a83834f3",
+    "content-hash": "3f9b79279bda0fd1f1c2044c45d984bf",
     "packages": [
         {
             "name": "asbiin/laravel-adorable",
@@ -478,6 +478,54 @@
                 "source": "https://github.com/beberlei/assert/tree/v3"
             },
             "time": "2019-12-19T17:51:41+00:00"
+        },
+        {
+            "name": "bolechen/nova-activitylog",
+            "version": "v0.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bolechen/nova-activitylog.git",
+                "reference": "8c4cff0a10699e1c1173b618f0e5a0782d9ea909"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bolechen/nova-activitylog/zipball/8c4cff0a10699e1c1173b618f0e5a0782d9ea909",
+                "reference": "8c4cff0a10699e1c1173b618f0e5a0782d9ea909",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/nova": "^2.0|^3.0",
+                "spatie/laravel-activitylog": "^3.9|^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Bolechen\\NovaActivitylog\\ToolServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Bolechen\\NovaActivitylog\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A tool to activity logger to monitor the users of your Laravel Nova.",
+            "keywords": [
+                "activity",
+                "laravel",
+                "log",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/bolechen/nova-activitylog/issues",
+                "source": "https://github.com/bolechen/nova-activitylog/tree/v0.3.0"
+            },
+            "time": "2021-11-11T08:16:48+00:00"
         },
         {
             "name": "brick/math",
@@ -2291,6 +2339,58 @@
             "time": "2022-05-13T20:54:50+00:00"
         },
         {
+            "name": "genealabs/nova-telescope",
+            "version": "0.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/GeneaLabs/nova-telescope.git",
+                "reference": "3040493d9c71fde5d09577a47acc0538ff38ef19"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/GeneaLabs/nova-telescope/zipball/3040493d9c71fde5d09577a47acc0538ff38ef19",
+                "reference": "3040493d9c71fde5d09577a47acc0538ff38ef19",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^8.0",
+                "laravel/telescope": "^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "GeneaLabs\\NovaTelescope\\ToolServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GeneaLabs\\NovaTelescope\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova tool.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/GeneaLabs/nova-telescope/issues",
+                "source": "https://github.com/GeneaLabs/nova-telescope/tree/0.4.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/mikebronner",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-09-09T13:45:15+00:00"
+        },
+        {
             "name": "geoip2/geoip2",
             "version": "v2.12.2",
             "source": {
@@ -3892,6 +3992,75 @@
                 "source": "https://github.com/laravel/socialite"
             },
             "time": "2022-04-20T20:24:33+00:00"
+        },
+        {
+            "name": "laravel/telescope",
+            "version": "4.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/telescope.git",
+                "reference": "79ab8bd9222bc585373f8fd349b296d4a6da075a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/telescope/zipball/79ab8bd9222bc585373f8fd349b296d4a6da075a",
+                "reference": "79ab8bd9222bc585373f8fd349b296d4a6da075a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "laravel/framework": "^8.37|^9.0",
+                "php": "^7.3|^8.0",
+                "symfony/var-dumper": "^5.0|^6.0"
+            },
+            "require-dev": {
+                "ext-gd": "*",
+                "guzzlehttp/guzzle": "^6.0|^7.0",
+                "orchestra/testbench": "^6.0|^7.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Telescope\\TelescopeServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Telescope\\": "src/",
+                    "Laravel\\Telescope\\Database\\Factories\\": "database/factories/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                },
+                {
+                    "name": "Mohamed Said",
+                    "email": "mohamed@laravel.com"
+                }
+            ],
+            "description": "An elegant debug assistant for the Laravel framework.",
+            "keywords": [
+                "debugging",
+                "laravel",
+                "monitoring"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel/telescope/issues",
+                "source": "https://github.com/laravel/telescope/tree/4.x"
+            },
+            "time": "2022-04-29T07:22:56+00:00"
         },
         {
             "name": "laravel/ui",

@@ -6,7 +6,7 @@ use App\Http\Requests\API\CreateCharityAPIRequest;
 use App\Http\Requests\API\UpdateCharityAPIRequest;
 use App\Models\Charity;
 use App\Repositories\CharityRepository;
-use App\Http\Controllers\API\ApiController;
+use App\Http\Controllers\Api\ApiController;
 use App\Http\Resources\CharityResource;
 use Illuminate\Http\Request;
 use Response;
