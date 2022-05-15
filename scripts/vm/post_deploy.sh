@@ -97,7 +97,7 @@ echo -e "\n4 - Fixing permissions";
 
 echo -e "\4b - Switching folders"
 cd ..
-rm -fr backup
+sudo rm -fr backup
 mv html backup
 mv staging html
 mkdir -p staging
@@ -106,7 +106,7 @@ sudo chmod 0775 staging
 
 echo -e "\n5 - Exiting maintenance mode"
 cd html
-composer dumpautoload
+php composer.phar dumpautoload
 php artisan optimize
 php artisan storage:link
 php artisan up
