@@ -1254,12 +1254,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "b055317333b1c010132ad353a971b25c25604095"
+                "reference": "e9acb0aa19dc9ffd5b056d644c0eaf2bee4a67da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/b055317333b1c010132ad353a971b25c25604095",
-                "reference": "b055317333b1c010132ad353a971b25c25604095",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/e9acb0aa19dc9ffd5b056d644c0eaf2bee4a67da",
+                "reference": "e9acb0aa19dc9ffd5b056d644c0eaf2bee4a67da",
                 "shasum": ""
             },
             "require": {
@@ -1357,7 +1357,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-14T22:20:33+00:00"
+            "time": "2022-05-15T14:09:37+00:00"
         },
         {
             "name": "doctrine/deprecations",
@@ -3427,12 +3427,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "69af96172b523e4300199d7e70c879fef0bb3d0e"
+                "reference": "f3940f8cd42bae1fe38e21400c19126ba8ff030d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/69af96172b523e4300199d7e70c879fef0bb3d0e",
-                "reference": "69af96172b523e4300199d7e70c879fef0bb3d0e",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/f3940f8cd42bae1fe38e21400c19126ba8ff030d",
+                "reference": "f3940f8cd42bae1fe38e21400c19126ba8ff030d",
                 "shasum": ""
             },
             "require": {
@@ -3592,7 +3592,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-05-12T15:00:22+00:00"
+            "time": "2022-05-15T15:53:20+00:00"
         },
         {
             "name": "laravel/nova",
@@ -6258,12 +6258,12 @@
             "source": {
                 "type": "git",
                 "url": "https://gitlab.com/nitm/laravel-base.git",
-                "reference": "ae986eddf955f27e43d1b1c34b88fdb5e1711866"
+                "reference": "ca2ea39d0865b9c1a5ae13530405d9fab896c7d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://gitlab.com/api/v4/projects/nitm%2Flaravel-base/repository/archive.zip?sha=ae986eddf955f27e43d1b1c34b88fdb5e1711866",
-                "reference": "ae986eddf955f27e43d1b1c34b88fdb5e1711866",
+                "url": "https://gitlab.com/api/v4/projects/nitm%2Flaravel-base/repository/archive.zip?sha=ca2ea39d0865b9c1a5ae13530405d9fab896c7d3",
+                "reference": "ca2ea39d0865b9c1a5ae13530405d9fab896c7d3",
                 "shasum": ""
             },
             "require": {
@@ -6321,7 +6321,7 @@
                 "docs": "https://gitlab.com/nitm/laravel-base/wiki",
                 "source": "https://gitlab.com/nitm/laravel-base"
             },
-            "time": "2022-05-10T02:31:24+00:00"
+            "time": "2022-05-14T23:52:48+00:00"
         },
         {
             "name": "nyholm/psr7",
