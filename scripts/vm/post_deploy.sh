@@ -102,6 +102,7 @@ mv html backup
 mv staging html
 mkdir -p staging
 sudo chgrp -cR www-data . > /dev/null 2>&1
+sudo chmod 0775 staging
 
 echo -e "\n5 - Exiting maintenance mode"
 cd html
