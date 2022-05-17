@@ -43,7 +43,7 @@ class NotifyUserAboutReminder implements ShouldQueue
         // prepare the notification to be sent
         $message = $this->getMessage();
 
-        if (! is_null($message)) {
+        if (!is_null($message)) {
             $this->sendNotification($message);
             $this->scheduleNextReminder();
         }
@@ -63,7 +63,7 @@ class NotifyUserAboutReminder implements ShouldQueue
         if ($this->reminderOutbox->reminder->contact !== null) {
             $account = $this->reminderOutbox->user->account;
             $hasLimitations = AccountHelper::hasLimitations($account);
-            if (! $hasLimitations) {
+            if (!$hasLimitations) {
                 Notification::send($this->reminderOutbox->user, $message);
             }
         }
