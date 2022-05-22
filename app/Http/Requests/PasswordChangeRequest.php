@@ -15,7 +15,15 @@ class PasswordChangeRequest extends AuthorizedRequest
     {
         return [
             'password_current' => 'required',
-            'password' => ['required', 'confirmed', PasswordRules::defaults()],
+            'password' => [
+                'required',
+                'confirmed',
+                PasswordRules::min(6)
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols()
+                    ->uncompromised()
+            ],
         ];
     }
 }

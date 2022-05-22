@@ -74,12 +74,21 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $beforePeriod = env('DOB_VALIDATION_BEFORE_PERIOD', '13 years ago');
         return Validator::make($data, [
             'last_name' => 'required|max:255',
             'first_name' => 'required|max:255',
             'email' => ['required', 'email', 'max:255', 'unique:users', new \App\Rules\BadWord],
-            'password' => ['required', 'confirmed', PasswordRules::defaults()],
+            'password' => [
+                'required', 'confirmed',
+                PasswordRules::min(6)
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols()
+                    ->uncompromised()
+            ],
             'policy' => 'required',
+            'dob' => "before:{$beforePeriod}"
         ]);
     }
 
@@ -115,6 +124,7 @@ class RegisterController extends Controller
 
             return $user;
         } catch (\Exception $e) {
+            throw ($e);
             Log::error($e);
 
             abort(500, trans('auth.signup_error'));

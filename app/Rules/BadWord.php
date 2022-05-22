@@ -30,8 +30,10 @@ class BadWord implements Rule
     {
         $badWords = cache()->remember('bad-words', app()->environment('testing') ? 0 : 3600, function () {
             return \App\Models\BadWord::pluck('word');
-        });
-        $profanityFilter =  new ProfanityFilter(config('profanity'), $badWords->all());
+        })->map(function ($word) {
+            return addcslashes($word, '[]{}()*+?.^$|%\\\/');
+        })->all();
+        $profanityFilter =  new ProfanityFilter(config('profanity'), $badWords);
         $this->badWord = $profanityFilter->noProfanity($value);
         return $this->badWord === true;
     }

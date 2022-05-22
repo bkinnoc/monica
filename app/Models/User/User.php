@@ -51,6 +51,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         'temperature_scale',
         'name_order',
         'google2fa_secret',
+        'dob'
     ];
 
     /**
@@ -76,6 +77,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         'profile_new_life_event_badge_seen' => 'boolean',
         'admin' => 'boolean',
         'fluid_container' => 'boolean',
+        'dob' => 'date'
     ];
 
     /**
