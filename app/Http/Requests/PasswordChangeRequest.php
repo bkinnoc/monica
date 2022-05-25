@@ -18,6 +18,7 @@ class PasswordChangeRequest extends AuthorizedRequest
             'password' => [
                 'required',
                 'confirmed',
+                'max:100',
                 PasswordRules::min(6)
                     ->mixedCase()
                     ->numbers()

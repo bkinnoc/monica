@@ -24,8 +24,8 @@ class RegisterTest extends FeatureTestCase
             'email' => 'john.mike@doe.com',
             'first_name' => 'john',
             'last_name' => 'doe',
-            'password' => 'admin0',
-            'password_confirmation' => 'admin0',
+            'password' => 'Admin0$123',
+            'password_confirmation' => 'Admin0$123',
             'policy' => 'true',
             'lang' => 'en',
         ];
@@ -52,8 +52,8 @@ class RegisterTest extends FeatureTestCase
             'email' => $user->email,
             'first_name' => 'john',
             'last_name' => 'doe',
-            'password' => 'admin0',
-            'password_confirmation' => 'admin0',
+            'password' => 'Admin0$123',
+            'password_confirmation' => 'Admin0$123',
             'policy' => 'true',
             'lang' => 'en',
         ];

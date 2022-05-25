@@ -81,6 +81,7 @@ class RegisterController extends Controller
             'email' => ['required', 'email', 'max:255', 'unique:users', new \App\Rules\BadWord],
             'password' => [
                 'required', 'confirmed',
+                'max:100',
                 PasswordRules::min(6)
                     ->mixedCase()
                     ->numbers()
@@ -88,7 +89,7 @@ class RegisterController extends Controller
                     ->uncompromised()
             ],
             'policy' => 'required',
-            'dob' => "before:{$beforePeriod}"
+            'dob' => "sometimes|before:{$beforePeriod}"
         ]);
     }
 
