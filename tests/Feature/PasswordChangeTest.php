@@ -13,13 +13,13 @@ class PasswordChangeTest extends FeatureTestCase
     {
         $user = $this->signIn();
 
-        $user->password = $password = bcrypt('password');
+        $user->password = $password = bcrypt('Admin0$123');
         $user->save();
 
         $response = $this->followingRedirects()->post('/settings/security/passwordChange', [
-            'password_current' => 'password',
-            'password' => 'newPassword',
-            'password_confirmation' => 'newPassword',
+            'password_current' => 'Admin0$123',
+            'password' => 'Admin0$123New',
+            'password_confirmation' => 'Admin0$123New',
         ]);
 
         $response->assertStatus(200);
@@ -34,13 +34,13 @@ class PasswordChangeTest extends FeatureTestCase
     {
         $user = $this->signIn();
 
-        $user->password = bcrypt('password');
+        $user->password = bcrypt('Admin0$123');
         $user->save();
 
         $response = $this->followingRedirects()->post('/settings/security/passwordChange', [
-            'password_current' => 'xpassword',
-            'password' => 'newPassword',
-            'password_confirmation' => 'newPassword',
+            'password_current' => 'Admin0$1231',
+            'password' => 'Admin0$123New',
+            'password_confirmation' => 'Admin0$123New',
         ]);
 
         $response->assertStatus(200);
