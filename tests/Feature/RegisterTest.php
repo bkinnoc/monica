@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Charity;
 use App\Models\User\User;
 use Tests\FeatureTestCase;
 use App\Jobs\SendNewUserAlert;
@@ -20,6 +21,7 @@ class RegisterTest extends FeatureTestCase
 
         Mail::fake();
 
+        Charity::factory()->create();
         $params = [
             'email' => 'john.mike@doe.com',
             'first_name' => 'john',
@@ -47,6 +49,7 @@ class RegisterTest extends FeatureTestCase
         Mail::fake();
 
         $user = factory(User::class)->create();
+        Charity::factory()->create();
 
         $params = [
             'email' => $user->email,
@@ -76,6 +79,7 @@ class RegisterTest extends FeatureTestCase
         config(['monica.email_new_user_notification' => 'test@test.com']);
 
         $user = factory(User::class)->create();
+        Charity::factory()->create();
 
         SendNewUserAlert::dispatch($user);
 
