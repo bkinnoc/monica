@@ -9,6 +9,8 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class BadWord extends Resource
 {
+    public static $canImportResource = true;
+
     /**
      * The model the resource corresponds to.
      *

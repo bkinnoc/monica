@@ -77,6 +77,9 @@ return [
     'register_action' => 'Register',
     'register_policy' => 'Signing up signifies you’ve read and agree to our <a href=":url" hreflang=":hreflang">Privacy Policy</a> and <a href=":urlterm" hreflang=":hreflang">Terms of use</a>.',
     'register_invitation_email' => 'For security purposes, please indicate the email of the person who’ve invited you to join this account. This information is provided in the invitation email.',
+    'register_charity_preference_delegate' => "I would rather you choose a charity for me!",
+    'register_charity_preference' => "Select a charity of your choice",
+    "register_charity_disclaimer" => "By default we will donate <b>:percentage%</b> of your subscription fees to your selected charity!",
 
     'confirmation_title' => 'Verify Your Email Address',
     'confirmation_fresh' => 'A fresh verification link has been sent to your email address.',

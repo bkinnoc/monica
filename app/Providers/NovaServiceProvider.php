@@ -3,13 +3,18 @@
 namespace App\Providers;
 
 use Laravel\Nova\Nova;
+use Laravel\Nova\Panel;
 use Laravel\Nova\Cards\Help;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Number;
 use Illuminate\Support\Facades\Gate;
 use App\Providers\AppServiceProvider;
 use GeneaLabs\NovaTelescope\NovaTelescope;
 use Bolechen\NovaActivitylog\NovaActivitylog;
+use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
 use Vyuldashev\NovaPermission\NovaPermissionTool;
+use SimonHamp\LaravelNovaCsvImport\LaravelNovaCsvImport;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -21,6 +26,21 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function boot()
     {
         parent::boot();
+
+        $this->registerSettings();
+    }
+
+    protected function registerSettings()
+    {
+        // Using an array
+        \OptimistDigital\NovaSettings\NovaSettings::addSettingsFields([
+            Panel::make('Charitable Settings', [
+                Number::make('Default Donation Percentage', 'charitable_percentage'),
+            ]),
+            Panel::make('Restrictions', [
+                Number::make('Minimum Age (Years)', 'minimum_age'),
+            ]),
+        ]);
     }
 
     /**
@@ -85,6 +105,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         $user = auth()->user();
         return array_filter([
             \Vyuldashev\NovaPermission\NovaPermissionTool::make(),
+            new LaravelNovaCsvImport,
+            new NovaSettings,
             AppServiceProvider::isUserAdmin($user) ? NovaActivitylog::make() : null,
             AppServiceProvider::isUserDeveloper($user) ? NovaTelescope::make() : null,
         ]);

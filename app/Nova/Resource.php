@@ -9,6 +9,13 @@ use Ebess\AdvancedNovaMediaLibrary\Fields\Media;
 abstract class Resource extends NovaResource
 {
     /**
+     * Disable import by default
+     *
+     * @var boolean
+     */
+    public static $canImportResource = false;
+
+    /**
      * Build an "index" query for the given resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request

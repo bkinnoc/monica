@@ -110,6 +110,24 @@
                                     name="password_confirmation" required autocomplete="password">
                             </div>
 
+                            <div class="form-group">
+                                <h2>Select a Charity to Donate to</h2>
+                                <p class="info">
+                                    {!! trans('auth.register_charity_disclaimer', ['percentage' => nova_get_setting('charitable_percentage', 30)]) !!}
+                                </p>
+                                <div class="form-group">
+                                    <label
+                                        for="charity_preference">{{ trans('auth.register_charity_preference') }}</label>
+                                    <select name="charity_preference" id="charity_preference" class="form-control"
+                                        placeholder="{{ trans('auth.register_charity_preference_example') }}">
+                                        <option value=''>Default: Automatically select for me!</option>
+                                        @foreach (\App\Models\Charity::pluck('id', 'name') as $charity => $id)
+                                            <option value="{{ $id }}">{{ $charity }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
                             <!-- Policy acceptance check -->
                             <div class="form-check">
                                 <label class="form-check-label">

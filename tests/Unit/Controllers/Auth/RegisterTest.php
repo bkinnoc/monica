@@ -4,6 +4,7 @@ namespace Tests\Unit\Controllers\Auth;
 
 use Tests\TestCase;
 use App\Models\BadWord;
+use App\Models\Charity;
 use App\Models\User\User;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -25,7 +26,7 @@ class RegisterTest extends TestCase
                 'policy' => true
             ]));
 
-            $this->assertEmpty($result->json());
+            $this->assertNotEquals(422, $result->status());
         }
     }
 
@@ -41,7 +42,7 @@ class RegisterTest extends TestCase
                 'policy' => true
             ]));
 
-            $this->assertArrayHasKey('errors', $result->json());
+            $this->assertEquals(422, $result->status());
         }
     }
 
@@ -52,12 +53,13 @@ class RegisterTest extends TestCase
      */
     protected function getFailingInfo(): array
     {
+        Charity::factory()->create();
         BadWord::create([
             'word' => 'test'
         ]);
         return [
             [
-                'email' => 'valid_email@mailinator.com',
+                'email' => 'valid_email2@mailinator.com',
                 'first_name' => 'Test',
                 'last_name' => 'User',
                 'dob' => '01/01/2009',
@@ -65,7 +67,7 @@ class RegisterTest extends TestCase
                 'password_confirmation' => 'password'
             ],
             [
-                'email' => 'valid_email@mailinator.com',
+                'email' => 'valid_email3@mailinator.com',
                 'first_name' => 'Test',
                 'last_name' => 'User',
                 'dob' => '01/01/2015',
@@ -79,7 +81,15 @@ class RegisterTest extends TestCase
                 'dob' => '01/01/2009',
                 'password' => 'finidaD$1',
                 'password_confirmation' => 'finidaD$1'
-            ]
+            ],
+            // [
+            //     'email' => 'valid_email4@mailinator.com',
+            //     'first_name' => 'Test',
+            //     'last_name' => 'User',
+            //     'dob' => '01/01/2009',
+            //     'password' => 'finidaD$1',
+            //     'password_confirmation' => 'finidaD$1',
+            // ],
         ];
     }
 
@@ -90,14 +100,24 @@ class RegisterTest extends TestCase
      */
     protected function getPassingInfo(): array
     {
+        Charity::factory()->create();
         return [
             [
-                'email' => 'valid_email@mailinator.com',
+                'email' => 'valid_email0@mailinator.com',
                 'first_name' => 'Test',
                 'last_name' => 'User',
                 'dob' => '01/01/2009',
                 'password' => 'finidaD$1',
-                'password_confirmation' => 'finidaD$1'
+                'password_confirmation' => 'finidaD$1',
+            ],
+            [
+                'email' => 'valid_email1@mailinator.com',
+                'first_name' => 'Test',
+                'last_name' => 'User',
+                'dob' => '01/01/2009',
+                'password' => 'finidaD$1',
+                'password_confirmation' => 'finidaD$1',
+                'charity_preference' => Charity::first()->id
             ]
         ];
     }

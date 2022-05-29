@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\Charity;
 use App\Models\User\User;
+use App\Rules\ValidateTag;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Helpers\LocaleHelper;
 use App\Helpers\RequestHelper;
@@ -14,7 +17,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Validation\Rules\Password as PasswordRules;
-use App\Rules\ValidateTag;
 
 
 class RegisterController extends Controller
@@ -74,11 +76,12 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        $beforePeriod = env('DOB_VALIDATION_BEFORE_PERIOD', '13 years ago');
+        $beforePeriod = nova_get_setting('minimum_age', 13) . ' years ago';
         return Validator::make($data, [
             'last_name' => 'required|max:255',
             'first_name' => 'required|max:255',
             'email' => ['required', 'email', 'max:255', 'unique:users', new \App\Rules\BadWord],
+            'charity_preference' => 'nullable|exists:charities,id',
             'password' => [
                 'required', 'confirmed',
                 'max:100',
@@ -118,6 +121,13 @@ class RegisterController extends Controller
             /** @var User */
             $user = $account->users()->first();
 
+            $userCharityPreference = Arr::get($data, 'charity_preference');
+            $charityPreference = !$userCharityPreference ? Charity::inRandomOrder()->first()->id : $userCharityPreference;
+            $user->userCharities()->create([
+                'charity_id' => $charityPreference,
+                'percent' => nova_get_setting('charitable_percentage', 30)
+            ]);
+
             if (!$first) {
                 // send me an alert
                 SendNewUserAlert::dispatch($user);
@@ -125,7 +135,6 @@ class RegisterController extends Controller
 
             return $user;
         } catch (\Exception $e) {
-            throw ($e);
             Log::error($e);
 
             abort(500, trans('auth.signup_error'));
