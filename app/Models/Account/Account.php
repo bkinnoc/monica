@@ -37,6 +37,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Contact\ContactFieldType;
 use App\Models\Contact\LifeEventCategory;
 use App\Models\Relationship\Relationship;
+use Spatie\Activitylog\Traits\LogsActivity;
 use App\Models\Relationship\RelationshipType;
 use App\Models\Relationship\RelationshipTypeGroup;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -55,6 +56,7 @@ use App\Services\Auth\Population\PopulateContactFieldTypesTable;
 class Account extends Model
 {
     use Subscription, HasUuid;
+    use LogsActivity;
 
     /**
      * The attributes that are mass assignable.
@@ -592,7 +594,7 @@ class Account extends Model
     {
         $defaultRelationshipTypeGroups = DB::table('default_relationship_type_groups')->get();
         foreach ($defaultRelationshipTypeGroups as $defaultRelationshipTypeGroup) {
-            if (! $ignoreTableAlreadyMigrated || $defaultRelationshipTypeGroup->migrated == 0) {
+            if (!$ignoreTableAlreadyMigrated || $defaultRelationshipTypeGroup->migrated == 0) {
                 DB::table('relationship_type_groups')->insert([
                     'account_id' => $this->id,
                     'name' => $defaultRelationshipTypeGroup->name,

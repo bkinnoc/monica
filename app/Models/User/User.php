@@ -16,6 +16,8 @@ use Nitm\Content\Traits\CustomWith;
 use Spatie\Permission\Traits\HasRoles;
 use Nitm\Content\Traits\SyncsRelations;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Nitm\Content\Traits\Model as ModelTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -23,11 +25,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Nitm\Content\Traits\Model as ModelTrait;
 
 class User extends Authenticatable implements MustVerifyEmail, HasLocalePreference
 {
     use Notifiable, HasApiTokens, HasUuid, HasRoles, SyncsRelations, CustomWith, ModelTrait;
+    use LogsActivity;
 
     const ROLE_USER        = 'User';
     const ROLE_ADMIN       = 'Web Admin';
