@@ -16,6 +16,7 @@ use Nitm\Content\Traits\CustomWith;
 use Spatie\Permission\Traits\HasRoles;
 use Nitm\Content\Traits\SyncsRelations;
 use Illuminate\Notifications\Notifiable;
+use MadWeb\SocialAuth\Traits\UserSocialite;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Nitm\Content\Traits\Model as ModelTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -30,6 +31,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
 {
     use Notifiable, HasApiTokens, HasUuid, HasRoles, SyncsRelations, CustomWith, ModelTrait;
     use LogsActivity;
+    use UserSocialite;
 
     const ROLE_USER        = 'User';
     const ROLE_ADMIN       = 'Web Admin';
@@ -330,5 +332,32 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         }
 
         return false;
+    }
+
+
+
+    /**
+     * Custom attachSocial for teams, taken from Mad Web Laravel Social Package
+     * Attach social network provider to the user.
+     *
+     * @param SocialProvider $social
+     * @param string         $socialId
+     * @param string         $token
+     * @param int            $expiresIn
+     */
+    public function attachSocialCustom($social, string $socialId, string $token, string $offlineToken = null, int $expiresIn = null)
+    {
+        $data = ['social_id' => $socialId, 'token' => $token, 'offline_token' => $offlineToken];
+
+        // \Log::info(json_encode($data));
+
+        $expiresIn = $expiresIn ?: 3600;
+        $expiresIn = date_create('now')
+            ->add(\DateInterval::createFromDateString($expiresIn . ' seconds'))
+            ->format($this->getDateFormat());
+
+        $data['expires_in'] = $expiresIn;
+
+        $this->socials()->attach($social, $data);
     }
 }

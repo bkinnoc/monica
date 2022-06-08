@@ -143,6 +143,10 @@
                                     class="btn btn-primary">{{ trans('auth.register_action') }}</button>
                             </div>
 
+                            <div class="form-group">
+                                @include('social-auth::buttons')
+                            </div>
+
                         </form>
                     </div>
 

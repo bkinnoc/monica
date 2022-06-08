@@ -326,3 +326,12 @@ Route::middleware(['auth', 'verified', 'mfa'])->group(function () {
         });
     });
 });
+
+/**
+ * Social auth routes
+ */
+Route::name('social.')->group(function () {
+    Route::get('social/{social}', 'Auth\SocialAuthController@getAccount')->name('auth');
+    Route::get('social/{social}/callback', 'Auth\SocialAuthController@callback')->name('callback');
+    Route::get('social/{social}/detach', 'Auth\SocialAuthController@detachAccount')->name('detach');
+});
