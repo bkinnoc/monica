@@ -38,7 +38,8 @@
 
                     <div class="br3 ba b--gray-monica bg-white mb4">
                         <div class="pa3 bb b--gray-monica">
-                            <charity-preferences></charity-preferences>
+                            <charity-preferences :percent="{{ nova_get_setting('charitable_percentage', 30) }}">
+                            </charity-preferences>
                         </div>
                     </div>
 

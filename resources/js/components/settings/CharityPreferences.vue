@@ -250,6 +250,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    percent: {
+      type: [Number, String],
+      default: 30,
+    },
   },
 
   data() {
@@ -265,7 +269,7 @@ export default {
 
       savePreferenceForm: {
         charity_id: null,
-        percent: 0,
+        percent: this.percent,
         errors: [],
       },
 
