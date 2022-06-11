@@ -23,11 +23,12 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use MadWeb\SocialAuth\Contracts\SocialAuthenticatable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class User extends Authenticatable implements MustVerifyEmail, HasLocalePreference
+class User extends Authenticatable implements MustVerifyEmail, HasLocalePreference, SocialAuthenticatable
 {
     use Notifiable, HasApiTokens, HasUuid, HasRoles, SyncsRelations, CustomWith, ModelTrait;
     use LogsActivity;
