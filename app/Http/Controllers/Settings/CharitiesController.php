@@ -9,7 +9,7 @@ use App\Traits\JsonRespondController;
 use App\Models\Contact\CharityPreference;
 use Illuminate\Support\Facades\Validator;
 
-class CharityController extends Controller
+class CharitiesController extends Controller
 {
     use JsonRespondController;
 
@@ -22,7 +22,7 @@ class CharityController extends Controller
     {
         $accountHasLimitations = AccountHelper::hasLimitations(auth()->user()->account);
 
-        return view('settings.charity.index')
+        return view('settings.charities.index')
             ->withAccountHasLimitations($accountHasLimitations);
     }
 
@@ -31,7 +31,7 @@ class CharityController extends Controller
      */
     public function userPreferences()
     {
-        return auth()->user()->charity;
+        return auth()->user()->charities;
     }
 
     /**
@@ -49,12 +49,10 @@ class CharityController extends Controller
             'percent' => $request->pivot ? $request->pivot['percent'] : $request->percent
         ];
 
-
         Validator::make($request->all(), [
             'charity_id' => 'required|exists:charities,id',
             'percent' => 'nullable|integer|min:0|max:' . abs((100 - $user->userCharities()->sum('percent')) + $data['percent']),
         ])->validate();
-        $user->userCharities()->delete();
         $result = $user->syncRelation([
             $data
         ], 'userCharities', null, [

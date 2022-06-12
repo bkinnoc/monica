@@ -316,13 +316,21 @@ Route::middleware(['auth', 'verified', 'mfa'])->group(function () {
         });
 
         // Charities
+        Route::name('charity.preference.')->group(function () {
+            Route::get('/settings/charity', 'Settings\\CharityController@index')->name('index');
+            Route::get('/settings/charity/preference', 'Settings\\CharityController@userPreferences')->name('user-charity-preferences.index');
+            Route::post('/settings/charity/preference', 'Settings\\CharityController@storeCharityPreference')->name('user-charity-preferences.store');
+            Route::put('/settings/charity/preference/{id}', 'Settings\\CharityController@storeCharityPreference')->name('user-charity-preferences.update');
+            Route::delete('/settings/charity/preference/{id}', 'Settings\\CharityController@destroyCharityPreference')->name('user-charity-preferences.delete');
+            Route::get('/settings/charity/all', 'Settings\\CharityController@charity')->name('all');
+        });
         Route::name('charities.preferences.')->group(function () {
-            Route::get('/settings/charities', 'Settings\\CharityController@index')->name('index');
-            Route::get('/settings/charities/preferences', 'Settings\\CharityController@userPreferences')->name('user-charity-preferences.index');
-            Route::post('/settings/charities/preferences', 'Settings\\CharityController@storeCharityPreference')->name('user-charity-preferences.store');
-            Route::put('/settings/charities/preferences/{id}', 'Settings\\CharityController@storeCharityPreference')->name('user-charity-preferences.update');
-            Route::delete('/settings/charities/preferences/{id}', 'Settings\\CharityController@destroyCharityPreference')->name('user-charity-preferences.delete');
-            Route::get('/settings/charities/all', 'Settings\\CharityController@charities')->name('all');
+            Route::get('/settings/charities', 'Settings\\CharitiesController@index')->name('index');
+            Route::get('/settings/charities/preferences', 'Settings\\CharitiesController@userPreferences')->name('user-charity-preferences.index');
+            Route::post('/settings/charities/preferences', 'Settings\\CharitiesController@storeCharityPreference')->name('user-charity-preferences.store');
+            Route::put('/settings/charities/preferences/{id}', 'Settings\\CharitiesController@storeCharityPreference')->name('user-charity-preferences.update');
+            Route::delete('/settings/charities/preferences/{id}', 'Settings\\CharitiesController@destroyCharityPreference')->name('user-charity-preferences.delete');
+            Route::get('/settings/charities/all', 'Settings\\CharitiesController@charities')->name('all');
         });
     });
 });

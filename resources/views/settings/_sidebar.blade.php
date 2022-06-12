@@ -19,7 +19,7 @@
 
         @component('components.sidebar',
             [
-                'route' => 'settings.charities.preferences.index',
+                'route' => 'settings.charity.preference.index',
                 'icon' => 'fa fa-gift',
                 'title' => 'settings.sidebar_charities',
             ])

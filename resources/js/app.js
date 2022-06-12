@@ -316,6 +316,10 @@ Vue.component(
   'CharityPreferences',
   require('./components/settings/CharityPreferences.vue').default
 );
+Vue.component(
+  'CharityPreference',
+  require('./components/settings/CharityPreference.vue').default
+);
 
 require('./testing');
 

@@ -35,13 +35,14 @@
                 <div class="mw9 center">
                     <div class="{{ htmldir() == 'ltr' ? 'fl' : 'fr' }} w-50-ns w-100 pa2">
                         <div class="br3 ba b--gray-monica bg-white mb4">
-                            <charity-preferences :percent="{{ nova_get_setting('charitable_percentage', 30) }}">
-                            </charity-preferences>
+                            <charity-preference :percent="{{ nova_get_setting('charitable_percentage', 30) }}"
+                                :charity-message="`{{ trans('auth.register_charity_disclaimer', ['percentage' => nova_get_setting('charitable_percentage', 30)]) }}`">
+                            </charity-preference>
                         </div>
                     </div>
                 </div>
             </section>
-        @endif;
+        @endif
         {{-- Main section --}}
         <section class="ph3 ph5-ns cf w-100 bg-gray-monica">
             <div class="mw9 center">

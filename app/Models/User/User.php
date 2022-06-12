@@ -168,6 +168,16 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
      *
      * @return A collection of charities that the user wants to donate to.
      */
+    public function charity()
+    {
+        return $this->hasOneThrough(\App\Models\Charity::class, \App\Models\UserCharity::class, 'user_id', 'id', 'id', 'charity_id');
+    }
+
+    /**
+     * This function returns a collection of charities that belong to the user
+     *
+     * @return A collection of charities that the user wants to donate to.
+     */
     public function userCharities()
     {
         return $this->hasMany(\App\Models\UserCharity::class, 'user_id');
