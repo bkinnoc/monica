@@ -95,8 +95,13 @@ fi
 echo -e "\n4 - Fixing permissions";
 #bash scripts/fix_permissions.sh ${dirOwner} ${dirGroup} > /dev/null
 
-echo -e "\4b - Switching folders"
+echo -e "\4b - Copying strorge and linking directories"
 cd ..
+cp -fr staging/storage/* storage
+mv staging/storage staging/storage-backup
+ln -s -f ../storage staging/storage
+
+echo -e "\4c - Switching folders"
 rm -fr backup
 mv html backup
 mv staging html
