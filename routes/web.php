@@ -46,6 +46,9 @@ Route::middleware(['auth', 'verified', 'mfa'])->group(function () {
         Route::get('/dashboard/debts', 'DashboardController@debts');
         Route::post('/dashboard/setTab', 'DashboardController@setTab');
     });
+    Route::name('mail.')->group(function () {
+        Route::get('/mail', 'MailController@index')->name('index');
+    });
 
     Route::get('/store/{file}', 'StorageController@show')->where('file', '.*')->name('storage');
 

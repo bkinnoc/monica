@@ -156,7 +156,7 @@ class OAuthController extends Controller
      */
     private function handleVerify(Request $request): ?JsonResponse
     {
-        if (! $request->session()->has('email') || ! $request->session()->has('password')) {
+        if (!$request->session()->has('email') || !$request->session()->has('password')) {
             return null;
         }
 
@@ -191,7 +191,7 @@ class OAuthController extends Controller
      */
     private function proxy(array $data = []): array
     {
-        $url = App::runningUnitTests() ? Str::of(config('app.url'))->ltrim('/').'/oauth/token' : route('passport.token');
+        $url = App::runningUnitTests() ? Str::of(config('app.url'))->ltrim('/') . '/oauth/token' : route('passport.token');
         /** @var \Illuminate\Http\Response */
         $response = app(Kernel::class)->handle(Request::create($url, 'POST', [
             'grant_type' => $data['grantType'],

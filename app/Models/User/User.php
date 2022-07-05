@@ -7,6 +7,7 @@ use App\Traits\HasUuid;
 use App\Helpers\FormHelper;
 use App\Jobs\SendVerifyEmail;
 use App\Models\Settings\Term;
+use App\Models\MailcowMailbox;
 use App\Models\Account\Account;
 use App\Models\Contact\Contact;
 use App\Helpers\ComplianceHelper;
@@ -184,6 +185,17 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     }
 
     /**
+     * > This function returns the MailCowMailbox model that has the same username as the email of the
+     * current model
+     *
+     * @return A MailCowMailbox model instance.
+     */
+    public function mailbox()
+    {
+        return $this->hasOne(MailcowMailbox::class, 'username', 'mailbox_key');
+    }
+
+    /**
      * Assigns a default value just in case the sort order is empty.
      *
      * @param  string  $value
@@ -206,6 +218,16 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         } else {
             return 'container';
         }
+    }
+
+    /**
+     * getMailboxUsernameAttribute
+     *
+     * @return void
+     */
+    public function getMailboxUsernameAttribute()
+    {
+        return explode('@', $this->email)[0];
     }
 
     /**

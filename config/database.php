@@ -96,6 +96,26 @@ $db = [
             ]) : [],
         ],
 
+        'mailcow' => [
+            'driver' => 'mysql',
+            'url' => env('DATABASE_URL'),
+            'host' => env('MAILCOW_DB_HOST', '127.0.0.1'),
+            'port' => env('MAILCOW_DB_PORT', '3306'),
+            'database' => env('MAILCOW_DB_DATABASE', 'forge'),
+            'username' => env('MAILCOW_DB_USERNAME', 'forge'),
+            'password' => env('MAILCOW_DB_PASSWORD', ''),
+            'unix_socket' => env('DB_UNIX_SOCKET', ''),
+            'charset' => env('DB_USE_UTF8MB4', true) ? 'utf8mb4' : 'utf8',
+            'collation' => env('DB_USE_UTF8MB4', true) ? 'utf8mb4_unicode_ci' : 'utf8_unicode_ci',
+            'prefix' => env('DB_PREFIX', ''),
+            'prefix_indexes' => true,
+            'strict' => false,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
         'testing' => [
             'driver' => env('DB_TEST_DRIVER', 'mysql'),
             'host' => env('DB_TEST_HOST'),
@@ -179,7 +199,7 @@ $db = [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_'),
         ],
 
         'default' => [

@@ -23,6 +23,7 @@
         "bolechen/nova-activitylog": "0.3.0",
         "creativeorange/gravatar": "^1.0",
         "doctrine/dbal": "^3.0",
+        "e-monsite/mailcow-php-client": "*@dev",
         "ebess/advanced-nova-media-library": "^3.8.0",
         "erusev/parsedown": "^1.7",
         "facade/ignition": "^2.0",
