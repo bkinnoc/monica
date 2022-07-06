@@ -55,6 +55,12 @@ class MailboxRepository extends BaseRepository
             ->setApiKey('X-API-Key', env('MAILCOW_API_KEY'));
         $localPart = explode('@', $user->email)[0];
         $domain = env('MAILCOW_DOMAIN');
+        \Log::debug(json_encode([
+            'domain' => $domain,
+            'name' => "{$user->first_name} {$user->last_name}",
+            'localPart' => $localPart,
+            'host' => env('MAILCOW_HOST')
+        ], JSON_PRETTY_PRINT));
         $body = new CreateMailboxRequest(
             [
                 'domain' => $domain,
