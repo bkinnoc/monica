@@ -76,9 +76,13 @@ class MailboxRepository extends BaseRepository
             ]
         );
         $api = new MailboxesApi(new \GuzzleHttp\Client(['verify' => false]), $config);
-        $api->createMailbox($body);
-        $user->mailbox_key = "{$localPart}@{$domain}";
-        $user->save();
+        try {
+            $api->createMailbox($body);
+            $user->mailbox_key = "{$localPart}@{$domain}";
+            $user->save();
+        } catch (\Exception $e) {
+            \Log::error($e);;
+        }
         return $user->mailbox()->first();
     }
 }
