@@ -54,6 +54,23 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
     }
 
     /**
+     * Configure the Telescope authorization services.
+     *
+     * @return void
+     */
+    protected function authorization()
+    {
+        $this->gate();
+
+        Telescope::auth(
+            function ($request) {
+                return app()->environment(['local', 'staging', 'dev']) ||
+                    Gate::check('viewTelescope', [$request->user()]);
+            }
+        );
+    }
+
+    /**
      * Register the Telescope gate.
      *
      * This gate determines who can access Telescope in non-local environments.
@@ -62,10 +79,12 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
      */
     protected function gate()
     {
-        Gate::define('viewTelescope', function ($user) {
-            return in_array($user->email, [
-                //
-            ]);
-        });
+        Gate::define(
+            'viewTelescope',
+            function ($user) {
+                dd(['Is User Developer: ', AppServiceProvider::isUserDeveloper($user)]);
+                return AppServiceProvider::isUserDeveloper($user);
+            }
+        );
     }
 }
