@@ -35,41 +35,53 @@
     </div>
 
     <div v-cy-name="'activity-types'">
-      <ul v-cy-name="'activity-type-categories'">
-        <li class="dt dt--fixed w-100 collapse br--top br--bottom mt3">
-          <!-- Charity Preference -->
-          <div class="dt-row hover bb b--light-gray">
+      <div class="dt dt--fixed w-100 collapse br--top br--bottom mt3">
+        <!-- Charity Preference -->
+        <div class="dt-row hover bb b--light-gray">
+          <div class="dtc">
+            <div class="pa2">
+              <ul
+                class="list-group"
+                :id="'add-charity-id'"
+              >
+                <li
+                  v-for="(option, index) in charityOptions"
+                  style="padding: 8px; cursor: pointer"
+                  :class="{
+                      'list-group-item': true,
+                      'active': savePreferenceForm.charity_id === option.id
+                    }"
+                  :key="index"
+                >
+                  <div class="form-check">
+                    <label
+                      :for="`preference-${option.id}`"
+                      class="form-check-label"
+                    >
+                      <input
+                        v-model="savePreferenceForm.charity_id"
+                        class="form-check-input"
+                        type="radio"
+                        :id="`preference-${option.id}`"
+                        :value="option.id"
+                      />
+                      {{ option.name }}
+                    </label>
+                  </div>
+                </li>
+              </ul>
+            </div>
             <div class="dtc">
-              <div
-                class="pa2"
-                :class="[ dirltr ? 'tr' : 'tl' ]"
-              >
-                <form-select
-                  :id="'add-charity-id'"
-                  v-model="savePreferenceForm.charity_id"
-                  class="tl"
-                  :required="true"
-                  :options="charityOptions"
-                  :input-props="{id:'autosuggest__input', placeholder:'Start searching?'}"
-                  :title="$t('settings.charity_preferences_modal_select_charity')"
-                  :validator="$v.savePreferenceForm.charity_id"
-                  @input="updateCharity"
-                />
-              </div>
-              <div class="
-                  dtc"
-              >
-                <div class="pa2 b">
-                  <p
-                    class="info"
-                    v-html="charityMessage.replace(':percentage', percent)"
-                  ></p>
-                </div>
+              <div class="pa2 b">
+                <p
+                  class="info"
+                  v-html="charityMessage.replace(':percentage', percent)"
+                ></p>
               </div>
             </div>
           </div>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
 
     <!-- Create Charity -->
@@ -82,7 +94,7 @@
       <form @submit.prevent="addCharity()">
         <div class="mb4">
           <p class="b mb2"></p>
-          <form-select
+          <!-- <form-select
             :id="'add-charity-id'"
             v-model="savePreferenceForm.charity_id"
             :required="true"
@@ -90,15 +102,46 @@
             :input-props="{id:'autosuggest__input', placeholder:'Start searching?'}"
             :title="$t('settings.charity_preferences_modal_select_charity')"
             :validator="$v.savePreferenceForm.charity_id"
-          />
-          <form-input
+          /> -->
+          <ul
+            class="list-group"
+            :id="'add-charity-id'"
+          >
+            <li
+              v-for="(option, index) in charityOptions"
+              style="padding: 8px; cursor: pointer"
+              :class="{
+                      'list-group-item': true,
+                      'active': savePreferenceForm.charity_id === option.id
+                    }"
+              :key="index"
+              @click="updateCharity(option)"
+            >
+              <div class="form-check">
+                <label
+                  :for="`preference-${option.id}`"
+                  class="form-check-label"
+                >
+                  <input
+                    v-model="savePreferenceForm.charity_id"
+                    class="form-check-input"
+                    type="radio"
+                    :id="`preference-${option.id}`"
+                    :value="option.id"
+                  />
+                  {{ option.name }}
+                </label>
+              </div>
+            </li>
+          </ul>
+          <!-- <form-input
             :id="'update-charity-percent'"
             v-model="savePreferenceForm.percent"
             :input-type="'number'"
             :required="true"
             :title="`${$t('settings.charity_preferences_modal_set_percent')}. Max: ${maxAllowablePercentage}`"
             :validator="$v.savePreferenceForm.percent"
-          />
+          /> -->
         </div>
       </form>
       <div slot="button">
@@ -204,9 +247,9 @@
 </template>
 
 <script>
-import { validationMixin } from 'vuelidate';
-import { SweetModal } from 'sweet-modal-vue';
-import { required, maxValue, minValue } from 'vuelidate/lib/validators';
+import { validationMixin } from "vuelidate";
+import { SweetModal } from "sweet-modal-vue";
+import { required, maxValue, minValue } from "vuelidate/lib/validators";
 
 export default {
   components: {
@@ -225,7 +268,7 @@ export default {
     },
     charityMessage: {
       type: String,
-      default: '',
+      default: "",
     },
   },
 
@@ -233,11 +276,11 @@ export default {
     return {
       charityPreferences: [],
       charityOptions: [],
-      errorMessage: '',
+      errorMessage: "",
 
       updatedCharity: {
-        id: '',
-        name: '',
+        id: "",
+        name: "",
       },
 
       savePreferenceForm: {
@@ -247,7 +290,7 @@ export default {
       },
 
       destroycharityForm: {
-        id: '',
+        id: "",
         errors: [],
       },
     };
@@ -255,7 +298,7 @@ export default {
 
   computed: {
     dirltr() {
-      return this.$root.htmldir === 'ltr';
+      return this.$root.htmldir === "ltr";
     },
     selectedCharityIds() {
       return [this.charityPreferences.id];
@@ -299,14 +342,14 @@ export default {
     },
 
     getCharityPreference() {
-      axios.get('settings/charity/preference').then((response) => {
+      axios.get("settings/charity/preference").then((response) => {
         this.charityPreferences = response.data || [].slice(0, 1);
         this.savePreferenceForm.charity_id = parseInt(response.data.id);
       });
     },
 
     getCharities() {
-      axios.get('api/charities').then((response) => {
+      axios.get("api/charities").then((response) => {
         this.charityOptions = response.data?.data || [];
       });
     },
@@ -327,7 +370,7 @@ export default {
 
     addCharity() {
       axios
-        .post('settings/charity/preference', this.savePreferenceForm)
+        .post("settings/charity/preference", this.savePreferenceForm)
         .then((response) => {
           this.$refs.createCharityModal.close();
           const result =
@@ -338,13 +381,13 @@ export default {
           this.savePreferenceForm.charity_id = null;
           this.savePreferenceForm.percent = 0;
 
-          this.notify(this.$t('app.default_save_success'), true);
+          this.notify(this.$t("app.default_save_success"), true);
         })
         .catch((error) => {
           this.errorMessage = this.$root
             .storeUtils()
             .objectValues(error.response.data.errors)
-            .join('<br/>');
+            .join("<br/>");
         });
     },
 
@@ -370,41 +413,41 @@ export default {
     updateCharity() {
       axios
         .put(
-          'settings/charity/preference/' + this.savePreferenceForm.charity_id,
+          "settings/charity/preference/" + this.savePreferenceForm.charity_id,
           this.savePreferenceForm
         )
         .then((response) => {
-          console.log('Result', response, this.$root.storeUtils());
+          console.log("Result", response, this.$root.storeUtils());
           this.$refs.updateCharityModal.close();
           const result =
             response.data instanceof Array ? response.data[0] : response.data;
-          console.log('Result', result);
+          console.log("Result", result);
           this.$root
             .storeUtils()
             .updateStateData(this.charityPreferences, result, true, true);
           this.updatedCharity = result;
 
-          this.notify(this.$t('app.default_save_success'), true);
+          this.notify(this.$t("app.default_save_success"), true);
         })
         .catch((error) => {
           this.errorMessage = this.$root
             .storeUtils()
             .objectValues(error.response.data.errors)
-            .join('<br/>');
+            .join("<br/>");
         });
     },
 
     destroyCharity() {
       axios
-        .delete('settings/charity/preference/' + this.destroycharityForm.id)
+        .delete("settings/charity/preference/" + this.destroycharityForm.id)
         .then((response) => {
           this.$refs.deleteCharityModal.close();
-          this.destroycharityForm.id = '';
+          this.destroycharityForm.id = "";
           this.charityPreferences = this.charityPreferences.filter(
             (c) => c.id != response.data.id
           );
 
-          this.notify(this.$t('app.default_save_success'), true);
+          this.notify(this.$t("app.default_save_success"), true);
         })
         .catch((error) => {
           this.errorMessage = JSON.stringify(
@@ -415,10 +458,10 @@ export default {
 
     notify(text, success) {
       this.$notify({
-        group: 'charityPreferences',
+        group: "charityPreferences",
         title: text,
-        text: '',
-        type: success ? 'success' : 'error',
+        text: "",
+        type: success ? "success" : "error",
       });
     },
   },

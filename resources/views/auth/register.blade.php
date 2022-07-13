@@ -115,25 +115,36 @@
                                 <p class="info">
                                     {!! trans('auth.register_charity_disclaimer', ['percentage' => nova_get_setting('charitable_percentage', 30)]) !!}
                                 </p>
-                                <div class="form-group">
-                                    <label
+                                <div class="form-group card">
+                                    <label class="card-header"
                                         for="charity_preference">{{ trans('auth.register_charity_preference') }}</label>
-                                    <select name="charity_preference" id="charity_preference" class="form-control"
-                                        placeholder="{{ trans('auth.register_charity_preference_example') }}">
-                                        <option value=''>Default: Automatically select for me!</option>
+
+                                    <div class="card-body" id="charity-preference">
                                         @foreach (\App\Models\Charity::pluck('id', 'name') as $charity => $id)
-                                            <option value="{{ $id }}">{{ $charity }}</option>
+                                            <div class="form-check" style="padding: 8px 8px; cursor: pointer">
+                                                <label class="form-check-label" for="preference-{{ $id }}"
+                                                    style="cursor: pointer">
+                                                    <input class="form-check-input" type="radio" name="charity_preference"
+                                                        id="preference-{{ $id }}"
+                                                        value="{{ $id }}" />
+                                                    {{ $charity }}
+                                                </label>
+                                            </div>
                                         @endforeach
-                                    </select>
+                                    </div>
                                 </div>
                             </div>
 
                             <!-- Policy acceptance check -->
                             <div class="form-check">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" id="policy" name="policy" type="checkbox" value="policy"
-                                        required>
-                                    {!! trans('auth.register_policy', ['url' => 'https://monicahq.com/privacy', 'urlterm' => 'https://monicahq.com/terms', 'hreflang' => 'en']) !!}
+                                    <input class="form-check-input" id="policy" name="policy" type="checkbox"
+                                        value="policy" required>
+                                    {!! trans('auth.register_policy', [
+                                        'url' => 'https://monicahq.com/privacy',
+                                        'urlterm' => 'https://monicahq.com/terms',
+                                        'hreflang' => 'en',
+                                    ]) !!}
                                 </label>
                             </div>
 
