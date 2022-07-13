@@ -46,7 +46,10 @@ class MailController extends Controller
 
         $loginRequest = Http::withHeaders([
             // 'Authorization' => "Basic {$params['authBasic']}"
-        ])->post("{$url}/SOGo/connect", $params);
+        ])
+            ->withOptions([
+                'verify' => false,
+            ])->post("{$url}/SOGo/connect", $params);
 
         $response = response(view('mailbox.index', $params));
 
