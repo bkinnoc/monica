@@ -84,8 +84,8 @@ class RegisterController extends Controller
             'charity_preference' => 'nullable|exists:charities,id',
             'password' => [
                 'required', 'confirmed',
-                'max:100',
-                PasswordRules::min(6)
+                'max:' . config('app.password_max', 32),
+                PasswordRules::min(config('app.password_main', 8))
                     ->mixedCase()
                     ->numbers()
                     ->symbols()

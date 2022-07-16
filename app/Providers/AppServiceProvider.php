@@ -68,9 +68,9 @@ class AppServiceProvider extends ServiceProvider
 
         Password::defaults(function () {
             if (!$this->app->environment('production')) {
-                return Password::min(6);
+                return Password::min(8);
             }
-            $rules = Password::min(config('app.password_min'));
+            $rules = Password::min(config('app.password_min', 8));
             $config = explode(',', config('app.password_rules'));
             if (in_array('mixedCase', $config)) {
                 $rules = $rules->mixedCase();

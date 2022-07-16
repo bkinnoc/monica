@@ -8,6 +8,19 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
+    /**
+     * Max Attempts
+     *
+     * @var undefined
+     */
+    protected $maxAttempts = 5;
+    /**
+     * Decay Minutes. Default is 3 hours
+     *
+     * @var int
+     */
+    protected $decayMinutes = 180;
+
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -40,7 +53,7 @@ class LoginController extends Controller
 
     public function showLoginOrRegister()
     {
-        $first = ! InstanceHelper::hasAtLeastOneAccount();
+        $first = !InstanceHelper::hasAtLeastOneAccount();
         if ($first) {
             return redirect()->route('register');
         }

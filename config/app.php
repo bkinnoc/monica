@@ -136,6 +136,7 @@ return [
     */
 
     'password_min' => (int) env('APP_PASSWORD_MIN', 8),
+    'password_max' => (int) env('APP_PASSWORD_MAX', 32),
 
     'password_rules' => env('APP_PASSWORD_RULES', 'mixedCase,letters,numbers,symbols,uncompromised'),
 
