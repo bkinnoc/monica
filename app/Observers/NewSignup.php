@@ -2,12 +2,12 @@
 
 namespace App\Observers;
 
-use App\Events\NewReaction;
+use App\Events\NewSignup as Event;
 
 class NewSignup extends BaseObserver
 {
     public function created($model)
     {
-        event(new NewSignup($model));
+        event(new Event($model));
     }
 }
