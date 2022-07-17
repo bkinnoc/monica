@@ -38,7 +38,7 @@ class AccountSubscriptionTest extends FeatureTestCase
     {
         parent::setUp();
 
-        if (! static::$productId) {
+        if (!static::$productId) {
             $this->markTestSkipped('Set STRIPE_SECRET to run this test.');
         } else {
             config([
@@ -63,9 +63,9 @@ class AccountSubscriptionTest extends FeatureTestCase
         Stripe::setApiVersion('2019-03-14');
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
-        static::$productId = static::$stripePrefix.'product-'.Str::random(10);
-        static::$monthlyPlanId = static::$stripePrefix.'monthly-'.Str::random(10);
-        static::$annualPlanId = static::$stripePrefix.'annual-'.Str::random(10);
+        static::$productId = static::$stripePrefix . 'product-' . Str::random(10);
+        static::$monthlyPlanId = static::$stripePrefix . 'monthly-' . Str::random(10);
+        static::$annualPlanId = static::$stripePrefix . 'annual-' . Str::random(10);
 
         Product::create([
             'id' => static::$productId,
