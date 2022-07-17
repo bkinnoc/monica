@@ -47,6 +47,7 @@
         "moneyphp/money": "^3.1",
         "monicahq/laravel-cloudflare": "^3.0",
         "monicahq/laravel-sabre": "^1.2",
+        "monooso/unobserve": "3.x-dev",
         "nitm/laravel-base": "*",
         "ok/ipstack-client": "^1.2",
         "outl1ne/nova-settings": "v3.x-dev",
