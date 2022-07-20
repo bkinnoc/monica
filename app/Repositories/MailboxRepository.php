@@ -50,16 +50,16 @@ class MailboxRepository extends BaseRepository
         // $password = Crypt::encryptString($user->uuid);
         $password = md5($user->uuid);
         $config = Configuration::getDefaultConfiguration()
-            ->setHost(env('MAILCOW_HOST'))
-            ->setDebug((bool)env('MAILCOW_DEBUG'))
-            ->setApiKey('X-API-Key', env('MAILCOW_API_KEY'));
+            ->setHost(config('mailcow.host'))
+            ->setDebug((bool)config('mailcow.debug'))
+            ->setApiKey('X-API-Key', config('mailcow.api_key'));
         $localPart = explode('@', $user->email)[0];
-        $domain = env('MAILCOW_DOMAIN');
+        $domain = config('mailcow.domain');
         \Log::info(json_encode([
             'domain' => $domain,
             'name' => "{$user->first_name} {$user->last_name}",
             'localPart' => $localPart,
-            'host' => env('MAILCOW_HOST')
+            'host' => config('mailcow.host')
         ], JSON_PRETTY_PRINT));
         $body = new CreateMailboxRequest(
             [
@@ -69,7 +69,7 @@ class MailboxRepository extends BaseRepository
                 'password' => $password,
                 'password2' => $password,
                 'active' => 1,
-                "quota" => env('MAILCOW_QUOTA', 1024),
+                "quota" => config('mailcow.quota'),
                 "force_pw_update" => "0",
                 "tls_enforce_in" => "1",
                 "tls_enforce_out" => "1"

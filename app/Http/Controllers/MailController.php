@@ -32,9 +32,9 @@ class MailController extends Controller
         }
 
         // $password = Crypt::encryptString($user->uuid);
-        $url = env('MAILCOW_WEB');
+        $url = config('mailcow.url');
         $password = md5($user->uuid);
-        $domain = env('MAILCOW_DOMAIN');
+        $domain = config('mailcow.domain');
         $params = [
             'url' => "{$url}/SOGo/so",
             'authBasic' => "{$user->mailbox_key}:{$password}",
