@@ -31,7 +31,9 @@ class PasswordChangeController extends Controller
     protected function credentials(PasswordChangeRequest $request)
     {
         return $request->only(
-            'password_current', 'password', 'password_confirmation'
+            'password_current',
+            'password',
+            'password_confirmation'
         );
     }
 
@@ -60,7 +62,7 @@ class PasswordChangeController extends Controller
     protected function validateAndPasswordChange($credentials)
     {
         $user = $this->validateChange($credentials);
-        if (! $user instanceof CanResetPassword) {
+        if (!$user instanceof CanResetPassword) {
             return $user;
         }
 
@@ -100,7 +102,7 @@ class PasswordChangeController extends Controller
         $user = Auth::user();
 
         // Using current email from user, and current password sent with the request to authenticate the user
-        if (! Auth::attempt([
+        if (!Auth::attempt([
             'email' => $user->getEmailForPasswordReset(),
             'password' => $credentials['password_current'],
         ])) {
@@ -140,7 +142,7 @@ class PasswordChangeController extends Controller
     protected function sendChangedResponse($response)
     {
         return redirect($this->redirectPath())
-                    ->with('status', trans($response));
+            ->with('status', trans($response));
     }
 
     /**
@@ -152,6 +154,6 @@ class PasswordChangeController extends Controller
     protected function sendChangedFailedResponse($response)
     {
         return redirect($this->redirectPath())
-                    ->withErrors(['password' => trans($response)]);
+            ->withErrors(['password' => trans($response)]);
     }
 }

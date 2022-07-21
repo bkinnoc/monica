@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\AppHelper;
 use Illuminate\Http\Request;
 use App\Helpers\RequestHelper;
 use App\Jobs\SendNewUserAlert;
@@ -68,7 +69,11 @@ class InvitationController extends Controller
             'first_name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'email_security' => 'required',
-            'password' => ['required', 'confirmed', PasswordRules::defaults()],
+            'password' => [
+                'required',
+                'confirmed',
+                AppHelper::getPasswordRules()
+            ],
             'policy' => 'required',
         ]);
     }
@@ -85,7 +90,7 @@ class InvitationController extends Controller
         $this->validator($request->all())->validate();
 
         $invitation = Invitation::where('invitation_key', $key)
-                                    ->firstOrFail();
+            ->firstOrFail();
 
         // as a security measure, make sure that the new user provides the email
         // of the person who has invited him/her.
@@ -142,7 +147,7 @@ class InvitationController extends Controller
      */
     protected function registered(Request $request, $user)
     {
-        if (! config('monica.signup_double_optin')) {
+        if (!config('monica.signup_double_optin')) {
             // if signup_double_optin is disabled, skip the confirm email part
             $user->markEmailAsVerified();
         }

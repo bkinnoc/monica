@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Helpers\AppHelper;
 use Illuminate\Validation\Rules\Password as PasswordRules;
 
 class PasswordChangeRequest extends AuthorizedRequest
@@ -19,11 +20,7 @@ class PasswordChangeRequest extends AuthorizedRequest
                 'required',
                 'confirmed',
                 'max:' . config('app.password_max', 32),
-                PasswordRules::min(config('app.password_main', 8))
-                    ->mixedCase()
-                    ->numbers()
-                    ->symbols()
-                    ->uncompromised()
+                AppHelper::getPasswordRules()
             ],
         ];
     }

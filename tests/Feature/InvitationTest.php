@@ -21,7 +21,7 @@ class InvitationTest extends FeatureTestCase
             'email' => 'test@test.com',
         ]);
 
-        $response = $this->get('/invitations/accept/'.$invitation->invitation_key);
+        $response = $this->get('/invitations/accept/' . $invitation->invitation_key);
 
         $response->assertStatus(200);
         $response->assertSee('test@test.com');
@@ -38,12 +38,12 @@ class InvitationTest extends FeatureTestCase
             'email' => 'test@test.com',
         ]);
 
-        $response = $this->post('/invitations/accept/'.$invitation->invitation_key, [
+        $response = $this->post('/invitations/accept/' . $invitation->invitation_key, [
             'email' => 'test@test007.com',
             'first_name' => 'john',
             'last_name' => 'doe',
-            'password' => 'admin0',
-            'password_confirmation' => 'admin0',
+            'password' => 'admin000',
+            'password_confirmation' => 'admin000',
             'policy' => 'true',
             'email_security' => $invitation->invitedBy->email,
         ]);

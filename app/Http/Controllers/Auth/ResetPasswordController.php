@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\AppHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Validation\Rules\Password as PasswordRules;
@@ -33,10 +34,15 @@ class ResetPasswordController extends Controller
      */
     protected function rules()
     {
+        dd(AppHelper::getPasswordRules());
         return [
             'token' => 'required',
             'email' => 'required|email',
-            'password' => ['required', 'confirmed', PasswordRules::defaults()],
+            'password' => [
+                'required',
+                'confirmed',
+                AppHelper::getPasswordRules()
+            ],
         ];
     }
 }

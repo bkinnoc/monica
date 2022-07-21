@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\Charity;
 use App\Models\User\User;
+use App\Helpers\AppHelper;
 use App\Rules\ValidateTag;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
@@ -85,11 +86,7 @@ class RegisterController extends Controller
             'password' => [
                 'required', 'confirmed',
                 'max:' . config('app.password_max', 32),
-                PasswordRules::min(config('app.password_main', 8))
-                    ->mixedCase()
-                    ->numbers()
-                    ->symbols()
-                    ->uncompromised()
+                AppHelper::getPasswordRules()
             ],
             'policy' => 'required',
             'dob' => "sometimes|before:{$beforePeriod}"
