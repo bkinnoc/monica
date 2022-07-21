@@ -6,9 +6,9 @@ use Illuminate\Validation\Rules\Password as PasswordRules;
 
 class AppHelper
 {
-    public static function getPasswordRules()
+    public static function getPasswordRules($forceProduction = false)
     {
-        return app()->environment('testing') ? PasswordRules::defaults() : PasswordRules::min(
+        return app()->environment('testing') && !$forceProduction ? PasswordRules::defaults() : PasswordRules::min(
             config('app.password_main', 8)
         )
             ->mixedCase()

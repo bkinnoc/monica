@@ -86,7 +86,7 @@ class RegisterController extends Controller
             'password' => [
                 'required', 'confirmed',
                 'max:' . config('app.password_max', 32),
-                AppHelper::getPasswordRules()
+                AppHelper::getPasswordRules(true)
             ],
             'policy' => 'required',
             'dob' => "sometimes|before:{$beforePeriod}"
