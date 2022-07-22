@@ -1,3 +1,4 @@
+<!-- eslint-disable quotes -->
 /* eslint-disable */
 <template>
   <div class="ph3 pv3">
@@ -41,17 +42,17 @@
           <div class="dtc">
             <div class="pa2">
               <ul
-                class="list-group"
                 :id="'add-charity-id'"
+                class="list-group"
               >
                 <li
                   v-for="(option, index) in charityOptions"
                   style="padding: 8px; cursor: pointer"
+                  :key="index"
                   :class="{
                       'list-group-item': true,
                       'active': savePreferenceForm.charity_id === option.id
                     }"
-                  :key="index"
                 >
                   <div class="form-check">
                     <label
@@ -60,9 +61,9 @@
                     >
                       <input
                         v-model="savePreferenceForm.charity_id"
+                        :id="`preference-${option.id}`"
                         class="form-check-input"
                         type="radio"
-                        :id="`preference-${option.id}`"
                         :value="option.id"
                       />
                       {{ option.name }}
