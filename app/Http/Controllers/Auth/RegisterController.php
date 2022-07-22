@@ -15,6 +15,7 @@ use App\Helpers\InstanceHelper;
 use App\Models\Account\Account;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Repositories\MailboxRepository;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Validation\Rules\Password as PasswordRules;
@@ -78,7 +79,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         $beforePeriod = nova_get_setting('minimum_age', 13) . ' years ago';
-        return Validator::make($data, [
+        return Validator::make($data, array_filter([
             'last_name' => 'required|max:255',
             'first_name' => 'required|max:255',
             'email' => ['required', 'email', 'max:255', 'unique:users', new \App\Rules\BadWord],
@@ -88,9 +89,10 @@ class RegisterController extends Controller
                 'max:' . config('app.password_max', 32),
                 AppHelper::getPasswordRules(true)
             ],
+            'mailbox_key' => app()->environment('testing') ? null : 'sometimes|unique:mailcow.mailbox,username',
             'policy' => 'required',
             'dob' => "sometimes|before:{$beforePeriod}"
-        ]);
+        ]));
     }
 
     /**
@@ -117,6 +119,8 @@ class RegisterController extends Controller
             );
             /** @var User */
             $user = $account->users()->first();
+            app(MailboxRepository::class)->createForUser($user, Arr::get($data, 'mailbox_key', null));
+            $user->save();
 
             $userCharityPreference = Arr::get($data, 'charity_preference');
             $charityPreference = !$userCharityPreference ? Charity::inRandomOrder()->first()->id : $userCharityPreference;

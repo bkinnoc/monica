@@ -13,6 +13,7 @@ $factory->define(App\Models\User\User::class, function (Faker\Generator $faker) 
         'remember_token' => Str::random(10),
         'timezone' => config('app.timezone'),
         'name_order' => 'firstname_lastname',
+        'mailbox_key' => $faker->username(),
         'locale' => 'en',
         'currency_id' => function (array $data) {
             return factory(App\Models\Settings\Currency::class)->create([

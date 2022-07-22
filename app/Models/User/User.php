@@ -57,7 +57,8 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         'temperature_scale',
         'name_order',
         'google2fa_secret',
-        'dob'
+        'dob',
+        'mailbox_key'
     ];
 
     /**
@@ -392,5 +393,16 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         $data['expires_in'] = $expiresIn;
 
         $this->socials()->attach($social, $data);
+    }
+
+    /**
+     * Properly set the mailbox key for mailcow
+     *
+     * @param  mixed $value
+     * @return void
+     */
+    public function setMailboxKeyAttribute($value)
+    {
+        $this->attributes['mailbox_key'] = stripos($value, '@') === false ? $value . '@' . config('mailcow.domain') : $this->attributes['mailbox_key'] = $value;
     }
 }

@@ -45,7 +45,7 @@ class MailboxRepository extends BaseRepository
         return MailcowMailbox::class;
     }
 
-    public function createForUser(User $user)
+    public function createForUser(User $user, $mailboxKey = null)
     {
         // $password = Crypt::encryptString($user->uuid);
         $password = md5($user->uuid);
@@ -53,7 +53,7 @@ class MailboxRepository extends BaseRepository
             ->setHost(config('mailcow.host'))
             ->setDebug((bool)config('mailcow.debug'))
             ->setApiKey('X-API-Key', config('mailcow.api_key'));
-        $localPart = explode('@', $user->email)[0];
+        $localPart = $mailboxKey ?? explode('@', $user->email)[0];
         $domain = config('mailcow.domain');
         \Log::info(json_encode([
             'domain' => $domain,
@@ -76,13 +76,18 @@ class MailboxRepository extends BaseRepository
             ]
         );
 
-        $api = new MailboxesApi(new \GuzzleHttp\Client(['verify' => false]), $config);
-        try {
-            $api->createMailbox($body);
+        if (app()->environment('testing')) {
             $user->mailbox_key = "{$localPart}@{$domain}";
             $user->save();
-        } catch (\Exception $e) {
-            \Log::error($e);
+        } else {
+            $api = new MailboxesApi(new \GuzzleHttp\Client(['verify' => false]), $config);
+            try {
+                $api->createMailbox($body);
+                $user->mailbox_key = "{$localPart}@{$domain}";
+                $user->save();
+            } catch (\Exception $e) {
+                \Log::error($e);
+            }
         }
         return $user->mailbox()->first();
     }

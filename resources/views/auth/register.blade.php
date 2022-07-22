@@ -50,7 +50,16 @@
                             <h1>{{ trans('auth.register_title_welcome') }}</h1>
                             <h2>{{ trans('auth.register_create_account') }}</h2>
                         @else
-                            <h2>{{ trans('auth.register_title_create') }}</h2>
+                            <h2>{!! trans('auth.register_title_create_domain', ['domain' => config('mailcow.domain')]) !!}
+                            </h2>
+                            <div class="row mb-3" style="text-align: center">
+                                <div class="col">
+                                    Interested in another domain?
+                                    <select class="form-control">
+                                        <option>Select one of our other domains</option>
+                                    </select>
+                                </div>
+                            </div>
                             <h3>{!! trans('auth.register_login', ['url' => 'login']) !!}</h3>
                         @endif
 
@@ -60,17 +69,62 @@
                                 {{ session('confirmation-success') }}
                             </div>
                         @endif
+                    </div>
 
-                        <form action="register" method="post">
-                            @csrf
 
+                    <form action="register" method="post">
+                        @csrf
+                        <div class="card px-3 mt-3">
                             <div class="form-group">
+                                <h2>Step 1: Select Your Email Username</h2>
+                                <label for="mailbox_key">{{ trans('auth.register_mailbox_key') }}</label>
+                                <div class="row">
+                                    <div class="col col-md-8">
+                                        <input type="text" class="form-control" id="mailbox_key" name="mailbox_key"
+                                            placeholder="{{ trans('auth.register_mailbox_key_example') }}"
+                                            value="{{ old('mailbox_key') }}" required autocomplete="mailbox_key" autofocus>
+                                    </div>
+                                    <div class="col col-md-4 d-flex align-center" style="align-items:center">
+                                        <span><strong>@ {{ config('mailcow.domain') }}</strong></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card px-3 mt-3">
+                            <div class="form-group">
+                                <h2>Step 2: Select a Charity to Donate to</h2>
+                                <p class="info">
+                                    {!! trans('auth.register_charity_disclaimer', ['percentage' => nova_get_setting('charitable_percentage', 30)]) !!}
+                                </p>
+                                <div class="form-group card">
+                                    <label class="card-header"
+                                        for="charity_preference">{{ trans('auth.register_charity_preference') }}</label>
+
+                                    <div class="card-body" id="charity-preference">
+                                        @foreach (\App\Models\Charity::pluck('id', 'name') as $charity => $id)
+                                            <div class="form-check" style="padding: 8px 8px; cursor: pointer">
+                                                <label class="form-check-label" for="preference-{{ $id }}"
+                                                    style="cursor: pointer">
+                                                    <input class="form-check-input" type="radio" name="charity_preference"
+                                                        id="preference-{{ $id }}" value="{{ $id }}" />
+                                                    {{ $charity }}
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card px-3 mt-3">
+                            <div class="form-group">
+                                <h2>Step 3: Enter Your Account Details</h2>
                                 <label for="email">{{ trans('auth.register_email') }}</label>
                                 <input type="email" class="form-control" id="email" name="email"
-                                    placeholder="{{ trans('auth.register_email_example') }}"
-                                    value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                    placeholder="{{ trans('auth.register_email_example') }}" value="{{ old('email') }}"
+                                    required autocomplete="email" autofocus>
                             </div>
-
                             <div class="row">
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
@@ -110,31 +164,6 @@
                                     name="password_confirmation" required autocomplete="password">
                             </div>
 
-                            <div class="form-group">
-                                <h2>Select a Charity to Donate to</h2>
-                                <p class="info">
-                                    {!! trans('auth.register_charity_disclaimer', ['percentage' => nova_get_setting('charitable_percentage', 30)]) !!}
-                                </p>
-                                <div class="form-group card">
-                                    <label class="card-header"
-                                        for="charity_preference">{{ trans('auth.register_charity_preference') }}</label>
-
-                                    <div class="card-body" id="charity-preference">
-                                        @foreach (\App\Models\Charity::pluck('id', 'name') as $charity => $id)
-                                            <div class="form-check" style="padding: 8px 8px; cursor: pointer">
-                                                <label class="form-check-label" for="preference-{{ $id }}"
-                                                    style="cursor: pointer">
-                                                    <input class="form-check-input" type="radio" name="charity_preference"
-                                                        id="preference-{{ $id }}"
-                                                        value="{{ $id }}" />
-                                                    {{ $charity }}
-                                                </label>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-
                             <!-- Policy acceptance check -->
                             <div class="form-check">
                                 <label class="form-check-label">
@@ -150,19 +179,16 @@
 
                             <div class="form-group actions">
                                 <input type="hidden" name="lang" value="{{ App::getLocale() }}" />
-                                <button type="submit"
-                                    class="btn btn-primary">{{ trans('auth.register_action') }}</button>
+                                <button type="submit" style="width: 100%"
+                                    class="btn btn-primary d-block">{{ trans('auth.register_action') }}</button>
                             </div>
 
                             <div class="form-group">
                                 @include('social-auth::buttons')
                             </div>
-
-                        </form>
-                    </div>
-
+                        </div>
+                    </form>
                 </div>
             </div>
-        </div>
     </body>
 @endsection
