@@ -1,4 +1,4 @@
-<!-- eslint-disable quotes -->
+<!-- eslint-disable -->
 /* eslint-disable */
 <template>
   <div class="ph3 pv3">
