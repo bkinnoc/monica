@@ -42,6 +42,7 @@
         "league/flysystem-aws-s3-v3": "~1.0",
         "league/flysystem-cached-adapter": "^1.0",
         "mad-web/laravel-social-auth": "dev-master",
+        "maize-tech/laravel-encryptable": "^2.0",
         "mariuzzo/laravel-js-localization": "^1.7",
         "matriphe/iso-639": "^1.0",
         "moneyphp/money": "^3.1",

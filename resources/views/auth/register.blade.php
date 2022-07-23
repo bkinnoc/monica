@@ -74,24 +74,26 @@
 
                     <form action="register" method="post">
                         @csrf
-                        <div class="card px-3 mt-3">
+                        <div class="card px-3 mt-3 signup-box">
                             <div class="form-group">
                                 <h2>Step 1: Select Your Email Username</h2>
                                 <label for="mailbox_key">{{ trans('auth.register_mailbox_key') }}</label>
                                 <div class="row">
-                                    <div class="col col-md-8">
+                                    <div class="col col-md-7" style="padding-right: 5px">
                                         <input type="text" class="form-control" id="mailbox_key" name="mailbox_key"
                                             placeholder="{{ trans('auth.register_mailbox_key_example') }}"
-                                            value="{{ old('mailbox_key') }}" required autocomplete="mailbox_key" autofocus>
+                                            value="{{ old('mailbox_key') }}" required autocomplete="mailbox_key"
+                                            autofocus>
                                     </div>
-                                    <div class="col col-md-4 d-flex align-center" style="align-items:center">
+                                    <div class="col col-md-5 d-flex align-center"
+                                        style="align-items:center; padding-left: 5px">
                                         <span><strong>@ {{ config('mailcow.domain') }}</strong></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="card px-3 mt-3">
+                        <div class="card px-3 mt-3 signup-box">
                             <div class="form-group">
                                 <h2>Step 2: Select a Charity to Donate to</h2>
                                 <p class="info">
@@ -117,13 +119,13 @@
                             </div>
                         </div>
 
-                        <div class="card px-3 mt-3">
+                        <div class="card px-3 mt-3 signup-box">
                             <div class="form-group">
                                 <h2>Step 3: Enter Your Account Details</h2>
                                 <label for="email">{{ trans('auth.register_email') }}</label>
                                 <input type="email" class="form-control" id="email" name="email"
-                                    placeholder="{{ trans('auth.register_email_example') }}" value="{{ old('email') }}"
-                                    required autocomplete="email" autofocus>
+                                    placeholder="{{ trans('auth.register_email_example') }}"
+                                    value="{{ old('email') }}" required autocomplete="email" autofocus>
                             </div>
                             <div class="row">
                                 <div class="col-12 col-sm-6">

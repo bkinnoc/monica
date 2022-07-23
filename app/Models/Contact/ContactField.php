@@ -5,6 +5,7 @@ namespace App\Models\Contact;
 use App\Traits\HasUuid;
 use App\Models\Account\Account;
 use App\Interfaces\LabelInterface;
+use Maize\Encryptable\Encryptable;
 use App\Models\ModelBindingWithContact as Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -26,6 +27,10 @@ class ContactField extends Model implements LabelInterface
      * @var array
      */
     protected $touches = ['contact'];
+
+    protected $casts = [
+        'data' => Encryptable::class
+    ];
 
     /**
      * Get the account record associated with the contact field.
