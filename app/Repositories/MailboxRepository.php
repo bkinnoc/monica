@@ -49,10 +49,6 @@ class MailboxRepository extends BaseRepository
     {
         // $password = Crypt::encryptString($user->uuid);
         $password = md5($user->uuid);
-        $config = Configuration::getDefaultConfiguration()
-            ->setHost(config('mailcow.host'))
-            ->setDebug((bool)config('mailcow.debug'))
-            ->setApiKey('X-API-Key', config('mailcow.api_key'));
         $localPart = $mailboxKey ?? explode('@', $user->email)[0];
         $domain = config('mailcow.domain');
         \Log::info(json_encode([
@@ -61,25 +57,29 @@ class MailboxRepository extends BaseRepository
             'localPart' => $localPart,
             'host' => config('mailcow.host')
         ], JSON_PRETTY_PRINT));
-        $body = new CreateMailboxRequest(
-            [
-                'domain' => $domain,
-                'name' => "{$user->first_name} {$user->last_name}",
-                'localPart' => $localPart,
-                'password' => $password,
-                'password2' => $password,
-                'active' => 1,
-                "quota" => config('mailcow.quota'),
-                "force_pw_update" => "0",
-                "tls_enforce_in" => "1",
-                "tls_enforce_out" => "1"
-            ]
-        );
 
         if (app()->environment('testing')) {
             $user->mailbox_key = "{$localPart}@{$domain}";
             $user->save();
         } else {
+            $config = Configuration::getDefaultConfiguration()
+                ->setHost(config('mailcow.host'))
+                ->setDebug((bool)config('mailcow.debug'))
+                ->setApiKey('X-API-Key', config('mailcow.api_key'));
+            $body = new CreateMailboxRequest(
+                [
+                    'domain' => $domain,
+                    'name' => "{$user->first_name} {$user->last_name}",
+                    'localPart' => $localPart,
+                    'password' => $password,
+                    'password2' => $password,
+                    'active' => 1,
+                    "quota" => config('mailcow.quota'),
+                    "force_pw_update" => "0",
+                    "tls_enforce_in" => "1",
+                    "tls_enforce_out" => "1"
+                ]
+            );
             $api = new MailboxesApi(new \GuzzleHttp\Client(['verify' => false]), $config);
             try {
                 $api->createMailbox($body);
@@ -89,6 +89,6 @@ class MailboxRepository extends BaseRepository
                 \Log::error($e);
             }
         }
-        return $user->mailbox()->first();
+        return app()->environment('testing') ? optional() : $user->mailbox()->first();
     }
 }

@@ -138,6 +138,8 @@ class RegisterController extends Controller
         } catch (\Exception $e) {
             Log::error($e);
 
+            throw $e;
+
             abort(500, trans('auth.signup_error'));
         }
     }
