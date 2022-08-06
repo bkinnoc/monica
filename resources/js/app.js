@@ -321,28 +321,37 @@ Vue.component(
   require('./components/settings/CharityPreference.vue').default
 );
 
+Vue.component(
+  'MultistepRegister',
+  require('./components/auth/MultistepRegister.vue').default
+);
+
 require('./testing');
 
 var common = require('./common').default;
 
-common.loadLanguage(window.Laravel.locale, true).then((i18n) => {
+common.loadLanguage(window.Laravel?.locale || 'en', true).then((i18n) => {
   // the Vue appplication
   const app = new Vue({
     i18n,
     data: {
-      htmldir: window.Laravel.htmldir,
-      timezone: window.Laravel.timezone,
+      htmldir: window.Laravel?.htmldir,
+      timezone: window.Laravel?.timezone,
       locale: i18n.locale,
       reminders_frequency: 'once',
       accept_invite_user: false,
       date_met_the_contact: 'known',
       global_relationship_form_new_contact: true,
-      global_profile_default_view: window.Laravel.profileDefaultView,
+      global_profile_default_view: window.Laravel?.profileDefaultView,
     },
 
     // global methods
     methods: require('./methods').default
   }).$mount('#app');
+  window.app = app;
+  app.config = app.config || {};
+  window.app.config.productionTip = false;
+  window.app.config.devtools = window.Laravel.env != 'production';
 
   return app;
 });

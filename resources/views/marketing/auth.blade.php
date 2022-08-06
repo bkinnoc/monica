@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ \App::getLocale() }}" dir="{{ htmldir() }}">
-  <head>
+
+<head>
     <base href="{{ url('/') }}/" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,28 +9,29 @@
     <title>@yield('title', trans('app.application_title'))</title>
     <link rel="manifest" href="manifest.webmanifest">
 
-    <link rel="stylesheet" href="{{ asset(mix('css/app-'.htmldir().'.css')) }}">
+    <link rel="stylesheet" href="{{ asset(mix('css/app-' . htmldir() . '.css')) }}">
     <link rel="shortcut icon" href="img/favicon.png">
     <script>
-      window.Laravel = {!! \Safe\json_encode([
-          'locale' => \App::getLocale(),
-          'htmldir' => htmldir(),
-      ]); !!}
+        window.Laravel = {!! \Safe\json_encode([
+            'locale' => \App::getLocale(),
+            'htmldir' => htmldir(),
+        ]) !!}
     </script>
-  </head>
+</head>
 
-  <body data-account-id={{ auth()->user()->account_id }} class="marketing register bg-gray-monica">
+<body data-account-id={{ auth()->user()->account_id }} class="marketing register bg-gray-monica">
 
-      <div id="app">
+    <div id="app">
         @yield('content')
-      </div>
+    </div>
 
     {{-- THE JS FILE OF THE APP --}}
-      <script src="{{ asset(mix('js/manifest.js')) }}"></script>
-      <script src="{{ asset(mix('js/vendor.js')) }}"></script>
-      <script src="{{ asset(mix('js/app.js')) }}"></script>
+    <script src="{{ asset(mix('js/manifest.js')) }}"></script>
+    <script src="{{ asset(mix('js/vendor.js')) }}"></script>
+    <script src="{{ asset(mix('js/app.js')) }}"></script>
 
     @stack('scripts')
 
-  </body>
+</body>
+
 </html>

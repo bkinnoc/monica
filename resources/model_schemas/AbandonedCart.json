@@ -1,0 +1,122 @@
+[
+    {
+        "name": "id",
+        "dbType": "bigInteger,true,true",
+        "htmlType": null,
+        "validations": null,
+        "searchable": false,
+        "fillable": false,
+        "primary": true,
+        "inForm": false,
+        "inIndex": false,
+        "inView": false
+    },
+    {
+        "name": "email",
+        "dbType": "text,65535",
+        "htmlType": "textarea",
+        "validations": "required|string",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "first_name",
+        "dbType": "text,65535:nullable",
+        "htmlType": "textarea",
+        "validations": "nullable|string",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "last_name",
+        "dbType": "text,65535:nullable",
+        "htmlType": "textarea",
+        "validations": "nullable|string",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "last_emailed_at",
+        "dbType": "datetime:nullable",
+        "htmlType": "date",
+        "validations": "nullable",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "signed_up_at",
+        "dbType": "datetime:nullable",
+        "htmlType": "date",
+        "validations": "nullable",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "emailed_times",
+        "dbType": "integer,false",
+        "htmlType": null,
+        "validations": "required|integer",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "user_id",
+        "dbType": "integer,false",
+        "htmlType": null,
+        "validations": "nullable|integer",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "created_at",
+        "dbType": "datetime:nullable",
+        "htmlType": "date",
+        "validations": null,
+        "searchable": false,
+        "fillable": false,
+        "primary": false,
+        "inForm": false,
+        "inIndex": false,
+        "inView": false
+    },
+    {
+        "name": "updated_at",
+        "dbType": "datetime:nullable",
+        "htmlType": "date",
+        "validations": null,
+        "searchable": false,
+        "fillable": false,
+        "primary": false,
+        "inForm": false,
+        "inIndex": false,
+        "inView": false
+    }
+]

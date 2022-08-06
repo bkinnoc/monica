@@ -1,10 +1,11 @@
 @extends('marketing.skeleton')
 
 @section('content')
+
     <body class="marketing register">
         <div class="container">
             <div class="row">
-                <div id="app" class="col-12 col-md-8 offset-md-2 offset-md-2-right">
+                <div class="col-12 col-md-6 offset-md-3 offset-md-3-right">
                     <div class="tc">
                         <ul class="horizontal f6 relative mb3 light-silver">
                             <li class="mr2">
@@ -69,52 +70,125 @@
                             </div>
                         @endif
                     </div>
-                    <multistep-register
-                      :charities="{{ \Safe\json_encode(App\Models\Charity::pluck('id', 'name')->toArray())}}"
-                        :locale="{{ App::getLocale() }}":urls="{{ \Safe\json_encode([
-                            'policy' => trans('auth.register_policy', [
-                                'url' => 'https://monicahq.com/privacy',
-                                'urlterm' => 'https://monicahq.com/terms',
-                                'hreflang' => 'en',
-                            ]),
-                        ]) }}"
-                        :i18n="{{ \Safe\json_encode([
-                            'auth' => [
-                                'mailbox_key' => trans('auth.register_mailbox_key'),
-                                'mailbox_key_example' => trans('auth.register_mailbox_key_example'),
-                                'register_charity_preference' => trans('auth.register_charity_preference'),
-                                'register_charity_disclaimer' => trans('auth.register_charity_disclaimer', [
-                                    'percentage' => nova_get_setting('charitable_percentage', 30),
-                                ]),
-                                'register_email' => trans('auth.register_email'),
-                                'register_email_example' => trans('auth.register_email_example'),
-                                'register_firstname' => trans('auth.register_firstname'),
-                                'register_firstname_example' => trans('auth.register_firstname_example'),
-                                'register_lastname' => trans('auth.register_lastname'),
-                                'register_lastname_example' => trans('auth.register_lastname'),
-                                'register_dob' => trans('auth.register_dob'),
-                                'register_dob_example' => trans('auth.register_dob_example'),
-                                'register_password' => trans('auth.register_password'),
-                                'register_password_example' => trans('auth.register_password_example'),
-                                'register_password_confirmation' => trans('auth.register_password_confirmation'),
-                                'register_action' => trans('auth.register_action'),
-                            ],
-                        ]) }}"
-                        :old="{{ \Safe\json_encode([
-                            'last_name' => old('last_name'),
-                            'first_name' => old('first_name'),
-                            'email' => old('email'),
-                            'dob' => old('dob'),
-                            'charity' => old('charity'),
-                        ]) }}"
-                        :config="{{ \Safe\json_encode(config('mailcow')) }}">
-                        <template v-slot:csrf>
-                            @csrf
-                        </template>
-                        <template v-slot:social-auth-buttons>
-                            @include('social-auth::buttons')
-                        </template>
-                    </multistep-register>
+
+
+                    <form action="register" method="post">
+                        @csrf
+                        <div class="card px-3 mt-3 signup-box">
+                            <div class="form-group">
+                                <h2>Step 1: Select Your Email Username</h2>
+                                <label for="mailbox_key">{{ trans('auth.register_mailbox_key') }}</label>
+                                <div class="row">
+                                    <div class="col col-md-7" style="padding-right: 5px">
+                                        <input type="text" class="form-control" id="mailbox_key" name="mailbox_key"
+                                            placeholder="{{ trans('auth.register_mailbox_key_example') }}"
+                                            value="{{ old('mailbox_key') }}" required autocomplete="mailbox_key" autofocus>
+                                    </div>
+                                    <div class="col col-md-5 d-flex align-center"
+                                        style="align-items:center; padding-left: 5px">
+                                        <span><strong>@ {{ config('mailcow.domain') }}</strong></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card px-3 mt-3 signup-box">
+                            <div class="form-group">
+                                <h2>Step 2: Select a Charity to Donate to</h2>
+                                <p class="info">
+                                    {!! trans('auth.register_charity_disclaimer', ['percentage' => nova_get_setting('charitable_percentage', 30)]) !!}
+                                </p>
+                                <div class="form-group card">
+                                    <label class="card-header"
+                                        for="charity_preference">{{ trans('auth.register_charity_preference') }}</label>
+
+                                    <div class="card-body" id="charity-preference">
+                                        @foreach (\App\Models\Charity::pluck('id', 'name') as $charity => $id)
+                                            <div class="form-check" style="padding: 8px 8px; cursor: pointer">
+                                                <label class="form-check-label" for="preference-{{ $id }}"
+                                                    style="cursor: pointer">
+                                                    <input class="form-check-input" type="radio" name="charity_preference"
+                                                        id="preference-{{ $id }}" value="{{ $id }}" />
+                                                    {{ $charity }}
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card px-3 mt-3 signup-box">
+                            <div class="form-group">
+                                <h2>Step 3: Enter Your Account Details</h2>
+                                <label for="email">{{ trans('auth.register_email') }}</label>
+                                <input type="email" class="form-control" id="email" name="email"
+                                    placeholder="{{ trans('auth.register_email_example') }}" value="{{ old('email') }}"
+                                    required autocomplete="email" autofocus>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="first_name">{{ trans('auth.register_firstname') }}</label>
+                                        <input type="text" class="form-control" id="first_name" name="first_name"
+                                            placeholder="{{ trans('auth.register_firstname_example') }}"
+                                            value="{{ old('first_name') }}" required autocomplete="given-name">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="last_name">{{ trans('auth.register_lastname') }}</label>
+                                        <input type="text" class="form-control" id="last_name" name="last_name"
+                                            placeholder="{{ trans('auth.register_lastname_example') }}"
+                                            value="{{ old('last_name') }}" required autocomplete="family-name">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="dob">{{ trans('auth.register_dob') }}</label>
+                                <input type="date" class="form-control" id="dob" name="dob"
+                                    placeholder="{{ trans('auth.register_dob_example') }}" required autocomplete="dob">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">{{ trans('auth.register_password') }}</label>
+                                <input type="password" class="form-control" id="password" name="password"
+                                    placeholder="{{ trans('auth.register_password_example') }}" required
+                                    autocomplete="password">
+                            </div>
+
+                            <div class="form-group">
+                                <label
+                                    for="password_confirmation">{{ trans('auth.register_password_confirmation') }}</label>
+                                <input type="password" class="form-control" id="password_confirmation"
+                                    name="password_confirmation" required autocomplete="password">
+                            </div>
+
+                            <!-- Policy acceptance check -->
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" id="policy" name="policy" type="checkbox"
+                                        value="policy" required>
+                                    {!! trans('auth.register_policy', [
+                                        'url' => 'https://monicahq.com/privacy',
+                                        'urlterm' => 'https://monicahq.com/terms',
+                                        'hreflang' => 'en',
+                                    ]) !!}
+                                </label>
+                            </div>
+
+                            <div class="form-group actions">
+                                <input type="hidden" name="lang" value="{{ App::getLocale() }}" />
+                                <button type="submit" style="width: 100%"
+                                    class="btn btn-primary d-block">{{ trans('auth.register_action') }}</button>
+                            </div>
+
+                            <div class="form-group">
+                                @include('social-auth::buttons')
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
     </body>
