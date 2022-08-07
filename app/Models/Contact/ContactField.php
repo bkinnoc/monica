@@ -28,7 +28,7 @@ class ContactField extends Model implements LabelInterface
     protected $touches = ['contact'];
 
     protected $casts = [
-        'data' => 'encrypted:object'
+        // 'data' => 'encrypted:object'
     ];
 
     /**
