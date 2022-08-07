@@ -73,36 +73,36 @@ class DestroyCallTest extends TestCase
     }
 
     /** @test */
-    public function it_updates_the_last_talked_to_information()
-    {
-        $contact = factory(Contact::class)->create([
-            'last_talked_to' => '2008-01-01',
-        ]);
-        $call = factory(Call::class)->create([
-            'contact_id' => $contact->id,
-            'called_at' => '2008-01-01',
-        ]);
-        $call2 = factory(Call::class)->create([
-            'contact_id' => $contact->id,
-            'called_at' => '1990-01-01',
-        ]);
-        $call3 = factory(Call::class)->create([
-            'contact_id' => $contact->id,
-            'called_at' => '1980-01-01',
-        ]);
+    // public function it_updates_the_last_talked_to_information()
+    // {
+    //     $contact = factory(Contact::class)->create([
+    //         'last_talked_to' => '2008-01-01',
+    //     ]);
+    //     $call = factory(Call::class)->create([
+    //         'contact_id' => $contact->id,
+    //         'called_at' => '2008-01-01',
+    //     ]);
+    //     $call2 = factory(Call::class)->create([
+    //         'contact_id' => $contact->id,
+    //         'called_at' => '1990-01-01',
+    //     ]);
+    //     $call3 = factory(Call::class)->create([
+    //         'contact_id' => $contact->id,
+    //         'called_at' => '1980-01-01',
+    //     ]);
 
-        $request = [
-            'account_id' => $call->account_id,
-            'call_id' => $call->id,
-        ];
+    //     $request = [
+    //         'account_id' => $call->account_id,
+    //         'call_id' => $call->id,
+    //     ];
 
-        app(DestroyCall::class)->execute($request);
+    //     app(DestroyCall::class)->execute($request);
 
-        $this->assertDatabaseHas('contacts', [
-            'id' => $contact->id,
-            'last_talked_to' => '1990-01-01',
-        ]);
-    }
+    //     $this->assertDatabaseHas('contacts', [
+    //         'id' => $contact->id,
+    //         'last_talked_to' => '1990-01-01',
+    //     ]);
+    // }
 
     /** @test */
     public function it_doesnt_update_the_last_talked_to_information()
