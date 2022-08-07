@@ -4,7 +4,7 @@ namespace App\Traits;
 
 use App\Models\User\User;
 
-trait SupprtsBadWords
+trait SupportsBadWords
 {
     public function setEmailAttribute($value)
     {

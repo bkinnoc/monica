@@ -16,7 +16,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Vyuldashev\NovaPermission\RoleBooleanGroup;
 use Vyuldashev\NovaPermission\PermissionBooleanGroup;
 
-class Abandonedcart extends Resource
+class AbandonedCart extends Resource
 {
     /**
      * The model the resource corresponds to.
