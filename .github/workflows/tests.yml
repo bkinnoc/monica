@@ -201,6 +201,9 @@ jobs:
     # Setup SSH keyscan
       - name: Setup proper ssh hosts
         run: bash scripts/setup.sh
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_PRIVATE_KEY_STAGING: ${{ secrets.SSH_PRIVATE_KEY_STAGING }}
 
       - name: Install yarn dependencies
         run: yarn inst

@@ -89,6 +89,9 @@ jobs:
     # Setup SSH keyscan
       - name: Setup proper ssh hosts
         run: bash scripts/setup.sh
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_PRIVATE_KEY_STAGING: ${{ secrets.SSH_PRIVATE_KEY_STAGING }}
 
       - name: Install yarn dependencies
         run: yarn inst
@@ -270,6 +273,8 @@ jobs:
           bash scripts/build.sh --env ${{ env.ENV_NAME }}
           bash scripts/vm/deploy.sh --env ${{ env.ENV_NAME }}
         env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_PRIVATE_KEY_STAGING: ${{ secrets.SSH_PRIVATE_KEY_STAGING }}
           # This avoids a failure when the client does not know the SSH Host already
           GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
           REPO_URL: ${{ secrets.REPO_URL }}
