@@ -279,7 +279,6 @@ jobs:
           GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
           REPO_URL: ${{ secrets.REPO_URL }}
           BRANCH_NAME: ${{ env.ENV_NAME }}
-          SSH_PRIVATE_KEY: ${{ env.SSH_PRIVATE_KEY }}
           HOST_STAGING: ${{ env.HOST_STAGING }}
           USER_STAGING: ${{ env.USER_STAGING }}
           DIR_STAGING: ${{ env.DIR_STAGING }}
