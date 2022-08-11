@@ -8,7 +8,6 @@ which rsync || ( apt-get update -y && apt-get install rsync -y )
 
 # Run ssh-agent (inside the build environment)
 mkdir -vp ~/.ssh
-eval "$(ssh-agent -s)"
 
 # Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
 #chmod 0600 scripts/.id_rsa*
@@ -20,11 +19,12 @@ else
     KEY="$SSH_PRIVATE_KEY_STAGING"
 fi
 
-# if [ ! -f "$HOME/.ssh/id_rsa" ]; then
+if [ ! -f "$HOME/.ssh/id_rsa" ]; then
     echo "$KEY" > ~/.ssh/id_rsa
     chmod 0600 ~/.ssh/id_rsa
     ssh-add ~/.ssh/id_rsa
-# fi
+fi
+eval "$(ssh-agent -s)"
 
 # For Docker builds disable host key checking. Be aware that by adding that
 # you are suspectible to man-in-the-middle attacks.
