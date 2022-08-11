@@ -20,11 +20,11 @@ else
     KEY="$SSH_PRIVATE_KEY_STAGING"
 fi
 
-if [ ! -f "$HOME/.ssh/id_rsa" ]; then
+# if [ ! -f "$HOME/.ssh/id_rsa" ]; then
     echo "$KEY" > ~/.ssh/id_rsa
     chmod 0600 ~/.ssh/id_rsa
     ssh-add ~/.ssh/id_rsa
-fi
+# fi
 
 # For Docker builds disable host key checking. Be aware that by adding that
 # you are suspectible to man-in-the-middle attacks.
