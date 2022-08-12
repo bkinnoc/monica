@@ -98,17 +98,17 @@ jobs:
       - name: Lint files
         run: yarn run lint:fix
 
-      # - name: Check if there is any file update needed
-      #   id: check
-      #   run: |
-      #     status=$(git status --porcelain)
-      #     if [ -z "$status" ]; then
-      #       echo "Nothing to push, already up to date."
-      #     else
-      #       echo -e "Waiting modifications:\n$status"
-      #       echo "::error::Resources are not up to date. Please rebuild with: 'yarn run lint:all' and 'yarn run prod'."
-      #       exit -1
-      #     fi
+      - name: Check if there is any file update needed
+        id: check
+        run: |
+          status=$(git status --porcelain)
+          if [ -z "$status" ]; then
+            echo "Nothing to push, already up to date."
+          else
+            echo -e "Waiting modifications:\n$status"
+            echo "::error::Resources are not up to date. Please rebuild with: 'yarn run lint:all' and 'yarn run prod'."
+            exit -1
+          fi
 
       - name: Get version
         id: version

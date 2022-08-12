@@ -70,8 +70,9 @@
                         @endif
                     </div>
                     <multistep-register
-                      :charities="{{ \Safe\json_encode(App\Models\Charity::pluck('id', 'name')->toArray())}}"
-                        :locale="{{ App::getLocale() }}":urls="{{ \Safe\json_encode([
+                    locale="{{ App::getLocale() }}"
+                    :charities="{{ \Safe\json_encode(App\Models\Charity::pluck('id', 'name')->toArray())}}"
+                        :urls="{{ \Safe\json_encode([
                             'policy' => trans('auth.register_policy', [
                                 'url' => 'https://monicahq.com/privacy',
                                 'urlterm' => 'https://monicahq.com/terms',
