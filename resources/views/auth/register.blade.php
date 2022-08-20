@@ -1,6 +1,7 @@
 @extends('marketing.skeleton')
 
 @section('content')
+
     <body class="marketing register">
         <div class="container">
             <div class="row">
@@ -69,15 +70,22 @@
                             </div>
                         @endif
                     </div>
-                    <multistep-register
-                    locale="{{ App::getLocale() }}"
-                    :charities="{{ \Safe\json_encode(App\Models\Charity::pluck('id', 'name')->toArray())}}"
+                    <multistep-register locale="{{ App::getLocale() }}"
+                        :charities="{{ \Safe\json_encode(App\Models\Charity::pluck('id', 'name')->toArray()) }}"
                         :urls="{{ \Safe\json_encode([
+                            'plans' => [
+                                'annually' => route('settings.subscriptions.upgrade') . '?plan=annual',
+                                'monthly' => route('settings.subscriptions.upgrade') . '?plan=monthly',
+                            ],
                             'policy' => trans('auth.register_policy', [
                                 'url' => 'https://monicahq.com/privacy',
                                 'urlterm' => 'https://monicahq.com/terms',
                                 'hreflang' => 'en',
                             ]),
+                        ]) }}"
+                        :plans="{{ \Safe\json_encode([
+                            'annually' => \App\Helpers\InstanceHelper::getPlanInformationFromConfig('annual'),
+                            'monthly' => \App\Helpers\InstanceHelper::getPlanInformationFromConfig('monthly'),
                         ]) }}"
                         :i18n="{{ \Safe\json_encode([
                             'auth' => [
@@ -108,7 +116,7 @@
                             'dob' => old('dob'),
                             'charity' => old('charity'),
                         ]) }}"
-                        :config="{{ \Safe\json_encode(config('mailcow')) }}">
+                        :config="{{ \Safe\json_encode(array_merge(config('mailcow'), ['monica' => config('monica')])) }}">
                         <template v-slot:csrf>
                             @csrf
                         </template>

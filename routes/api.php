@@ -9,9 +9,8 @@ Route::resource('compliance', 'Settings\\ApiComplianceController', ['only' => ['
 Route::resource('currencies', 'Settings\\ApiCurrencyController', ['only' => ['index', 'show']])->name('index', 'api.currencies');
 
 // Support for validating sign up steps
-Route::post('/register-validate/{step}', 'Auth\RegisterController@validateStep')->name('register-steps-validate');
-Route::post('/abandoned-cart', 'Auth\RegisterController@recordForAbandonedCart')->name('register-steps-abandoned-cart');
-Route::post('/register', 'Auth\RegisterController@registerCustom')->name('register-using-api');
+Route::post('/register-validate/{step}', 'Auth\RegisterController@validateStep')->name('register.steps.validate');
+Route::post('/abandoned-cart', 'Auth\RegisterController@recordForAbandonedCart')->name('register.steps.abandoned-cart');
 
 Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/', 'ApiController@success')->name('api');

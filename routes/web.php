@@ -19,6 +19,7 @@ use App\Http\Controllers\Contacts\CallsController;
 Route::get('/', 'Auth\LoginController@showLoginOrRegister')->name('loginRedirect');
 
 Auth::routes(['verify' => true]);
+Route::post('/multi-step-register', 'Api\Auth\\RegisterController@registerCustom')->name('register.steps');
 
 // Redirect .well-known urls (https://en.wikipedia.org/wiki/List_of_/.well-known/_services_offered_by_webservers)
 Route::permanentRedirect('/.well-known/carddav', '/dav/');

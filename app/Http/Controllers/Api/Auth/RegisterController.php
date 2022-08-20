@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Models\User\User;
 use App\Helpers\AppHelper;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\AbandonedCart;
@@ -30,6 +31,16 @@ class RegisterController extends Controller
     use RegistersUsers;
 
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['guest', 'oauth'], ['except' => ['logout']]);
+    }
+
+    /**
      * Validate the given step and parameters
      *
      * @param  mixed $request
@@ -41,6 +52,9 @@ class RegisterController extends Controller
         switch ($step) {
             case 0:
                 $params = [
+                    'last_name' => 'required|max:255',
+                    'first_name' => 'required|max:255',
+                    'email' => ['required', 'email', 'max:255', 'unique:users', new \App\Rules\BadWord],
                     'mailbox_key' => app()->environment('testing') ? [new \App\Rules\BadWord] : [
                         'unique:mailcow.mailbox,username',
                         new \App\Rules\BadWord
@@ -55,9 +69,6 @@ class RegisterController extends Controller
             case 2:
                 $beforePeriod = nova_get_setting('minimum_age', 13) . ' years ago';
                 $params = [
-                    'last_name' => 'required|max:255',
-                    'first_name' => 'required|max:255',
-                    'email' => ['required', 'email', 'max:255', 'unique:users', new \App\Rules\BadWord],
                     'password' => [
                         'required', 'confirmed',
                         'max:' . config('app.password_max', 32),
@@ -97,7 +108,13 @@ class RegisterController extends Controller
      */
     public function recordForAbandonedCart(Request $request)
     {
-        $record = AbandonedCart::firstOrCreate($request->all());
+        $params = $request->all();
+        $record = [];
+        if (isset($params['email']) && !AbandonedCart::where(Arr::only($params, ['email'], ['mailbox_key']))->exists()) {
+            $record = AbandonedCart::firstOrCreate(['email' => $params['email']]);
+            $record->fill($params);
+            $record->save();
+        }
         return new JsonResponse($record);
     }
 
@@ -109,7 +126,8 @@ class RegisterController extends Controller
      */
     public function create($data): ?User
     {
-        return app(BaseRegisterController::class)->create($data);
+        $result = app(BaseRegisterController::class)->create($data);
+        return $result;
     }
 
     /**
@@ -121,6 +139,7 @@ class RegisterController extends Controller
     protected function registered(Request $request, $user)
     {
         if (!is_null($user)) {
+            $this->guard()->login($user);
             /** @var int $count */
             $count = Account::count();
             if (!config('monica.signup_double_optin') || $count == 1) {
