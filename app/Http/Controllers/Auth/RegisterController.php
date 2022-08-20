@@ -126,7 +126,7 @@ class RegisterController extends Controller
                 'percent' => nova_get_setting('charitable_percentage', 30)
             ]);
 
-            if (!$first) {
+            if (!$first && $user instanceof User) {
                 // send me an alert
                 SendNewUserAlert::dispatch($user);
             }
