@@ -31,7 +31,7 @@ class RegisterControllerTest extends TestCase
         'expires_in',
     ];
 
-    private const OAUTH_MULTISTEP_REGISTER_URL = 'http://localhost:8001/api/multi-step-register';
+    private const OAUTH_MULTISTEP_REGISTER_URL = 'http://localhost:8001/multi-step-register';
 
     public function test_multistep_register()
     {
