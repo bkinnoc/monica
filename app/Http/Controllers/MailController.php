@@ -6,6 +6,7 @@ use App\Models\User\User;
 use App\Helpers\DateHelper;
 use App\Models\Contact\Debt;
 use Illuminate\Http\Request;
+use App\Models\MailcowMailbox;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Crypt;
@@ -26,10 +27,13 @@ class MailController extends Controller
         $mailbox = $user->mailbox()
             ->first();
 
+
         if (!$mailbox) {
             app(MailboxRepository::class)->createForUser($user);
             $user->load('mailbox');
+            $mailbox = $user->mailbox;
         }
+        // dd("Mailbox", $user->mailbox_key, $mailbox, \Nitm\Helpers\DbHelper::getQueryWithBindings($user->mailbox()), MailcowMailbox::all()->toArray());
 
         // $password = Crypt::encryptString($user->uuid);
         $url = config('mailcow.url');

@@ -70,6 +70,7 @@ class MailboxRepository extends BaseRepository
                 [
                     'domain' => $domain,
                     'name' => "{$user->first_name} {$user->last_name}",
+                    'local_part' => $localPart,
                     'localPart' => $localPart,
                     'password' => $password,
                     'password2' => $password,
