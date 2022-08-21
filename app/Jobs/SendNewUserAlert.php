@@ -35,7 +35,7 @@ class SendNewUserAlert implements ShouldQueue
     public function handle()
     {
         $email = config('monica.email_new_user_notification');
-        if (! empty($email)) {
+        if (!empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL) && $this->user instanceof User) {
             Notification::route('mail', $email)
                 ->notify(new NewUserAlert($this->user));
         }
