@@ -3,10 +3,15 @@
 namespace App\Providers;
 
 use Laravel\Nova\Nova;
+use Eminiarts\Tabs\Tab;
 use Laravel\Nova\Panel;
+use Eminiarts\Tabs\Tabs;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Boolean;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Gate;
 use App\Providers\AppServiceProvider;
 use GeneaLabs\NovaTelescope\NovaTelescope;
@@ -40,6 +45,26 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             Panel::make('Restrictions', [
                 Number::make('Minimum Age (Years)', 'minimum_age'),
             ]),
+            Panel::make('Abandoned Cart Settings', [
+                Boolean::make("Disable abandoned cart emails", "abandoned_cart_emails_disabled"),
+                Number::make('# of emails to send', 'abandoned_cart_emails_to_send')->default(nova_get_setting('abandoned_cart_emails_to_send', 1))
+            ]),
+            Tabs::make(
+                'Abandoned Cart Emails',
+                Collection::times(
+                    nova_get_setting('abandoned_cart_emails_to_send', 1),
+                    function ($index) {
+                        return Tab::make("Email ${index}", [
+                            Number::make('Send after (hrs)', "abandoned_cart_${index}_hours")->help($index == 1 ? 'Send the first email after the above  hours' : 'Sent after the last email was sent'),
+                            Trix::make("Email ${index}", "abandoned_cart_${index}_email")->help("Use tokens such as to replace text:
+                            <br/>{{name}} - The user's full name
+                            <br/>{{email}} - The user's email
+                            <br/>{{firstName}} - The user's first name
+                            <br/>{{lastName}} - The user's last name")
+                        ]);
+                    }
+                )
+            )
         ]);
     }
 

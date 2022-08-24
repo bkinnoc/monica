@@ -25,6 +25,7 @@
         "doctrine/dbal": "^3.0",
         "e-monsite/mailcow-php-client": "*@dev",
         "ebess/advanced-nova-media-library": "^3.8.0",
+        "eminiarts/nova-tabs": "^1.0.0",
         "erusev/parsedown": "^1.7",
         "facade/ignition": "^2.0",
         "genealabs/nova-telescope": "0.4.1",
