@@ -38,34 +38,36 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function registerSettings()
     {
         // Using an array
-        \OptimistDigital\NovaSettings\NovaSettings::addSettingsFields([
-            Panel::make('Charitable Settings', [
-                Number::make('Default Donation Percentage', 'charitable_percentage'),
-            ]),
-            Panel::make('Restrictions', [
-                Number::make('Minimum Age (Years)', 'minimum_age'),
-            ]),
-            Panel::make('Abandoned Cart Settings', [
-                Boolean::make("Disable abandoned cart emails", "abandoned_cart_emails_disabled"),
-                Number::make('# of emails to send', 'abandoned_cart_emails_to_send')->default(nova_get_setting('abandoned_cart_emails_to_send', 1))
-            ]),
-            Tabs::make(
-                'Abandoned Cart Emails',
-                Collection::times(
-                    nova_get_setting('abandoned_cart_emails_to_send', 1),
-                    function ($index) {
-                        return Tab::make("Email ${index}", [
-                            Number::make('Send after (hrs)', "abandoned_cart_${index}_hours")->help($index == 1 ? 'Send the first email after the above  hours' : 'Sent after the last email was sent'),
-                            Trix::make("Email ${index}", "abandoned_cart_${index}_email")->help("Use tokens such as to replace text:
+        if (!app()->environment('testing')) {
+            \OptimistDigital\NovaSettings\NovaSettings::addSettingsFields([
+                Panel::make('Charitable Settings', [
+                    Number::make('Default Donation Percentage', 'charitable_percentage'),
+                ]),
+                Panel::make('Restrictions', [
+                    Number::make('Minimum Age (Years)', 'minimum_age'),
+                ]),
+                Panel::make('Abandoned Cart Settings', [
+                    Boolean::make("Disable abandoned cart emails", "abandoned_cart_emails_disabled"),
+                    Number::make('# of emails to send', 'abandoned_cart_emails_to_send')->default(nova_get_setting('abandoned_cart_emails_to_send', 1))
+                ]),
+                Tabs::make(
+                    'Abandoned Cart Emails',
+                    Collection::times(
+                        nova_get_setting('abandoned_cart_emails_to_send', 1),
+                        function ($index) {
+                            return Tab::make("Email ${index}", [
+                                Number::make('Send after (hrs)', "abandoned_cart_${index}_hours")->help($index == 1 ? 'Send the first email after the above  hours' : 'Sent after the last email was sent'),
+                                Trix::make("Email ${index}", "abandoned_cart_${index}_email")->help("Use tokens such as to replace text:
                             <br/>{{name}} - The user's full name
                             <br/>{{email}} - The user's email
                             <br/>{{firstName}} - The user's first name
                             <br/>{{lastName}} - The user's last name")
-                        ]);
-                    }
+                            ]);
+                        }
+                    )
                 )
-            )
-        ]);
+            ]);
+        }
     }
 
     /**
