@@ -147,4 +147,9 @@ return [
 
     'currency' => 'USD',
 
+    /**
+     * Dynamically manage and handle nova settings
+     */
+    'enable_settings' => env('NOVA_SETTINGS_ENABLED', false)
+
 ];
