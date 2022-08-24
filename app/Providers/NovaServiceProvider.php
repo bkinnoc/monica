@@ -38,7 +38,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function registerSettings()
     {
         // Using an array
-        if (!env('NOVA_SETTINGS_DISABLED')) {
+        if (env('NOVA_SETTINGS_ENABLED')) {
             \OptimistDigital\NovaSettings\NovaSettings::addSettingsFields([
                 Panel::make('Charitable Settings', [
                     Number::make('Default Donation Percentage', 'charitable_percentage'),
