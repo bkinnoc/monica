@@ -7,11 +7,12 @@ use Carbon\Traits\Timestamp;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
-use Laravel\Nova\Fields\DateTime;
+use App\Nova\Actions\EmailAbandonedCart;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Vyuldashev\NovaPermission\RoleBooleanGroup;
 use Vyuldashev\NovaPermission\PermissionBooleanGroup;
@@ -121,6 +122,8 @@ class AbandonedCart extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            new EmailAbandonedCart
+        ];
     }
 }

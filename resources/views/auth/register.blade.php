@@ -72,6 +72,7 @@
                     </div>
                     <multistep-register locale="{{ App::getLocale() }}"
                         :charities="{{ \Safe\json_encode(App\Models\Charity::pluck('id', 'name')->toArray()) }}"
+                        :existing="{{ \Safe\json_encode(($token = request()->token) ? optional(App\Models\AbandonedCart::where('email', '=', Crypt::decryptString($token))->first())->toArray() : [])}}"
                         :urls="{{ \Safe\json_encode([
                             'plans' => [
                                 'annually' => route('settings.subscriptions.upgrade') . '?plan=annual',

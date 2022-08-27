@@ -1,10 +1,8 @@
 @component('mail::message')
-# Introduction
+{!! $body !!}
 
-The body of your message.
-
-@component('mail::button', ['url' => ''])
-Button Text
+@component('mail::button', ['url' => $url])
+    Claim your email address!
 @endcomponent
 
 Thanks,<br>

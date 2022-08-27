@@ -124,6 +124,15 @@
           <h2>Step 1b: Select Your <strong>{{ config.domain }}</strong> Username</h2>
           <div class="row">
             <div
+              v-if="welcomeBack"
+              class="col col-12"
+            >
+              <div class="alert alert-info">
+                Welcome back {{ form.first_name }}.
+                <span v-if="!this.errors.mailbox_key">Your chosen mailbox is still available! Continue where you left of.</span><span v-else>Unfortunately your previously chosen mailbox is no longer available!</span>
+              </div>
+            </div>
+            <div
               class="col col-sm-12 col-lg-7 col-md-7"
               style="padding-right: 5px; flex-grow: 1;"
             >
@@ -514,6 +523,8 @@
   </div>
 </template>
 <script>
+import { validate } from "json-schema";
+
 export default {
   props: {
     charities: {
@@ -547,6 +558,10 @@ export default {
       type: Object,
       default: () => {},
     },
+    existing: {
+      type: Object,
+      default: () => {},
+    },
     plans: {
       type: Object,
       default: () => {},
@@ -574,6 +589,7 @@ export default {
       step: 0,
       errors: {},
       user: {},
+      welcomeBack: false,
       steps: [
         {
           label: "Select Username",
@@ -641,6 +657,15 @@ export default {
             !this.form.password_confirmation ||
             !this.form.policy
           );
+        default:
+          return (
+            this.activity.busy ||
+            !this.form.first_name ||
+            !this.form.last_name ||
+            !this.form.email ||
+            !this.form.mailbox_key
+          );
+          break;
       }
     },
     checkMailboxKey() {
@@ -722,6 +747,17 @@ export default {
   },
   created() {
     this.form = { ...this.form, ...this.old };
+    if (this.existing instanceof Object && this.existing.email) {
+      this.welcomeBack = true;
+      this.form.email = this.existing.email;
+      this.form.first_name = this.existing.first_name;
+      this.form.last_name = this.existing.last_name;
+      this.form.mailbox_key = this.existing.mailbox_key;
+      this.form.mailbox_key && this.checkMailboxKey();
+      if (this.getIsStepDisabled(0)) {
+        this.validateStep(0);
+      }
+    }
   },
 };
 </script>

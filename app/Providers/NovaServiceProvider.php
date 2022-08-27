@@ -57,6 +57,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                         function ($index) {
                             return Tab::make("Email ${index}", [
                                 Number::make('Send after (hrs)', "abandoned_cart_${index}_hours")->help($index == 1 ? 'Send the first email after the above  hours' : 'Sent after the last email was sent'),
+                                Text::make('Subject', "abandoned_cart_${index}_subject")->help("Use tokens such as to replace text:
+                                <br/>{{name}} - The user's full name
+                                <br/>{{email}} - The user's email
+                                <br/>{{firstName}} - The user's first name
+                                <br/>{{lastName}} - The user's last name"),
                                 Trix::make("Email ${index}", "abandoned_cart_${index}_email")->help("Use tokens such as to replace text:
                                 <br/>{{name}} - The user's full name
                                 <br/>{{email}} - The user's email

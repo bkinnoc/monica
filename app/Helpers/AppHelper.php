@@ -2,7 +2,9 @@
 
 namespace App\Helpers;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
+use OptimistDigital\NovaSettings\Models\Settings;
 use Illuminate\Validation\Rules\Password as PasswordRules;
 
 class AppHelper
@@ -47,5 +49,27 @@ class AppHelper
             'policy' => 'required',
             'dob' => "sometimes|before:{$beforePeriod}"
         ]));
+    }
+
+    /**
+     * Get Settings Based OnHoursKey
+     *
+     * @param  mixed $setting
+     * @return Collection
+     */
+    public static function getSettingsBasedOnHoursKey($key): Collection
+    {
+        $key = str_replace(['abandoned_cart_', '_hours'], '', $key);
+        $search = "abandoned_cart_{$key}";
+        return  Settings::where('key', 'like', $search . "_%")
+            ->get()
+            ->map(function ($setting) use ($search) {
+                return [
+                    'key' => substr($setting['key'], strlen($search) + 1),
+                    'value' => $setting['value'],
+                ];
+            })->keyBy('key')->transform(function ($setting) {
+                return $setting['value'];
+            });
     }
 }

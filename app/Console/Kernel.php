@@ -13,8 +13,7 @@ class Kernel extends ConsoleKernel
      *
      * @var array
      */
-    protected $commands = [
-    ];
+    protected $commands = [];
 
     /**
      * Register the Closure based commands for the application.
@@ -23,11 +22,11 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
-        $this->load(__DIR__.'/Commands/OneTime');
+        $this->load(__DIR__ . '/Commands');
+        $this->load(__DIR__ . '/Commands/OneTime');
 
         if ($this->app->environment() != 'production') {
-            $this->load(__DIR__.'/Commands/Tests');
+            $this->load(__DIR__ . '/Commands/Tests');
         }
 
         require base_path('routes/console.php');
@@ -54,6 +53,8 @@ class Kernel extends ConsoleKernel
             $this->scheduleCommand($schedule, 'cloudflare:reload', 'daily');
         }
         $this->scheduleCommand($schedule, 'model:prune', 'daily');
+        //Custom app commands
+        $this->scheduleCommand($schedule, 'app:contact-abandoned-carts', 'hourly');
     }
 
     /**
