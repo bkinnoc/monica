@@ -6,14 +6,26 @@ use Laravel\Nova\Nova;
 use Eminiarts\Tabs\Tab;
 use Laravel\Nova\Panel;
 use Eminiarts\Tabs\Tabs;
+use App\Helpers\AppHelper;
+use Illuminate\Support\Str;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Trix;
+use App\Models\MailcowMailbox;
+use App\Nova\Metrics\NewUsers;
+use App\Helpers\InstanceHelper;
+use App\Nova\Lenses\UserQuotas;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Boolean;
+use App\Nova\Metrics\UsersPerDay;
+use Laravel\Cashier\Subscription;
 use Illuminate\Support\Collection;
+use Mako\CustomTableCard\Table\Row;
 use Illuminate\Support\Facades\Gate;
+use Mako\CustomTableCard\Table\Cell;
+use App\Nova\Metrics\UsersPerCharity;
 use App\Providers\AppServiceProvider;
+use Mako\CustomTableCard\CustomTableCard;
 use GeneaLabs\NovaTelescope\NovaTelescope;
 use Bolechen\NovaActivitylog\NovaActivitylog;
 use OptimistDigital\NovaSettings\NovaSettings;
@@ -113,7 +125,45 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         return [
-            new Help,
+            new NewUsers,
+            new UsersPerDay,
+            new UsersPerCharity,
+            (new CustomTableCard)->header([
+                new Cell('User'),
+                new Cell('Mailbox'),
+                new Cell('Subscription'),
+                new Cell('Total Storage'),
+                new Cell('Available Storage')
+            ])
+                ->data(
+                    MailcowMailbox::with('user.account')
+                        ->select([
+                            'quota', 'quota', 'username'
+                        ])
+                        ->get()
+                        ->map(function ($mailbox) {
+                            $subscription = optional($mailbox->user)->account->getSubscribedPlan();
+                            $plan = $subscription instanceof Subscription ? InstanceHelper::getPlanInformationFromSubscription($subscription) : [];
+                            // dump(optional($mailbox->user)->account->getSubscribedPlan(), $plan);
+                            return new Row(
+                                new Cell(optional($mailbox->user)->name),
+                                new Cell($mailbox->username),
+                                new Cell(
+                                    implode(
+                                        ' @ ',
+                                        [
+                                            $plan['name'] ?: Str::title($plan['type']) ?: 'Unnamed Plan',
+                                            $plan['friendlyPrice'] ?: '$0.00',
+                                        ]
+                                    )
+                                ),
+                                new Cell(AppHelper::bytesToHumanReadable($mailbox->quota)),
+                                new Cell(AppHelper::bytesToHumanReadable($mailbox->quota)),
+                            );
+                        })->toArray()
+                )
+                ->title('User Quotas')
+                ->viewAll(['label' => 'View All', 'link' => 'resources/mailboxes'])
         ];
     }
 

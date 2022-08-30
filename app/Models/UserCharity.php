@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model as Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class UserCharity
  * @package App\Models
- * @version May 8, 2022, 7:59 pm UTC
+ * @version August 30, 2022, 7:48 pm UTC
  *
  * @property integer $user_id
  * @property integer $charity_id
@@ -17,7 +18,7 @@ class UserCharity extends Model
 {
 
     public $table = 'user_charities';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
@@ -52,5 +53,13 @@ class UserCharity extends Model
         'percent' => 'required|integer'
     ];
 
-    
+    /**
+     * Charity
+     *
+     * @return BelongsTo
+     */
+    public function charity(): BelongsTo
+    {
+        return $this->belongsTo(Charity::class);
+    }
 }
