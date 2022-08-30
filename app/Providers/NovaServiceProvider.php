@@ -164,7 +164,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                         })->toArray()
                 )
                 ->title('User Quotas')
-                ->viewAll(['label' => 'View All', 'link' => 'resources/mailboxes'])
+                ->viewAll(['label' => 'View All', 'link' => 'resources/mailcow-mailboxes'])
         ];
     }
 
