@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Helpers\AppHelper;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
@@ -46,7 +47,7 @@ class MailcowMailbox extends Resource
      * @var array
      */
     public static $search = [
-        'name', 'username', 'local_part', 'domain'
+        'first_name', 'last_name', 'mailbox_key'
     ];
 
     /**
@@ -92,16 +93,16 @@ class MailcowMailbox extends Resource
                 return implode(
                     ' @ ',
                     [
-                        $plan['name'] ?: Str::title($plan['type']) ?: 'Unnamed Plan',
-                        $plan['friendlyPrice'] ?: '$0.00',
+                        Str::title(Arr::get($plan, 'name') ?: Arr::get($plan, 'type') ?: 'Unnamed Plan'),
+                        Arr::get($plan, 'friendlyPrice') ?: '$0.00',
                     ]
                 );
             }),
             Text::make('Total Storage')->displayUsing(function () {
-                return AppHelper::bytesToHumanReadable($this->mailbox->quota);
+                return AppHelper::bytesToHumanReadable(optional($this->mailbox)->quota);
             }),
             Text::make('Available Storage')->displayUsing(function () {
-                return AppHelper::bytesToHumanReadable($this->mailbox->quota);
+                return AppHelper::bytesToHumanReadable(optional($this->mailbox)->quota);
             })
         ];
     }

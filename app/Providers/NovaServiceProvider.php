@@ -7,6 +7,7 @@ use Eminiarts\Tabs\Tab;
 use Laravel\Nova\Panel;
 use Eminiarts\Tabs\Tabs;
 use App\Helpers\AppHelper;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -142,7 +143,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                         ])
                         ->get()
                         ->map(function ($mailbox) {
-                            $subscription = optional($mailbox->user)->account->getSubscribedPlan();
+                            $subscription = optional(optional($mailbox->user)->account)->getSubscribedPlan();
                             $plan = $subscription instanceof Subscription ? InstanceHelper::getPlanInformationFromSubscription($subscription) : [];
                             // dump(optional($mailbox->user)->account->getSubscribedPlan(), $plan);
                             return new Row(
@@ -152,8 +153,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                                     implode(
                                         ' @ ',
                                         [
-                                            $plan['name'] ?: Str::title($plan['type']) ?: 'Unnamed Plan',
-                                            $plan['friendlyPrice'] ?: '$0.00',
+                                            Str::title(Arr::get($plan, 'name') ?: Arr::get($plan, 'type') ?: 'Unnamed Plan'),
+                                            Arr::get($plan, 'friendlyPrice') ?: '$0.00',
                                         ]
                                     )
                                 ),
