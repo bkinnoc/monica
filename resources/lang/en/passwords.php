@@ -26,5 +26,6 @@ return [
     'changed' => 'Password changed successfully.',
     'invalid' => 'Current password you entered is not correct.',
     'throttled' => 'Please wait before retrying.',
+    'uncompromised' => 'This pssword is very insecure. We recommend using a stronger password based on the given password rules.'
 
 ];
