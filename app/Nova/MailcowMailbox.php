@@ -2,29 +2,30 @@
 
 namespace App\Nova;
 
+use App\Helpers\AppHelper;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Laravel\Nova\Fields\ID;
-use Carbon\Traits\Timestamp;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use App\Helpers\InstanceHelper;
 use Laravel\Nova\Fields\Number;
-use Laravel\Nova\Fields\DateTime;
+use Laravel\Cashier\Subscription;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
-use App\Nova\Actions\EmailAbandonedCart;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Vyuldashev\NovaPermission\RoleBooleanGroup;
 use Vyuldashev\NovaPermission\PermissionBooleanGroup;
 
-class AbandonedCart extends Resource
+class MailcowMailbox extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\AbandonedCart::class;
+    public static $model = \App\Models\User\User::class;
 
     /**
      * @inheritDoc
@@ -38,7 +39,7 @@ class AbandonedCart extends Resource
      *
      * @var string
      */
-    public static $title = 'email';
+    public static $title = 'username';
 
     /**
      * The columns that should be searched.
@@ -46,8 +47,30 @@ class AbandonedCart extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'first_name', 'last_name', 'mailbox_key', 'email',
+        'first_name', 'last_name', 'mailbox_key'
     ];
+
+    /**
+     * Title
+     *
+     * @return void
+     */
+    public static function label()
+    {
+        return 'Mailboxes';
+    }
+
+    /**
+     * Index Query
+     *
+     * @param  mixed $request
+     * @param  mixed $query
+     * @return void
+     */
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        return $query->with('account',  'mailbox')->whereNotNull('mailbox_key');
+    }
 
     /**
      * Get the fields displayed by the resource.
@@ -58,26 +81,29 @@ class AbandonedCart extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
-            BelongsTo::make('User', 'user'),
-
-            Text::make('First Name')
+            Text::make('Name', 'name')
                 ->sortable()
                 ->readonly(),
-
-            Text::make('Last Name')
+            Text::make('Mailbox', 'mailbox_key')
                 ->sortable()
                 ->readonly(),
-
-            Text::make('Email')
-                ->sortable()
-                ->readonly(),
-
-            Text::make('Mailbox Key')
-                ->sortable()
-                ->readonly(),
-            DateTime::make('Signed Up At'),
-            DateTime::make('Created At')
+            Text::make('Subscription')->displayUsing(function () {
+                $subscription = $this->account->getSubscribedPlan();
+                $plan = $subscription instanceof Subscription ? InstanceHelper::getPlanInformationFromSubscription($subscription) : [];
+                return implode(
+                    ' @ ',
+                    [
+                        Str::title(Arr::get($plan, 'name') ?: Arr::get($plan, 'type') ?: 'Unnamed Plan'),
+                        Arr::get($plan, 'friendlyPrice') ?: '$0.00',
+                    ]
+                );
+            }),
+            Text::make('Total Storage')->displayUsing(function () {
+                return AppHelper::bytesToHumanReadable(optional($this->mailbox)->quota);
+            }),
+            Text::make('Available Storage')->displayUsing(function () {
+                return AppHelper::bytesToHumanReadable(optional($this->mailbox)->quota);
+            })
         ];
     }
 
@@ -122,8 +148,6 @@ class AbandonedCart extends Resource
      */
     public function actions(Request $request)
     {
-        return [
-            new EmailAbandonedCart
-        ];
+        return [];
     }
 }
