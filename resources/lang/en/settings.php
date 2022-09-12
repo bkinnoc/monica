@@ -262,8 +262,8 @@ return [
     'subscriptions_payment_success' => 'The payment was successful.',
 
     'subscriptions_pdf_title' => 'Your :name monthly subscription',
-    'subscriptions_plan_frequency_year' => ':amount / year',
-    'subscriptions_plan_frequency_month' => ':amount / month',
+    'subscriptions_plan_frequency_year' => '{amount} / year',
+    'subscriptions_plan_frequency_month' => '{amount} / month',
     'subscriptions_plan_choose' => 'Choose this plan',
     'subscriptions_plan_year_title' => 'Pay annually',
     'subscriptions_plan_year_bonus' => 'Peace of mind for a whole year',

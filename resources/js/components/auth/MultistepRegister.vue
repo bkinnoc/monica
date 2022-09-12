@@ -273,6 +273,7 @@
               </div>
             </div>
             <div class="col col-12">
+              <div class="alert alert-info"><span v-html="i18n.auth.register_password_rules"></span></div>
               <div class="form-group">
                 <label for="password">{{ i18n.auth.register_password }}</label>
                 <input
@@ -364,12 +365,12 @@
       >
         <div class="row">
           <div class="col-12">
-            <h2 class="tc mt4 fw4">{{ $t('settings.subscriptions_account_upgrade_title') }}</h2>
+            <!-- <h2 class="tc mt4 fw4">{{ $t('settings.subscriptions_account_upgrade_title') }}</h2> -->
             <div class="br3 ba b--gray-monica bg-white mb4">
               <div class="pa4 bb b--gray-monica">
                 <h3 class="tc">{{ $t('settings.subscriptions_account_payment') }}</h3>
                 <div class="cf mb4">
-                  <div class="fl w-50-ns w-100 pa3 mt0-ns mt4">
+                  <div class="fl w-100-ns w-100 pa3 mt0-ns mt4">
                     <div class="b--purple ba pt3 br3 bw1 relative">
                       <img
                         src="img/settings/subscription/best_value.png"
@@ -432,7 +433,7 @@
                       </ul>
                     </div>
                   </div>
-                  <div class="fl w-50-ns w-100 pa3">
+                  <!-- <div class="fl w-50-ns w-100 pa3">
                     <div class="b--gray-monica ba pt3 br3 bw1">
                       <h3 class="tc mb3 pt3">{{ $t('settings.subscriptions_plan_month_title') }}
                       </h3>
@@ -489,7 +490,7 @@
                         </li>
                       </ul>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
                 <p class="mb1 tc">{{ $t('settings.subscriptions_plan_include1') }}</p>
                 <p class="mb1 tc">{{ $t('settings.subscriptions_plan_include2') }}</p>

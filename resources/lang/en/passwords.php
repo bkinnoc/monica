@@ -26,6 +26,6 @@ return [
     'changed' => 'Password changed successfully.',
     'invalid' => 'Current password you entered is not correct.',
     'throttled' => 'Please wait before retrying.',
-    'uncompromised' => 'This pssword is very insecure. We recommend using a stronger password based on the given password rules.'
+    'rules' => 'Your password must contain at least: <br/><ol><li>10 characters</li><li>One special character</li><li>One number</li><li>One uppercase character</li></ol>'
 
 ];

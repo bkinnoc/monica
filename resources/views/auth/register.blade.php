@@ -5,7 +5,7 @@
     <body class="marketing register">
         <div class="container">
             <div class="row">
-                <div id="app" class="col-12 col-md-8 offset-md-2 offset-md-2-right">
+                <div id="app" class="col-12 col-md-10 offset-lg-2 offset-lg-2-right">
                     <div class="tc">
                         <ul class="horizontal f6 relative mb3 light-silver">
                             <li class="mr2">
@@ -72,7 +72,7 @@
                     </div>
                     <multistep-register locale="{{ App::getLocale() }}"
                         :charities="{{ \Safe\json_encode(App\Models\Charity::pluck('id', 'name')->toArray()) }}"
-                        :existing="{{ \Safe\json_encode(($token = request()->token) ? optional(App\Models\AbandonedCart::where('email', '=', Crypt::decryptString($token))->first())->toArray() : [])}}"
+                        :existing="{{ \Safe\json_encode(($token = request()->token) ? optional(App\Models\AbandonedCart::where('email', '=', Crypt::decryptString($token))->first())->toArray() : []) }}"
                         :urls="{{ \Safe\json_encode([
                             'plans' => [
                                 'annually' => route('settings.subscriptions.upgrade') . '?plan=annual',
@@ -107,6 +107,7 @@
                                 'register_password' => trans('auth.register_password'),
                                 'register_password_example' => trans('auth.register_password_example'),
                                 'register_password_confirmation' => trans('auth.register_password_confirmation'),
+                                'register_password_rules' => trans('passwords.rules'),
                                 'register_action' => trans('auth.register_action'),
                             ],
                         ]) }}"

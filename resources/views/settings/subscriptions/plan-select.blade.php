@@ -2,9 +2,9 @@
     <div class="col-12 col-sm-8 offset-sm-2">
 
         <h2 class="tc mt4 fw4">{{ trans('settings.subscriptions_account_upgrade_title') }}</h2>
-        <p class="tc mb4">
+        {{-- <p class="tc mb4">
             {{ trans('settings.subscriptions_account_upgrade_choice', ['customers' => $numberOfCustomers]) }}
-        </p>
+        </p> --}}
 
         <div class="br3 ba b--gray-monica bg-white mb4">
             <div class="pa4 bb b--gray-monica">
@@ -46,6 +46,7 @@
                             </ul>
                         </div>
                     </div>
+                    <?php if(false): ?>
                     <div class="{{ htmldir() == 'ltr' ? 'fl' : 'fr' }} w-50-ns w-100 pa3">
                         <div class="b--gray-monica ba pt3 br3 bw1">
                             <h3 class="tc mb3 pt3">{{ trans('settings.subscriptions_plan_month_title') }}
@@ -79,6 +80,7 @@
                             </ul>
                         </div>
                     </div>
+                    <?php endif; ?>
                 </div>
                 <p class="mb1 tc">{{ trans('settings.subscriptions_plan_include1') }}</p>
                 <p class="mb1 tc">{{ trans('settings.subscriptions_plan_include2') }}</p>
