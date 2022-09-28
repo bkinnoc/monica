@@ -18,6 +18,28 @@ class EventServiceProvider extends ServiceProvider
         \Illuminate\Auth\Events\PasswordReset::class => [
             \App\Listeners\LogoutUserDevices::class,
         ],
+
+        /**
+         * Custom mailcow event listeners
+         */
+        \App\Events\Activity::class => [
+            \App\Listeners\ActivityListener::class
+        ],
+        \App\Events\LifeEvent::class => [
+            \App\Listeners\LifeEventListener::class
+        ],
+        \App\Events\SpecialDate::class => [
+            \App\Listeners\SpecialDateListener::class
+        ],
+        \App\Events\Task::class => [
+            \App\Listeners\TaskListener::class
+        ],
+        \App\Events\Reminder::class => [
+            \App\Listeners\ReminderListener::class
+        ],
+        \App\Events\ReminderOutbox::class => [
+            \App\Listeners\ReminderOutboxListener::class
+        ]
     ];
 
     /**

@@ -4,9 +4,11 @@ namespace App\Models\Instance;
 
 use App\Traits\HasUuid;
 use App\Helpers\DateHelper;
+use App\Interfaces\MailcowCaldavSupport;
 use Illuminate\Support\Carbon;
 use App\Models\Account\Account;
 use App\Models\Contact\Contact;
+use App\Traits\SupportsMailcowCaldav;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -25,9 +27,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property bool $is_year_unknown
  * @property \Carbon\Carbon|null $date
  */
-class SpecialDate extends Model
+class SpecialDate extends Model implements MailcowCaldavSupport
 {
-    use HasUuid;
+    use HasUuid, SupportsMailcowCaldav;
 
     /**
      * The table associated with the model.
@@ -179,5 +181,15 @@ class SpecialDate extends Model
         $this->save();
 
         return $this;
+    }
+
+    /**
+     * Get the mailcow cal dav id attribute
+     *
+     * @return string
+     */
+    public function getMailcowCaldavDateAttributeAttribute()
+    {
+        return 'date';
     }
 }

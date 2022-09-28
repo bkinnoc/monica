@@ -6,10 +6,12 @@ use Carbon\Carbon;
 use App\Traits\HasUuid;
 use App\Models\User\User;
 use App\Helpers\DateHelper;
+use App\Interfaces\MailcowCaldavSupport;
 use App\Models\Account\Account;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\ModelBindingHasherWithContact as Model;
+use App\Traits\SupportsMailcowCaldav;
 
 /**
  * A reminder has two states: active and inactive.
@@ -19,9 +21,9 @@ use App\Models\ModelBindingHasherWithContact as Model;
  * @property string $next_expected_date_human_readable
  * @property string $next_expected_date
  */
-class Reminder extends Model
+class Reminder extends Model implements MailcowCaldavSupport
 {
-    use HasUuid;
+    use HasUuid, SupportsMailcowCaldav;
 
     /**
      * The attributes that aren't mass assignable.
@@ -133,8 +135,15 @@ class Reminder extends Model
     public function calculateNextExpectedDateOnTimezone()
     {
         $date = $this->initial_date;
-        $date = Carbon::create($date->year, $date->month, $date->day, 0, 0, 0,
-                    DateHelper::getTimezone() ?? config('app.timezone'));
+        $date = Carbon::create(
+            $date->year,
+            $date->month,
+            $date->day,
+            0,
+            0,
+            0,
+            DateHelper::getTimezone() ?? config('app.timezone')
+        );
 
         return $this->calculateNextExpectedDate($date);
     }
@@ -195,5 +204,15 @@ class Reminder extends Model
                 'notification_number_days_before' => $reminderRule->number_of_days_before,
             ]);
         }
+    }
+
+    /**
+     * Get the mailcow cal dav id attribute
+     *
+     * @return string
+     */
+    public function getMailcowCaldavDateAttributeAttribute()
+    {
+        return 'initial_date';
     }
 }

@@ -14,14 +14,16 @@ class NewSignup
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    protected $model;
+
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($model = null)
     {
-        //
+        $this->model = $model;
     }
 
     /**
@@ -31,6 +33,6 @@ class NewSignup
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-name');
+        return new PrivateChannel('user.' . (auth()->id() ?: 0));
     }
 }

@@ -87,6 +87,9 @@ class MailboxRepository extends BaseRepository
                 $user->mailbox_key = "{$localPart}@{$domain}";
                 $user->save();
             } catch (\Exception $e) {
+                if (app()->environment('local', 'dev')) {
+                    throw $e;
+                }
                 \Log::error($e);
             }
         }

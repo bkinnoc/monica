@@ -34,7 +34,6 @@ class ResetPasswordController extends Controller
      */
     protected function rules()
     {
-        dd(AppHelper::getPasswordRules());
         return [
             'token' => 'required',
             'email' => 'required|email',

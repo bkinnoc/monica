@@ -2,14 +2,16 @@
 
 namespace App\Models\Contact;
 
+use App\Interfaces\MailcowCaldavSupport;
 use App\Traits\HasUuid;
 use App\Models\Account\Account;
 use App\Models\ModelBinding as Model;
+use App\Traits\SupportsMailcowCaldav;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class LifeEvent extends Model
+class LifeEvent extends Model implements MailcowCaldavSupport
 {
-    use HasUuid;
+    use HasUuid, SupportsMailcowCaldav;
 
     protected $table = 'life_events';
 
@@ -92,5 +94,15 @@ class LifeEvent extends Model
     public function reminder()
     {
         return $this->belongsTo(Reminder::class);
+    }
+
+    /**
+     * Get the mailcow cal dav id attribute
+     *
+     * @return string
+     */
+    public function getMailcowCaldavDateAttributeAttribute()
+    {
+        return 'happened_at';
     }
 }

@@ -2,10 +2,12 @@
 
 namespace App\Models\Contact;
 
+use App\Interfaces\MailcowCaldavSupport;
 use App\Models\User\User;
 use App\Models\Account\Account;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\ModelBindingHasherWithContact as Model;
+use App\Traits\SupportsMailcowCaldav;
 
 /**
  * @property Account $account
@@ -19,8 +21,10 @@ use App\Models\ModelBindingHasherWithContact as Model;
  * @property \Illuminate\Support\Carbon|null $planned_date
  * @property int $notification_number_days_before
  */
-class ReminderOutbox extends Model
+class ReminderOutbox extends Model implements MailcowCaldavSupport
 {
+    use SupportsMailcowCaldav;
+
     protected $table = 'reminder_outbox';
 
     /**
@@ -67,5 +71,15 @@ class ReminderOutbox extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the mailcow cal dav id attribute
+     *
+     * @return string
+     */
+    public function getMailcowCaldavDateAttributeAttribute()
+    {
+        return 'planned_date';
     }
 }

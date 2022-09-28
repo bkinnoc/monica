@@ -2,8 +2,10 @@
 
 namespace App\Models\Contact;
 
+use App\Interfaces\MailcowCaldavSupport;
 use App\Models\Account\Account;
 use App\Models\ModelBinding as Model;
+use App\Traits\SupportsMailcowCaldav;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -20,8 +22,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder completed()
  * @method static Builder inProgress()
  */
-class Task extends Model
+class Task extends Model implements MailcowCaldavSupport
 {
+    use SupportsMailcowCaldav;
+
     /**
      * The attributes that aren't mass assignable.
      *
@@ -97,5 +101,15 @@ class Task extends Model
     public function scopeInProgress(Builder $query)
     {
         return $query->where('completed', false);
+    }
+
+    /**
+     * Get the mailcow cal dav id attribute
+     *
+     * @return string
+     */
+    public function getMailcowCaldavDateAttributeAttribute()
+    {
+        return 'completed_at';
     }
 }

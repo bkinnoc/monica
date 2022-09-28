@@ -6,6 +6,7 @@ use App\Models\User\User;
 use App\Helpers\DateHelper;
 use App\Models\Contact\Debt;
 use Illuminate\Http\Request;
+use App\Helpers\MailcowHelper;
 use App\Models\MailcowMailbox;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
@@ -22,38 +23,11 @@ class MailController extends Controller
      */
     public function index()
     {
-        // dd(config('database.connections.mailcow'));
         $user    = auth()->user();
-        $mailbox = $user->mailbox()
-            ->first();
-
-
-        if (!$mailbox) {
-            app(MailboxRepository::class)->createForUser($user);
-            $user->load('mailbox');
-            $mailbox = $user->mailbox;
-        }
         // dd("Mailbox", $user->mailbox_key, $mailbox, \Nitm\Helpers\DbHelper::getQueryWithBindings($user->mailbox()), MailcowMailbox::all()->toArray());
 
         // $password = Crypt::encryptString($user->uuid);
-        $url = config('mailcow.url');
-        $password = md5($user->uuid);
-        $domain = config('mailcow.domain');
-        $params = [
-            'url' => "{$url}/SOGo/so",
-            'authBasic' => "{$user->mailbox_key}:{$password}",
-            'authString' => htmlentities(rawurlencode("{$user->mailbox_key}:{$password}")),
-            'authStringEncoded' => base64_encode("{$user->mailbox_key}:{$password}"),
-            'userName' => $user->mailbox_key,
-            'password' => $password,
-        ];
-
-        $loginRequest = Http::withHeaders([
-            // 'Authorization' => "Basic {$params['authBasic']}"
-        ])
-            ->withOptions([
-                'verify' => false,
-            ])->post("{$url}/SOGo/connect", $params);
+        list($loginRequest, $params) = MailcowHelper::login($user);
 
         $response = response(view('mailbox.index', $params));
 

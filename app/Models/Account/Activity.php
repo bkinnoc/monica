@@ -7,7 +7,9 @@ use App\Helpers\DateHelper;
 use App\Traits\Journalable;
 use App\Models\Contact\Contact;
 use App\Models\Journal\JournalEntry;
+use App\Traits\SupportsMailcowCaldav;
 use Illuminate\Database\Eloquent\Model;
+use App\Interfaces\MailcowCaldavSupport;
 use App\Models\Instance\Emotion\Emotion;
 use App\Interfaces\IsJournalableInterface;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,9 +19,9 @@ use App\Http\Resources\Contact\ContactShort as ContactShortResource;
 /**
  * @property int|null $activity_type_id
  */
-class Activity extends Model implements IsJournalableInterface
+class Activity extends Model implements IsJournalableInterface, MailcowCaldavSupport
 {
-    use Journalable, HasUuid;
+    use Journalable, HasUuid, SupportsMailcowCaldav;
 
     /**
      * The table associated with the model.
@@ -146,7 +148,7 @@ class Activity extends Model implements IsJournalableInterface
         return [
             'type' => 'activity',
             'id' => $this->id,
-            'activity_type' => (! is_null($this->type) ? $this->type->name : null),
+            'activity_type' => (!is_null($this->type) ? $this->type->name : null),
             'summary' => $this->summary,
             'description' => $this->description,
             'day' => $this->happened_at->day,
@@ -156,5 +158,15 @@ class Activity extends Model implements IsJournalableInterface
             'year' => $this->happened_at->year,
             'attendees' => $this->getContactsForAPI(),
         ];
+    }
+
+    /**
+     * Get the mailcow cal dav id attribute
+     *
+     * @return string
+     */
+    public function getMailcowCaldavDateAttributeAttribute()
+    {
+        return 'happened_at';
     }
 }

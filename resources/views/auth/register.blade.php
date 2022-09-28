@@ -5,7 +5,7 @@
     <body class="marketing register">
         <div class="container">
             <div class="row">
-                <div id="app" class="col-12 col-md-10 offset-lg-2 offset-lg-2-right">
+                <div id="app" class="col-12 col-md-10 offset-md-1 offset-md-1-right">
                     <div class="tc">
                         <ul class="horizontal f6 relative mb3 light-silver">
                             <li class="mr2">
