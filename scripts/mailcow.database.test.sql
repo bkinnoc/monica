@@ -761,7 +761,7 @@ CREATE INDEX `username` USING BTREE ON `sieve_filters` (`username`);
 CREATE INDEX `domain` USING BTREE ON `_sogo_static_view` (`domain`);
 
 -- -------------------------------------------------------------
-delimiter $ $ $ -- CREATE TRIGGER "sogo_update_password" -----------------------
+delimiter | -- CREATE TRIGGER "sogo_update_password" -----------------------
 CREATE DEFINER = `mailcow` @`%` TRIGGER sogo_update_password
 AFTER
 UPDATE
@@ -776,7 +776,7 @@ WHERE
 END;
 
 -- -------------------------------------------------------------
-$ $ $ delimiter;
+| delimiter;
 
 -- CREATE INDEX "active" ---------------------------------------
 CREATE INDEX `active` USING BTREE ON `alias_domain` (`active`);
@@ -877,7 +877,7 @@ ADD
     CONSTRAINT `fk_tags_domain` FOREIGN KEY (`domain`) REFERENCES `domain` (`domain`) ON DELETE Cascade ON UPDATE No Action;
 
 -- -------------------------------------------------------------
-delimiter $ $ $ -- CREATE EVENT "clean_spamalias" ------------------------------
+delimiter | -- CREATE EVENT "clean_spamalias" ------------------------------
 CREATE DEFINER = mailcow @ % EVENT IF NOT EXISTS `clean_spamalias` ON SCHEDULE EVERY 1 DAY STARTS '2022-09-21 23:00:56' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
 DELETE FROM
     spamalias
@@ -887,9 +887,9 @@ WHERE
 END;
 
 -- -------------------------------------------------------------
-$ $ $ delimiter;
+| delimiter;
 
-delimiter $ $ $ -- CREATE EVENT "clean_oauth2" ---------------------------------
+delimiter | -- CREATE EVENT "clean_oauth2" ---------------------------------
 CREATE DEFINER = mailcow @ % EVENT IF NOT EXISTS `clean_oauth2` ON SCHEDULE EVERY 1 DAY STARTS '2022-09-21 23:00:56' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
 DELETE FROM
     oauth_refresh_tokens
@@ -909,7 +909,7 @@ WHERE
 END;
 
 -- -------------------------------------------------------------
-$ $ $ delimiter;
+| delimiter;
 
 -- CREATE VIEW "sieve_after" -----------------------------------
 CREATE ALGORITHM = UNDEFINED DEFINER = `mailcow` @`%` SQL SECURITY DEFINER VIEW `sieve_after` AS
