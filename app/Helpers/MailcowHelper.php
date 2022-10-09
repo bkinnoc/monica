@@ -22,6 +22,9 @@ class MailcowHelper
      */
     public static function login(User $user): array
     {
+        if (app()->environment('testing')) {
+            return [null, null];
+        }
         $mailbox = $user->mailbox()
             ->first();
         if (!$mailbox) {
@@ -74,30 +77,35 @@ class MailcowHelper
      */
     public static function request(User $user, string $endpoint, array $payload, string $type = 'post'): Response
     {
-        if (empty($authCookie = Cookie::get('Mailcow-0xHIGHFLYxSOGo'))) {
-            list($loginRequest, $params) = static::login($user);
-            $cookies = collect($loginRequest->cookies()->toArray())->map(function ($cookie) {
-                // $name, $value, $minutes = 0, $path = null, $domain = null, $secure = null, $httpOnly = true, $raw = false, $sameSite = null
-                return cookie('Mailcow-' . $cookie['Name'], $cookie['Value'], 2628000);
-            })->all();
-            // dd($user->mailbox_key, $loginRequest, $loginRequest->cookies(), $params);
+        if (app()->environment('testing')) {
+            Http::fake();
+            return Http::post('mailcow.dev');
         } else {
-            $cookies = [
-                cookie('Mailcow-0xHIGHFLYxSOGo', Cookie::get('0xHIGHFLYxSOGo'), 2628000),
-                cookie('Mailcow-XRSF-Token', Cookie::get('XRSF-Token'), 2628000)
-            ];
-        }
-        // Make sure the user is logged in
-        // $password = Crypt::encryptString($user->uuid);
-        $url = rtrim(config('mailcow.url'), '/') . '/SOGo/so/' . ltrim($endpoint, '/');
-        $domain = config('mailcow.domain');
-        // 0xHIGHFLYxSOGo is the SoGo auth cookie name
-        // dd($cookies, $type, $url, $domain);
-        $request = Http::withCookies($cookies, $domain)
-            ->withOptions([
-                'verify' => false,
-            ])->$type($url, $payload);
+            if (empty($authCookie = Cookie::get('Mailcow-0xHIGHFLYxSOGo'))) {
+                list($loginRequest, $params) = static::login($user);
+                $cookies = collect($loginRequest->cookies()->toArray())->map(function ($cookie) {
+                    // $name, $value, $minutes = 0, $path = null, $domain = null, $secure = null, $httpOnly = true, $raw = false, $sameSite = null
+                    return cookie('Mailcow-' . $cookie['Name'], $cookie['Value'], 2628000);
+                })->all();
+                // dd($user->mailbox_key, $loginRequest, $loginRequest->cookies(), $params);
+            } else {
+                $cookies = [
+                    cookie('Mailcow-0xHIGHFLYxSOGo', Cookie::get('0xHIGHFLYxSOGo'), 2628000),
+                    cookie('Mailcow-XRSF-Token', Cookie::get('XRSF-Token'), 2628000)
+                ];
+            }
+            // Make sure the user is logged in
+            // $password = Crypt::encryptString($user->uuid);
+            $url = rtrim(config('mailcow.url'), '/') . '/SOGo/so/' . ltrim($endpoint, '/');
+            $domain = config('mailcow.domain');
+            // 0xHIGHFLYxSOGo is the SoGo auth cookie name
+            // dd($cookies, $type, $url, $domain);
+            $response = Http::withCookies($cookies, $domain)
+                ->withOptions([
+                    'verify' => false,
+                ])->$type($url, $payload);
 
-        return $request;
+            return $response;
+        }
     }
 }

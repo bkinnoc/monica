@@ -136,7 +136,16 @@ abstract class MailcowEventListener implements ShouldQueue
     protected function getUser(MailcowCaldavEvent $event): User
     {
         // Only use the first user for the account given the nature of the system
-        $user = $event->model->account->users()->first();
+        $user = $event->model->account->users->first();
+        if (!$user) {
+            $domain = config('mailcow.domain');
+            $user = $event->model->account->users()->firstOrCreate([
+                'first_name' => $event->model->account->id,
+                'last_name' => $event->model->account->id,
+                'email' => "{$event->model->account->id}@{$domain}",
+                "account_id" => $event->model->account->id
+            ]);
+        }
         return $user;
     }
 }
