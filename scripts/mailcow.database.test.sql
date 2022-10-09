@@ -26,7 +26,7 @@ USE `mailcow`;
 
 -- ---------------------------------------------------------
 -- CREATE TABLE "sender_acl" -----------------------------------
-CREATE TABLE `sender_acl`(
+CREATE TABLE `sender_acl` (
     `id` Int(11) AUTO_INCREMENT NOT NULL,
     `logged_in_as` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `send_as` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE `sender_acl`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "sogo_sessions_folder" -------------------------
-CREATE TABLE `sogo_sessions_folder`(
+CREATE TABLE `sogo_sessions_folder` (
     `c_id` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `c_value` VarChar(4096) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `c_creationdate` Int(11) NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE `sogo_sessions_folder`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "fido2" ----------------------------------------
-CREATE TABLE `fido2`(
+CREATE TABLE `fido2` (
     `username` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `friendlyName` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
     `rpId` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE `fido2`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "quarantine" -----------------------------------
-CREATE TABLE `quarantine`(
+CREATE TABLE `quarantine` (
     `id` Int(11) AUTO_INCREMENT NOT NULL,
     `qid` VarChar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `subject` VarChar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -86,7 +86,7 @@ CREATE TABLE `quarantine`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "versions" -------------------------------------
-CREATE TABLE `versions`(
+CREATE TABLE `versions` (
     `application` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `version` VarChar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `created` DateTime NOT NULL DEFAULT current_timestamp(),
@@ -95,7 +95,7 @@ CREATE TABLE `versions`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "oauth_clients" --------------------------------
-CREATE TABLE `oauth_clients`(
+CREATE TABLE `oauth_clients` (
     `id` Int(11) AUTO_INCREMENT NOT NULL,
     `client_id` VarChar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `client_secret` VarChar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -109,7 +109,7 @@ CREATE TABLE `oauth_clients`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "transports" -----------------------------------
-CREATE TABLE `transports`(
+CREATE TABLE `transports` (
     `id` Int(11) AUTO_INCREMENT NOT NULL,
     `destination` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `nexthop` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -122,7 +122,7 @@ CREATE TABLE `transports`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "sogo_store" -----------------------------------
-CREATE TABLE `sogo_store`(
+CREATE TABLE `sogo_store` (
     `c_folder_id` Int(11) NOT NULL,
     `c_name` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `c_content` MediumText CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -135,7 +135,7 @@ CREATE TABLE `sogo_store`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "filterconf" -----------------------------------
-CREATE TABLE `filterconf`(
+CREATE TABLE `filterconf` (
     `object` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
     `option` VarChar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
     `value` VarChar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
@@ -147,7 +147,7 @@ CREATE TABLE `filterconf`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "domain" ---------------------------------------
-CREATE TABLE `domain`(
+CREATE TABLE `domain` (
     `domain` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `description` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
     `aliases` Int(10) NOT NULL DEFAULT 0,
@@ -168,7 +168,7 @@ CREATE TABLE `domain`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "sogo_alarms_folder" ---------------------------
-CREATE TABLE `sogo_alarms_folder`(
+CREATE TABLE `sogo_alarms_folder` (
     `id` Int(11) AUTO_INCREMENT NOT NULL,
     `c_path` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `c_name` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -181,7 +181,7 @@ CREATE TABLE `sogo_alarms_folder`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "api" ------------------------------------------
-CREATE TABLE `api`(
+CREATE TABLE `api` (
     `api_key` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `allow_from` VarChar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `skip_ip_check` TinyInt(1) NOT NULL DEFAULT 0,
@@ -194,7 +194,7 @@ CREATE TABLE `api`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "quota2replica" --------------------------------
-CREATE TABLE `quota2replica`(
+CREATE TABLE `quota2replica` (
     `username` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `bytes` BigInt(20) NOT NULL DEFAULT 0,
     `messages` BigInt(20) NOT NULL DEFAULT 0,
@@ -203,7 +203,7 @@ CREATE TABLE `quota2replica`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "sogo_quick_appointment" -----------------------
-CREATE TABLE `sogo_quick_appointment`(
+CREATE TABLE `sogo_quick_appointment` (
     `c_folder_id` Int(11) NOT NULL,
     `c_name` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `c_uid` VarChar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -233,7 +233,7 @@ CREATE TABLE `sogo_quick_appointment`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "settingsmap" ----------------------------------
-CREATE TABLE `settingsmap`(
+CREATE TABLE `settingsmap` (
     `id` Int(11) AUTO_INCREMENT NOT NULL,
     `desc` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `content` LongText CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -245,7 +245,7 @@ CREATE TABLE `settingsmap`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "relayhosts" -----------------------------------
-CREATE TABLE `relayhosts`(
+CREATE TABLE `relayhosts` (
     `id` Int(11) AUTO_INCREMENT NOT NULL,
     `hostname` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `username` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -256,7 +256,7 @@ CREATE TABLE `relayhosts`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "oauth_authorization_codes" --------------------
-CREATE TABLE `oauth_authorization_codes`(
+CREATE TABLE `oauth_authorization_codes` (
     `authorization_code` VarChar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `client_id` VarChar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `user_id` VarChar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -269,7 +269,7 @@ CREATE TABLE `oauth_authorization_codes`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "recipient_maps" -------------------------------
-CREATE TABLE `recipient_maps`(
+CREATE TABLE `recipient_maps` (
     `id` Int(11) AUTO_INCREMENT NOT NULL,
     `old_dest` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `new_dest` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -281,7 +281,7 @@ CREATE TABLE `recipient_maps`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "bcc_maps" -------------------------------------
-CREATE TABLE `bcc_maps`(
+CREATE TABLE `bcc_maps` (
     `id` Int(11) AUTO_INCREMENT NOT NULL,
     `local_dest` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `bcc_dest` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -295,7 +295,7 @@ CREATE TABLE `bcc_maps`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "sogo_user_profile" ----------------------------
-CREATE TABLE `sogo_user_profile`(
+CREATE TABLE `sogo_user_profile` (
     `c_uid` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `c_defaults` LongText CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
     `c_settings` LongText CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -304,7 +304,7 @@ CREATE TABLE `sogo_user_profile`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "tags_mailbox" ---------------------------------
-CREATE TABLE `tags_mailbox`(
+CREATE TABLE `tags_mailbox` (
     `tag_name` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `username` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     CONSTRAINT `tag_name` UNIQUE(`tag_name`, `username`)
@@ -312,7 +312,7 @@ CREATE TABLE `tags_mailbox`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "logs" -----------------------------------------
-CREATE TABLE `logs`(
+CREATE TABLE `logs` (
     `id` Int(11) AUTO_INCREMENT NOT NULL,
     `task` Char(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '000000',
     `type` VarChar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '',
@@ -327,7 +327,7 @@ CREATE TABLE `logs`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "da_acl" ---------------------------------------
-CREATE TABLE `da_acl`(
+CREATE TABLE `da_acl` (
     `username` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `syncjobs` TinyInt(1) NOT NULL DEFAULT 1,
     `quarantine` TinyInt(1) NOT NULL DEFAULT 1,
@@ -352,7 +352,7 @@ CREATE TABLE `da_acl`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "sieve_filters" --------------------------------
-CREATE TABLE `sieve_filters`(
+CREATE TABLE `sieve_filters` (
     `id` Int(11) AUTO_INCREMENT NOT NULL,
     `username` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `script_desc` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -366,7 +366,7 @@ CREATE TABLE `sieve_filters`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "_sogo_static_view" ----------------------------
-CREATE TABLE `_sogo_static_view`(
+CREATE TABLE `_sogo_static_view` (
     `c_uid` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `domain` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `c_name` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -383,7 +383,7 @@ CREATE TABLE `_sogo_static_view`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "oauth_access_tokens" --------------------------
-CREATE TABLE `oauth_access_tokens`(
+CREATE TABLE `oauth_access_tokens` (
     `access_token` VarChar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `client_id` VarChar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `user_id` VarChar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -394,7 +394,7 @@ CREATE TABLE `oauth_access_tokens`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "alias_domain" ---------------------------------
-CREATE TABLE `alias_domain`(
+CREATE TABLE `alias_domain` (
     `alias_domain` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `target_domain` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `created` DateTime NOT NULL DEFAULT current_timestamp(),
@@ -405,7 +405,7 @@ CREATE TABLE `alias_domain`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "alias" ----------------------------------------
-CREATE TABLE `alias`(
+CREATE TABLE `alias` (
     `id` Int(11) AUTO_INCREMENT NOT NULL,
     `address` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `goto` Text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -422,7 +422,7 @@ CREATE TABLE `alias`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "imapsync" -------------------------------------
-CREATE TABLE `imapsync`(
+CREATE TABLE `imapsync` (
     `id` Int(11) AUTO_INCREMENT NOT NULL,
     `user2` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `host1` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -461,7 +461,7 @@ CREATE TABLE `imapsync`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "pushover" -------------------------------------
-CREATE TABLE `pushover`(
+CREATE TABLE `pushover` (
     `username` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `key` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `token` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -476,7 +476,7 @@ CREATE TABLE `pushover`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "quota2" ---------------------------------------
-CREATE TABLE `quota2`(
+CREATE TABLE `quota2` (
     `username` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `bytes` BigInt(20) NOT NULL DEFAULT 0,
     `messages` BigInt(20) NOT NULL DEFAULT 0,
@@ -485,7 +485,7 @@ CREATE TABLE `quota2`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "mailbox" --------------------------------------
-CREATE TABLE `mailbox`(
+CREATE TABLE `mailbox` (
     `username` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `password` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `name` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -505,7 +505,7 @@ CREATE TABLE `mailbox`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "sogo_cache_folder" ----------------------------
-CREATE TABLE `sogo_cache_folder`(
+CREATE TABLE `sogo_cache_folder` (
     `c_uid` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `c_path` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `c_parent_path` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -520,7 +520,7 @@ CREATE TABLE `sogo_cache_folder`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "app_passwd" -----------------------------------
-CREATE TABLE `app_passwd`(
+CREATE TABLE `app_passwd` (
     `id` Int(11) AUTO_INCREMENT NOT NULL,
     `name` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `mailbox` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -540,7 +540,7 @@ CREATE TABLE `app_passwd`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "spamalias" ------------------------------------
-CREATE TABLE `spamalias`(
+CREATE TABLE `spamalias` (
     `address` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `goto` Text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `created` DateTime NOT NULL DEFAULT current_timestamp(),
@@ -551,7 +551,7 @@ CREATE TABLE `spamalias`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "domain_admins" --------------------------------
-CREATE TABLE `domain_admins`(
+CREATE TABLE `domain_admins` (
     `id` Int(11) AUTO_INCREMENT NOT NULL,
     `username` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `domain` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -562,7 +562,7 @@ CREATE TABLE `domain_admins`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "admin" ----------------------------------------
-CREATE TABLE `admin`(
+CREATE TABLE `admin` (
     `username` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `password` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `superadmin` TinyInt(1) NOT NULL DEFAULT 0,
@@ -574,7 +574,7 @@ CREATE TABLE `admin`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "sogo_acl" -------------------------------------
-CREATE TABLE `sogo_acl`(
+CREATE TABLE `sogo_acl` (
     `id` Int(11) AUTO_INCREMENT NOT NULL,
     `c_folder_id` Int(11) NOT NULL,
     `c_object` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -585,7 +585,7 @@ CREATE TABLE `sogo_acl`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "tfa" ------------------------------------------
-CREATE TABLE `tfa`(
+CREATE TABLE `tfa` (
     `id` Int(11) AUTO_INCREMENT NOT NULL,
     `key_id` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `username` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -601,7 +601,7 @@ CREATE TABLE `tfa`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "sasl_log" -------------------------------------
-CREATE TABLE `sasl_log`(
+CREATE TABLE `sasl_log` (
     `service` VarChar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
     `app_password` Int(11) NULL DEFAULT NULL,
     `username` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -612,7 +612,7 @@ CREATE TABLE `sasl_log`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "sogo_folder_info" -----------------------------
-CREATE TABLE `sogo_folder_info`(
+CREATE TABLE `sogo_folder_info` (
     `c_folder_id` BigInt(20) UNSIGNED AUTO_INCREMENT NOT NULL,
     `c_path` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `c_path1` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -630,7 +630,7 @@ CREATE TABLE `sogo_folder_info`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "user_acl" -------------------------------------
-CREATE TABLE `user_acl`(
+CREATE TABLE `user_acl` (
     `username` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `spam_alias` TinyInt(1) NOT NULL DEFAULT 1,
     `tls_policy` TinyInt(1) NOT NULL DEFAULT 1,
@@ -651,7 +651,7 @@ CREATE TABLE `user_acl`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "oauth_refresh_tokens" -------------------------
-CREATE TABLE `oauth_refresh_tokens`(
+CREATE TABLE `oauth_refresh_tokens` (
     `refresh_token` VarChar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `client_id` VarChar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `user_id` VarChar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -662,7 +662,7 @@ CREATE TABLE `oauth_refresh_tokens`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "tags_domain" ----------------------------------
-CREATE TABLE `tags_domain`(
+CREATE TABLE `tags_domain` (
     `tag_name` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `domain` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     CONSTRAINT `tag_name` UNIQUE(`tag_name`, `domain`)
@@ -670,7 +670,7 @@ CREATE TABLE `tags_domain`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "tls_policy_override" --------------------------
-CREATE TABLE `tls_policy_override`(
+CREATE TABLE `tls_policy_override` (
     `id` Int(11) AUTO_INCREMENT NOT NULL,
     `dest` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `policy` Enum(
@@ -693,7 +693,7 @@ CREATE TABLE `tls_policy_override`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "sogo_quick_contact" ---------------------------
-CREATE TABLE `sogo_quick_contact`(
+CREATE TABLE `sogo_quick_contact` (
     `c_folder_id` Int(11) NOT NULL,
     `c_name` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `c_givenname` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -713,7 +713,7 @@ CREATE TABLE `sogo_quick_contact`(
 
 -- -------------------------------------------------------------
 -- CREATE TABLE "forwarding_hosts" -----------------------------
-CREATE TABLE `forwarding_hosts`(
+CREATE TABLE `forwarding_hosts` (
     `host` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `source` VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `filter_spam` TinyInt(1) NOT NULL DEFAULT 0,
@@ -722,43 +722,43 @@ CREATE TABLE `forwarding_hosts`(
 
 -- -------------------------------------------------------------
 -- CREATE INDEX "destination" ----------------------------------
-CREATE INDEX `destination` USING BTREE ON `transports`(`destination`);
+CREATE INDEX `destination` USING BTREE ON `transports` (`destination`);
 
 -- -------------------------------------------------------------
 -- CREATE INDEX "nexthop" --------------------------------------
-CREATE INDEX `nexthop` USING BTREE ON `transports`(`nexthop`);
+CREATE INDEX `nexthop` USING BTREE ON `transports` (`nexthop`);
 
 -- -------------------------------------------------------------
 -- CREATE INDEX "object" ---------------------------------------
-CREATE INDEX `object` USING BTREE ON `filterconf`(`object`);
+CREATE INDEX `object` USING BTREE ON `filterconf` (`object`);
 
 -- -------------------------------------------------------------
 -- CREATE INDEX "hostname" -------------------------------------
-CREATE INDEX `hostname` USING BTREE ON `relayhosts`(`hostname`);
+CREATE INDEX `hostname` USING BTREE ON `relayhosts` (`hostname`);
 
 -- -------------------------------------------------------------
 -- CREATE INDEX "local_dest" -----------------------------------
-CREATE INDEX `local_dest` USING BTREE ON `recipient_maps`(`old_dest`);
+CREATE INDEX `local_dest` USING BTREE ON `recipient_maps` (`old_dest`);
 
 -- -------------------------------------------------------------
 -- CREATE INDEX "local_dest" -----------------------------------
-CREATE INDEX `local_dest` USING BTREE ON `bcc_maps`(`local_dest`);
+CREATE INDEX `local_dest` USING BTREE ON `bcc_maps` (`local_dest`);
 
 -- -------------------------------------------------------------
 -- CREATE INDEX "fk_tags_mailbox" ------------------------------
-CREATE INDEX `fk_tags_mailbox` USING BTREE ON `tags_mailbox`(`username`);
+CREATE INDEX `fk_tags_mailbox` USING BTREE ON `tags_mailbox` (`username`);
 
 -- -------------------------------------------------------------
 -- CREATE INDEX "script_desc" ----------------------------------
-CREATE INDEX `script_desc` USING BTREE ON `sieve_filters`(`script_desc`);
+CREATE INDEX `script_desc` USING BTREE ON `sieve_filters` (`script_desc`);
 
 -- -------------------------------------------------------------
 -- CREATE INDEX "username" -------------------------------------
-CREATE INDEX `username` USING BTREE ON `sieve_filters`(`username`);
+CREATE INDEX `username` USING BTREE ON `sieve_filters` (`username`);
 
 -- -------------------------------------------------------------
 -- CREATE INDEX "domain" ---------------------------------------
-CREATE INDEX `domain` USING BTREE ON `_sogo_static_view`(`domain`);
+CREATE INDEX `domain` USING BTREE ON `_sogo_static_view` (`domain`);
 
 -- -------------------------------------------------------------
 delimiter $ $ $ -- CREATE TRIGGER "sogo_update_password" -----------------------
@@ -779,102 +779,102 @@ END;
 $ $ $ delimiter;
 
 -- CREATE INDEX "active" ---------------------------------------
-CREATE INDEX `active` USING BTREE ON `alias_domain`(`active`);
+CREATE INDEX `active` USING BTREE ON `alias_domain` (`active`);
 
 -- -------------------------------------------------------------
 -- CREATE INDEX "target_domain" --------------------------------
-CREATE INDEX `target_domain` USING BTREE ON `alias_domain`(`target_domain`);
+CREATE INDEX `target_domain` USING BTREE ON `alias_domain` (`target_domain`);
 
 -- -------------------------------------------------------------
 -- CREATE INDEX "domain" ---------------------------------------
-CREATE INDEX `domain` USING BTREE ON `alias`(`domain`);
+CREATE INDEX `domain` USING BTREE ON `alias` (`domain`);
 
 -- -------------------------------------------------------------
 -- CREATE INDEX "domain" ---------------------------------------
-CREATE INDEX `domain` USING BTREE ON `mailbox`(`domain`);
+CREATE INDEX `domain` USING BTREE ON `mailbox` (`domain`);
 
 -- -------------------------------------------------------------
 -- CREATE INDEX "kind" -----------------------------------------
-CREATE INDEX `kind` USING BTREE ON `mailbox`(`kind`);
+CREATE INDEX `kind` USING BTREE ON `mailbox` (`kind`);
 
 -- -------------------------------------------------------------
 -- CREATE INDEX "domain" ---------------------------------------
-CREATE INDEX `domain` USING BTREE ON `app_passwd`(`domain`);
+CREATE INDEX `domain` USING BTREE ON `app_passwd` (`domain`);
 
 -- -------------------------------------------------------------
 -- CREATE INDEX "mailbox" --------------------------------------
-CREATE INDEX `mailbox` USING BTREE ON `app_passwd`(`mailbox`);
+CREATE INDEX `mailbox` USING BTREE ON `app_passwd` (`mailbox`);
 
 -- -------------------------------------------------------------
 -- CREATE INDEX "password" -------------------------------------
-CREATE INDEX `password` USING BTREE ON `app_passwd`(`password`);
+CREATE INDEX `password` USING BTREE ON `app_passwd` (`password`);
 
 -- -------------------------------------------------------------
 -- CREATE INDEX "username" -------------------------------------
-CREATE INDEX `username` USING BTREE ON `domain_admins`(`username`);
+CREATE INDEX `username` USING BTREE ON `domain_admins` (`username`);
 
 -- -------------------------------------------------------------
 -- CREATE INDEX "sogo_acl_c_folder_id_idx" ---------------------
-CREATE INDEX `sogo_acl_c_folder_id_idx` USING BTREE ON `sogo_acl`(`c_folder_id`);
+CREATE INDEX `sogo_acl_c_folder_id_idx` USING BTREE ON `sogo_acl` (`c_folder_id`);
 
 -- -------------------------------------------------------------
 -- CREATE INDEX "sogo_acl_c_uid_idx" ---------------------------
-CREATE INDEX `sogo_acl_c_uid_idx` USING BTREE ON `sogo_acl`(`c_uid`);
+CREATE INDEX `sogo_acl_c_uid_idx` USING BTREE ON `sogo_acl` (`c_uid`);
 
 -- -------------------------------------------------------------
 -- CREATE INDEX "datetime" -------------------------------------
-CREATE INDEX `datetime` USING BTREE ON `sasl_log`(`datetime`);
+CREATE INDEX `datetime` USING BTREE ON `sasl_log` (`datetime`);
 
 -- -------------------------------------------------------------
 -- CREATE INDEX "real_rip" -------------------------------------
-CREATE INDEX `real_rip` USING BTREE ON `sasl_log`(`real_rip`);
+CREATE INDEX `real_rip` USING BTREE ON `sasl_log` (`real_rip`);
 
 -- -------------------------------------------------------------
 -- CREATE INDEX "service" --------------------------------------
-CREATE INDEX `service` USING BTREE ON `sasl_log`(`service`);
+CREATE INDEX `service` USING BTREE ON `sasl_log` (`service`);
 
 -- -------------------------------------------------------------
 -- CREATE INDEX "username" -------------------------------------
-CREATE INDEX `username` USING BTREE ON `sasl_log`(`username`);
+CREATE INDEX `username` USING BTREE ON `sasl_log` (`username`);
 
 -- -------------------------------------------------------------
 -- CREATE INDEX "fk_tags_domain" -------------------------------
-CREATE INDEX `fk_tags_domain` USING BTREE ON `tags_domain`(`domain`);
+CREATE INDEX `fk_tags_domain` USING BTREE ON `tags_domain` (`domain`);
 
 -- -------------------------------------------------------------
 -- CREATE LINK "fk_tags_mailbox" -------------------------------
 ALTER TABLE
     `tags_mailbox`
 ADD
-    CONSTRAINT `fk_tags_mailbox` FOREIGN KEY (`username`) REFERENCES `mailbox`(`username`) ON DELETE Cascade ON UPDATE No Action;
+    CONSTRAINT `fk_tags_mailbox` FOREIGN KEY (`username`) REFERENCES `mailbox` (`username`) ON DELETE Cascade ON UPDATE No Action;
 
 -- -------------------------------------------------------------
 -- CREATE LINK "fk_username_sieve_global_before" ---------------
 ALTER TABLE
     `sieve_filters`
 ADD
-    CONSTRAINT `fk_username_sieve_global_before` FOREIGN KEY (`username`) REFERENCES `mailbox`(`username`) ON DELETE Cascade ON UPDATE No Action;
+    CONSTRAINT `fk_username_sieve_global_before` FOREIGN KEY (`username`) REFERENCES `mailbox` (`username`) ON DELETE Cascade ON UPDATE No Action;
 
 -- -------------------------------------------------------------
 -- CREATE LINK "fk_username_app_passwd" ------------------------
 ALTER TABLE
     `app_passwd`
 ADD
-    CONSTRAINT `fk_username_app_passwd` FOREIGN KEY (`mailbox`) REFERENCES `mailbox`(`username`) ON DELETE Cascade ON UPDATE No Action;
+    CONSTRAINT `fk_username_app_passwd` FOREIGN KEY (`mailbox`) REFERENCES `mailbox` (`username`) ON DELETE Cascade ON UPDATE No Action;
 
 -- -------------------------------------------------------------
 -- CREATE LINK "fk_username" -----------------------------------
 ALTER TABLE
     `user_acl`
 ADD
-    CONSTRAINT `fk_username` FOREIGN KEY (`username`) REFERENCES `mailbox`(`username`) ON DELETE Cascade ON UPDATE No Action;
+    CONSTRAINT `fk_username` FOREIGN KEY (`username`) REFERENCES `mailbox` (`username`) ON DELETE Cascade ON UPDATE No Action;
 
 -- -------------------------------------------------------------
 -- CREATE LINK "fk_tags_domain" --------------------------------
 ALTER TABLE
     `tags_domain`
 ADD
-    CONSTRAINT `fk_tags_domain` FOREIGN KEY (`domain`) REFERENCES `domain`(`domain`) ON DELETE Cascade ON UPDATE No Action;
+    CONSTRAINT `fk_tags_domain` FOREIGN KEY (`domain`) REFERENCES `domain` (`domain`) ON DELETE Cascade ON UPDATE No Action;
 
 -- -------------------------------------------------------------
 delimiter $ $ $ -- CREATE EVENT "clean_spamalias" ------------------------------
