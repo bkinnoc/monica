@@ -761,23 +761,20 @@ CREATE INDEX `username` USING BTREE ON `sieve_filters` (`username`);
 CREATE INDEX `domain` USING BTREE ON `_sogo_static_view` (`domain`);
 
 -- -------------------------------------------------------------
-delimiter | -- CREATE TRIGGER "sogo_update_password" -----------------------
-CREATE DEFINER = `mailcow` @`%` TRIGGER sogo_update_password
-AFTER
-UPDATE
-    ON _sogo_static_view FOR EACH ROW BEGIN
-UPDATE
-    mailbox
-SET
-    password = NEW.c_password
-WHERE
-    NEW.c_uid = username;
-
-END;
-
--- -------------------------------------------------------------
-| delimiter;
-
+-- delimiter | -- CREATE TRIGGER "sogo_update_password" -----------------------
+-- CREATE DEFINER = `mailcow` @`%` TRIGGER sogo_update_password
+-- AFTER
+-- UPDATE
+--     ON _sogo_static_view FOR EACH ROW BEGIN
+-- UPDATE
+--     mailbox
+-- SET
+--     password = NEW.c_password
+-- WHERE
+--     NEW.c_uid = username;
+-- END;
+-- -- -------------------------------------------------------------
+-- | delimiter;
 -- CREATE INDEX "active" ---------------------------------------
 CREATE INDEX `active` USING BTREE ON `alias_domain` (`active`);
 
@@ -877,40 +874,32 @@ ADD
     CONSTRAINT `fk_tags_domain` FOREIGN KEY (`domain`) REFERENCES `domain` (`domain`) ON DELETE Cascade ON UPDATE No Action;
 
 -- -------------------------------------------------------------
-delimiter | -- CREATE EVENT "clean_spamalias" ------------------------------
-CREATE DEFINER = mailcow @ % EVENT IF NOT EXISTS `clean_spamalias` ON SCHEDULE EVERY 1 DAY STARTS '2022-09-21 23:00:56' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
-DELETE FROM
-    spamalias
-WHERE
-    validity < UNIX_TIMESTAMP();
-
-END;
-
+-- delimiter | -- CREATE EVENT "clean_spamalias" ------------------------------
+-- CREATE DEFINER = mailcow @ % EVENT IF NOT EXISTS `clean_spamalias` ON SCHEDULE EVERY 1 DAY STARTS '2022-09-21 23:00:56' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
+-- DELETE FROM
+--     spamalias
+-- WHERE
+--     validity < UNIX_TIMESTAMP();
+-- END;
+-- -- -------------------------------------------------------------
+-- | delimiter;
+-- delimiter | -- CREATE EVENT "clean_oauth2" ---------------------------------
+-- CREATE DEFINER = mailcow @ % EVENT IF NOT EXISTS `clean_oauth2` ON SCHEDULE EVERY 1 DAY STARTS '2022-09-21 23:00:56' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
+-- DELETE FROM
+--     oauth_refresh_tokens
+-- WHERE
+--     expires < NOW();
+-- DELETE FROM
+--     oauth_access_tokens
+-- WHERE
+--     expires < NOW();
+-- DELETE FROM
+--     oauth_authorization_codes
+-- WHERE
+--     expires < NOW();
+-- END;
 -- -------------------------------------------------------------
-| delimiter;
-
-delimiter | -- CREATE EVENT "clean_oauth2" ---------------------------------
-CREATE DEFINER = mailcow @ % EVENT IF NOT EXISTS `clean_oauth2` ON SCHEDULE EVERY 1 DAY STARTS '2022-09-21 23:00:56' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
-DELETE FROM
-    oauth_refresh_tokens
-WHERE
-    expires < NOW();
-
-DELETE FROM
-    oauth_access_tokens
-WHERE
-    expires < NOW();
-
-DELETE FROM
-    oauth_authorization_codes
-WHERE
-    expires < NOW();
-
-END;
-
--- -------------------------------------------------------------
-| delimiter;
-
+-- | delimiter;
 -- CREATE VIEW "sieve_after" -----------------------------------
 CREATE ALGORITHM = UNDEFINED DEFINER = `mailcow` @`%` SQL SECURITY DEFINER VIEW `sieve_after` AS
 select
